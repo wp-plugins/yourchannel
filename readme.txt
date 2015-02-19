@@ -12,8 +12,7 @@ YouTube channel on your website.
 
 == Description ==
 YouTube channel on your website.
-Show your YouTube channel on your very own website. Let users search YouTube – can be restricted to your channel.
-Turn your site visitors into YouTube subscribers.
+Show your YouTube channel on your very own website.
 
 **Upgrade to:**
 
