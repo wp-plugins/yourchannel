@@ -1,9 +1,9 @@
 === YourChannel ===
 Contributors: plugin.builders
-Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, player, playlist, channel, search, ratings, views, likes, dislikes, google, api, free
+Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, player, playlist, youtube plugin, youtube player, youtube gallery, channel, search, ratings, views, likes, dislikes, google, api, free
 Donate link: http://plugin.builders
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: 0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ Show your YouTube channel on your very own website.
 * change colors to match with your site.
 * show video stats/ratings.
 * sort uploads (latest, most liked, most viewed).
-* need to show a subscribe button.
+* show a subscribe button.
 
 **[Pro Version Demo](http://plugin.builders/yourchannel/)**
 
