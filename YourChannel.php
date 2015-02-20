@@ -1,14 +1,14 @@
 <?php
 /**
  * @package YourChannel
- * @version 0.1
+ * @version 0.2
  */
 /*
 Plugin Name: YourChannel
 Plugin URI: http://wordpress.org/plugins/yourchannel/
 Description: YouTube channel in your website.
 Author: Plugin Builders
-Version: 0.1
+Version: 0.2
 Author URI: http://plugin.builders/
 */
 
