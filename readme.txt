@@ -12,9 +12,6 @@ Do you create or curate YouTube videos? Now turn your website with YouTube links
  
 
 == Description ==
-Are your vistors leaving your website for YouTube?
-Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
-
 You don't need more storage or bandwidth, and your visitors hate leaving the webpage they've already loaded, so why don't you show your videos and playlists in your own website.
 	
 Tell this plugin your YouTube username and it'll setup your channel in your own property.
