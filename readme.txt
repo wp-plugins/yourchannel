@@ -8,7 +8,7 @@ Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
+Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform. TLDR: Youtube channel on your site.
  
 
 == Description ==
@@ -32,19 +32,6 @@ YourChannel is completely responsive (shouldn't have mentioned, IT'S 2015).
 
 **[Demo](http://plugin.builders/yourchannel/?demo=free)**
 **[Instructions](http://plugin.builders/yourchannel/)**
-
-**Upgrade (10$) to enhance content & experience.**
-
-**Pro features:**
-
-* show multiple channels.	
-* let users search YouTube - can be restricted to your channel.
-* change colors to match with your site.
-* show video stats/ratings.
-* sort uploads (latest, most liked, most viewed).
-* show a subscribe button.
-
-**[Pro Demo](http://plugin.builders/yourchannel/?demo=premium)**
 
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
