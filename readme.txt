@@ -18,8 +18,7 @@ Tell this plugin your YouTube username and it'll setup your channel in your own 
 
 **What it'll display :**
 
-* Banner image.
-* Profile picture and username.
+* Banner image, profile picture and username.
 * Total videos and views.
 * Uploads (sorted by views.)
 * Playlists (lists videos on that playlist on click).
