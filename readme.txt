@@ -16,7 +16,7 @@ You don't need more storage or bandwidth, and your visitors hate leaving the web
 	
 Tell this plugin your YouTube username and it'll setup your channel in your own property.
 
-**What it'll display :**
+**What it displays :**
 
 * Banner image, profile picture and username.
 * Total videos and views.
