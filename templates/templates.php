@@ -25,7 +25,7 @@
 			<li>need to show a subscribe button.</li>
 		</ul>
 		<a class="button button-primary" href="http://plugin.builders/yourchannel">Upgrade for only 10$</a>
-		<a class="button" href="http://plugin.builders/yourchannel">Demo</a>
+		<a class="button" href="http://plugin.builders/yourchannel/?demo=premium">Demo</a>
 	</div>
 </script>				
 
