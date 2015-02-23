@@ -1,6 +1,6 @@
-=== YourChannel: Are your vistors leaving your website for YouTube? ===
+=== YourChannel: YouTube channel on your website ===
 Contributors: plugin.builders
-Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
+Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, play, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
 Donate link: http://plugin.builders
 Requires at least: 3.0
 Tested up to: 4.1.1
@@ -8,7 +8,7 @@ Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform. TLDR: Youtube channel on your site.
+Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
  
 
 == Description ==
@@ -28,6 +28,8 @@ You can put YourChannel shortcode in posts or any custome fields.
 Shortcode looks like `[yourchannel user="you"]`.
 
 YourChannel is completely responsive (shouldn't have mentioned, IT'S 2015).
+
+Don't let visitors leave your site for YouTube.
 
 **[Demo](http://plugin.builders/yourchannel/?demo=free)**
 
