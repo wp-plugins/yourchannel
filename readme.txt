@@ -18,8 +18,7 @@ Tell this plugin your YouTube username and it'll setup your channel in your own 
 
 **What it'll display :**
 
-* Banner image.
-* Profile picture and username.
+* Banner image, profile picture and username.
 * Total videos and views.
 * Uploads (sorted by views.)
 * Playlists (lists videos on that playlist on click).
@@ -31,7 +30,6 @@ Shortcode looks like `[yourchannel user="you"]`.
 YourChannel is completely responsive (shouldn't have mentioned, IT'S 2015).
 
 **[Demo](http://plugin.builders/yourchannel/?demo=free)**
-**[Instructions](http://plugin.builders/yourchannel/)**
 
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
