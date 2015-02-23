@@ -31,7 +31,6 @@ Shortcode looks like `[yourchannel user="you"]`.
 YourChannel is completely responsive (shouldn't have mentioned, IT'S 2015).
 
 **[Demo](http://plugin.builders/yourchannel/?demo=free)**
-**[Instructions](http://plugin.builders/yourchannel/)**
 
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
