@@ -118,7 +118,8 @@ jQuery(document).ready(function($){
 		
 		'onResponse': function( re ){
 			$(this.coresel+' .yrc-load-more-button').remove();
-			if(!re.items.length) return this.nothingFound();
+			if(!re.items.length)
+				return this.nothingFound();
 			this.request.times ++;
 			if(re.nextPageToken) this.more( re.nextPageToken, re.pageInfo.totalResults - (this.request.times*25) );
 			this.list( re.items );
