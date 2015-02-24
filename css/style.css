@@ -9,7 +9,9 @@
 .pb-clr{zoom:1;}
 .pb-clr:after{clear:both;display:block;content:'';}
 
-.yrc-shell, .yrc-shell *{ box-sizing:border-box; }
+.yrc-shell, .yrc-shell *{
+	box-sizing:border-box;
+}
 .yrc-shell li {list-style-type: none;}
 .yrc-shell a {text-decoration: none;}
 
