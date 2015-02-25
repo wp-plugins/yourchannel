@@ -53,7 +53,9 @@
 	top:0px;
 }
 
-.yrc-stats span span{line-height:40px;}
+.yrc-stats span span{
+	line-height:40px;
+}
 
 .yrc-video{
 	overflow:hidden;
