@@ -24,8 +24,8 @@
 			<li>want the ability to sort uploads (latest, most liked, most viewed).</li>
 			<li>need to show a subscribe button.</li>
 		</ul>
-		<a class="button button-primary" href="http://plugin.builders/yourchannel">Upgrade for only 10$</a>
-		<a class="button" href="http://plugin.builders/yourchannel/?demo=premium">Demo</a>
+		<a class="button button-primary" href="http://plugin.builders/yourchannel/?from=wp">Upgrade for only 10$</a>
+		<a class="button" href="http://plugin.builders/yourchannel/?from=wp&demo=premium">Demo</a>
 	</div>
 </script>				
 
