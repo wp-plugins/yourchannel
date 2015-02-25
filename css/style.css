@@ -31,7 +31,9 @@
 	background-size: cover !important;
 }
 
-.yrc-brand{height:150px;}
+.yrc-brand{
+	height:150px;
+}
 
 .yrc-name{
 	top: 0px;
