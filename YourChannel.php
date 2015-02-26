@@ -57,7 +57,7 @@ class WPB_YourChannel{
 	public function deploy(){}
 	
 	public function loadDashJs($hook){
-		if($hook == 'settings_page_yourchannel'){
+		if($hook === 'settings_page_yourchannel'){
 			wp_enqueue_script('wp-color-picker');
 			wp_register_script('yrc_script', plugins_url('/js/yrc.js', __FILE__), array('jquery', 'underscore', 'wp-color-picker'), null, 1);
 			wp_enqueue_script('yrc_script');
