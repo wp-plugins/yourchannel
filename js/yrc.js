@@ -223,7 +223,6 @@ jQuery(document).ready(function($){
 			var banners = $(this.sel).find('.yrc-banner');
 				banners.css('background', 'url('+ (image || channel.brandingSettings.image.bannerImageUrl)+ ') no-repeat '+this.data.style.colors.item.background);
 				banners.eq(0).append( YRC.template.header(channel) );
-			//$(this.sel +' .yrc-stats span span').css('line-height', '40px');
 			$(this.sel +' .yrc-stats').css('top', function(){ return 75 - ($(this).height()/2); })		
 			this.events();
 			YRC.EM.trigger('yrc.deployed', [[this.sel, channel.brandingSettings.channel.title]]);
