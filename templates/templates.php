@@ -39,11 +39,12 @@
 		</div>
 	
 		<div class="pbc-row">
-			<div class="pbc-row-label wpb-inline">Username</div>
+			<div class="pbc-row-label wpb-inline">YouTube</div>
 			<div class="pbc-row-field wpb-inline">
-				<input name="user" value="<%= meta.user %>" class="wpb-raw" id="yrc-username"/>
+				<input name="user" value="<%= meta.user %>" class="wpb-raw" id="yrc-username" placeholder="username"/><span> OR </span>
+				<input name="channel" value="<%= meta.channel %>" class="wpb-raw" id="yrc-channel" placeholder="channel"/>
 				<div class="pbc-field wpb-inline">
-					<a class="button" id="yrc-get-channel-id">Get channel id</a>
+					<a class="button" id="yrc-get-channel-id">Check</a>
 				</div>
 			</div>
 		</div>
@@ -51,7 +52,7 @@
 		<div class="pbc-row">
 			<div class="pbc-row-label wpb-inline">Channel</div>
 			<div class="pbc-row-field wpb-inline">
-				<input name="channel" value="<%= meta.channel %>" class="wpb-raw" readonly />
+				<input id="yrc-channel-input" name="channel" value="<%= meta.channel %>" class="wpb-raw" readonly />
 			</div>
 		</div>
 														

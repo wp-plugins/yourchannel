@@ -1,10 +1,10 @@
 === YourChannel: YouTube channel on your website ===
 Contributors: plugin.builders
 Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, play, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
-Donate link: http://plugin.builders
+Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.0
 Tested up to: 4.1.1
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Do you create or curate YouTube videos? Now turn your website with YouTube links
 == Description ==
 You don't need more storage or bandwidth, and your visitors hate leaving the webpage they've already loaded, so why don't you show your videos and playlists in your own website.
 	
-Tell this plugin your YouTube username and it'll setup your channel in your own property.
+Tell this plugin your YouTube username or channel ID and it'll setup your channel in your own property.
 
 **What it displays :**
 

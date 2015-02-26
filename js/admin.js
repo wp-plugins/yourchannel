@@ -1,6 +1,7 @@
 var YC = YC || {'channels':{}};
 
 jQuery(document).ready(function($){
+	//delete YC.EM;
 	YC.EM = YC.EM || $({});
 
 	YC.template = function(selector){
@@ -44,14 +45,18 @@ jQuery(document).ready(function($){
 	$('body').on('click', '#yrc-get-channel-id', function(e){
 		$('.pbc-form-message').text('').removeClass('pbc-form-error');
 		if(!YC.channel.data.meta.apikey || YC.channel.data.meta.apikey.length != 39) return YC.formError('apikey');
-		var user_box = $('#yrc-username'), channel_box = $('input.wpb-raw[name=channel]');
-			if(!user_box.val()) return;
+		var user_box = $('#yrc-username'), channel_box = $('input.wpb-raw[name=channel]'), channel_input = $('#yrc-channel');
+			if(!user_box.val() && !channel_input.val()) return;
 			
 		YRC.auth.apikey = YRC.auth.apikey || YC.dummy.meta.apikey;	
-		var uu = YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&forUsername='+user_box.val());
+		var uu = user_box.val() ? YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&forUsername='+user_box.val())
+				: YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&id='+channel_input.val());
 		ajax(uu, function(re){
-			if(!re.items.length) user_box.val(user_box.val() +' doesn\'t exist.');
+			if(!re.items.length) user_box.val() ? user_box.val(user_box.val() +' doesn\'t exist.') : channel_input.val(channel_input.val() +' doesn\'t exist.');
 			else {
+				if(user_box.val()) channel_input.val(re.items[0].id);
+				else user_box.val(re.items[0].snippet.title);
+				
 				channel_box.val(re.items[0].id);
 				YC.channel.data.meta.channel = re.items[0].id;
 				YC.channel.data.meta.user = user_box.val();
@@ -63,6 +68,9 @@ jQuery(document).ready(function($){
 			console.log(er);
 		});
 	});
+	
+	$('body').on('change', '#yrc-channel', function(e){ $('#yrc-username').val(''); });
+	$('body').on('change', '#yrc-username', function(e){ $('#yrc-channel').val(''); });
 
 	function ajax(url, success, error){
 		$.ajax({

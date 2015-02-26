@@ -9,9 +9,7 @@
 .pb-clr{zoom:1;}
 .pb-clr:after{clear:both;display:block;content:'';}
 
-.yrc-shell, .yrc-shell *{
-	box-sizing:border-box;
-}
+.yrc-shell, .yrc-shell *{ box-sizing:border-box; }
 .yrc-shell li {list-style-type: none;}
 .yrc-shell a {text-decoration: none;}
 
@@ -31,9 +29,7 @@
 	background-size: cover !important;
 }
 
-.yrc-brand{
-	height:150px;
-}
+.yrc-brand{height:150px;}
 
 .yrc-name{
 	top: 0px;
@@ -53,9 +49,7 @@
 	top:0px;
 }
 
-.yrc-stats span span{
-	line-height:40px;
-}
+.yrc-stats span span{line-height:40px;}
 
 .yrc-video{
 	overflow:hidden;
