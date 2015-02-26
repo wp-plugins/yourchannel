@@ -49,8 +49,8 @@ jQuery(document).ready(function($){
 			if(!user_box.val() && !channel_input.val()) return;
 			
 		YRC.auth.apikey = YRC.auth.apikey || YC.dummy.meta.apikey;	
-		var uu = user_box.val() ? YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&forUsername='+user_box.val())
-				: YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&id='+channel_input.val());
+		var uu = user_box.val() ? YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&forUsername='+user_box.val().trim())
+				: YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&id='+channel_input.val().trim());
 		ajax(uu, function(re){
 			if(!re.items.length) user_box.val() ? user_box.val(user_box.val() +' doesn\'t exist.') : channel_input.val(channel_input.val() +' doesn\'t exist.');
 			else {
