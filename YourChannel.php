@@ -173,9 +173,7 @@ class WPB_YourChannel{
 		
 	
 	/**
-	
 		Sanitizing
-		
 	**/
 	
 	public $fields = array();
