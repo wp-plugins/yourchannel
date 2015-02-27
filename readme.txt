@@ -32,6 +32,7 @@ YourChannel is completely responsive (shouldn't have mentioned, IT'S 2015).
 Don't let visitors leave your site for YouTube.
 
 **[Demo](http://plugin.builders/yourchannel/?demo=free)**
+**[Video tutorial in Spanish](http://www.webempresa.com/blog/item/1733-publica-tu-canal-de-videos-de-youtube-en-wordpress.html)**
 
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
