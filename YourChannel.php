@@ -125,9 +125,7 @@ class WPB_YourChannel{
 	
 	
 	/**
-	
 		Input
-		
 	**/
 	
 	
