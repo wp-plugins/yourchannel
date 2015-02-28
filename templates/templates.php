@@ -28,7 +28,6 @@
 		<a class="button" href="http://plugin.builders/yourchannel/?from=wp&demo=premium">Demo</a>
 	</div>
 </script>				
-
 <script type="text/template" id="yrc-form-tmpl">
 	<form class="pbc-pane" id="pbc-form">
 		<div class="pbc-row">
