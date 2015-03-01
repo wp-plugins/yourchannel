@@ -1,7 +1,6 @@
 var YC = YC || {'channels':{}};
 
 jQuery(document).ready(function($){
-	//delete YC.EM;
 	YC.EM = YC.EM || $({});
 
 	YC.template = function(selector){
