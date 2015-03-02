@@ -66,10 +66,16 @@
 	line-height:1em;
 }
 
+input[name=apikey]{width:200%;}
+
+.pbc-field small {color:#aaa;}
+
 #pbc-styles .pbc-row .pbc-field{
 	width:45%;
 	margin:0 2% 2% 0;
 }
+
+#pbc-feedback{margin-top:1em;}
 
 .wp-color-result{
 	overflow:hidden;

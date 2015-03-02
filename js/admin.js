@@ -1,5 +1,4 @@
 var YC = YC || {'channels':{}};
-
 jQuery(document).ready(function($){
 	YC.EM = YC.EM || $({});
 
@@ -22,6 +21,7 @@ jQuery(document).ready(function($){
 	YC.channel = {};
 
 	YC.channels.adminit = function(channel, key, is_new){
+		if(!is_new && !YC.is_pro) channel.style.colors = YC.dummy.style.colors;
 		YC.channel.data = channel;
 		YC.channel.key = key;
 		YC.EM.trigger('yc.before_form');
@@ -33,6 +33,12 @@ jQuery(document).ready(function($){
 		YC.EM.trigger('yc.form');
 						
 		$('#yrc-live').removeClass('wpb-hidden');
+		new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
+	};
+	
+	YC.redraw = function(){
+		$('style.yrc-stylesheet').remove();
+		$('#yrc-live').empty();
 		new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
 	};
 
@@ -51,7 +57,8 @@ jQuery(document).ready(function($){
 		var uu = user_box.val() ? YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&forUsername='+user_box.val().trim())
 				: YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&id='+channel_input.val().trim());
 		ajax(uu, function(re){
-			if(!re.items.length) user_box.val() ? user_box.val(user_box.val() +' doesn\'t exist.') : channel_input.val(channel_input.val() +' doesn\'t exist.');
+			if(!re.items.length)
+				$('#yrc-ac-error').text( (user_box.val() ? user_box.val() : channel_input.val()) + ' doesn\'t exist.' ).addClass('pbc-form-error');
 			else {
 				if(user_box.val()) channel_input.val(re.items[0].id);
 				else user_box.val(re.items[0].snippet.title);
@@ -59,9 +66,7 @@ jQuery(document).ready(function($){
 				channel_box.val(re.items[0].id);
 				YC.channel.data.meta.channel = re.items[0].id;
 				YC.channel.data.meta.user = user_box.val();
-				$('style.yrc-stylesheet').remove();
-				$('#yrc-live').empty();
-				new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
+				YC.redraw();
 			}
 		}, function(er){
 			console.log(er);
@@ -70,6 +75,10 @@ jQuery(document).ready(function($){
 	
 	$('body').on('change', '#yrc-channel', function(e){ $('#yrc-username').val(''); });
 	$('body').on('change', '#yrc-username', function(e){ $('#yrc-channel').val(''); });
+	$('body').on('change', '#pbc-show-sections input', function(e){
+		YC.channel.data.style[$(this).attr('name')] = $(this).attr('checked') ? true : '';
+		YC.redraw();
+	});
 
 	function ajax(url, success, error){
 		$.ajax({
@@ -94,8 +103,7 @@ jQuery(document).ready(function($){
 			return YC.formError('invalid');
 		
 		$('.pbc-form-save .button-primary').text('Saving...');
-		
-		var is_new = (YC.channel.key == 'nw');
+		var is_new = (YC.channel.key === 'nw');
 		
 		YC.post({'action': 'yrc_save', 'yrc_channel': YC.channel.data}, function(re){
 			if(!re) YC.formError('invalid');
@@ -135,18 +143,19 @@ jQuery(document).ready(function($){
 		'style': {
 			'colors': {
 				'item': {
-					'background': '#35B9C5'
+					'background': '#fff'
 				},
 				'button': {
-					'background': '#D5226E',
-					'color': '#F5E6EA'
+					'background': '#333',
+					'color': '#fff'
 				},
 				'color': {
 					'text': '#fff',
 					'link': '#000'
 				}
 			},
-			'fit': false
+			'fit': false,
+			'playlists': true
 		}
 	};
 		

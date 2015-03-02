@@ -27,7 +27,12 @@
 		<a class="button button-primary" href="http://plugin.builders/yourchannel/?from=wp">Upgrade for only 10$</a>
 		<a class="button" href="http://plugin.builders/yourchannel/?from=wp&demo=premium">Demo</a>
 	</div>
+	<div id="pbc-feedback">
+		<a class="button" href="mailto:support@plugin.builders?subject=YourChannel Problem">Report Issue</a>
+		<a class="button" href="https://wordpress.org/support/view/plugin-reviews/yourchannel?#postform" target="_blank">Rate It</a>
+	</div>
 </script>				
+
 <script type="text/template" id="yrc-form-tmpl">
 	<form class="pbc-pane" id="pbc-form">
 		<div class="pbc-row">
@@ -40,11 +45,16 @@
 		<div class="pbc-row">
 			<div class="pbc-row-label wpb-inline">YouTube</div>
 			<div class="pbc-row-field wpb-inline">
-				<input name="user" value="<%= meta.user %>" class="wpb-raw" id="yrc-username" placeholder="username"/><span> OR </span>
-				<input name="channel" value="<%= meta.channel %>" class="wpb-raw" id="yrc-channel" placeholder="channel"/>
+				<div class="pbc-field wpb-inline">
+					<label class="pbc-field-label">Username:<input name="user" value="<%= meta.user %>" class="wpb-raw" id="yrc-username" placeholder="username"/></label><span> OR </span>
+				</div></br></br>
+				<div class="pbc-field wpb-inline">
+					<label class="pbc-field-label">Channel ID:<input name="channel" value="<%= meta.channel %>" class="wpb-raw" id="yrc-channel" placeholder="channel"/></label>
+				</div>
 				<div class="pbc-field wpb-inline">
 					<a class="button" id="yrc-get-channel-id">Check</a>
 				</div>
+				<div class="pbc-form-message" id="yrc-ac-error"></div>
 			</div>
 		</div>
 			
@@ -52,6 +62,15 @@
 			<div class="pbc-row-label wpb-inline">Channel</div>
 			<div class="pbc-row-field wpb-inline">
 				<input id="yrc-channel-input" name="channel" value="<%= meta.channel %>" class="wpb-raw" readonly />
+			</div>
+		</div>
+		
+		<div class="pbc-row">
+			<div class="pbc-row-label wpb-inline">Show</div>
+			<div class="pbc-row-field wpb-inline" id="pbc-show-sections">
+				<div class="pbc-field wpb-inline">
+					<label class="pbc-field-label">Playlists:<input type="checkbox" name="playlists" <%- style.playlists ? 'checked' : '' %> class="wpb-raw"/></label>
+				</div>
 			</div>
 		</div>
 														

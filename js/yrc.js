@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 				border-bottom: 3px solid '+ colors.button.background +';\
 			}\
 			'+ sel +' .yrc-menu li{\
-				color:'+ colors.item.background +'\
+				color:'+ colors.color.link +'\
 			}\
 			'+ sel +' .yrc-video, '+ sel +' .yrc-banner, .yrc-placeholder-item, '+ sel +' .yrc-player, '+ sel +' .yrc-playlist-item{\
 				background: '+ colors.item.background +';\
@@ -50,6 +50,7 @@ jQuery(document).ready(function($){
 	var watch_video = 'https://www.youtube.com/watch?v=';
 	
 	YRC.auth = {
+		//'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk',
 		'baseUrl': function ( rl ){ return 'https://www.googleapis.com/youtube/v3/' + rl +'&key=' + this.apikey; },
 		
 		'url': function uuu(type, page, res_id, search){
@@ -85,10 +86,7 @@ jQuery(document).ready(function($){
 	
 	YRC.Base = function(){};
 	
-	YRC.Base.prototype = {
-		'request': {'id':'', 'page':'', 'times':0},
-		'criteria': '',
-		
+	YRC.Base.prototype = {		
 		'more': function( nextpage , more){
 			this.request.page = nextpage;
 			$(this.coresel).append( YRC.template.loadMoreButton(more) );
@@ -107,6 +105,7 @@ jQuery(document).ready(function($){
 		},
 		
 		'fetch': function(){
+			console.log(this.request.page);
 			var url = YRC.auth.url( this.label, this.request.page, this.channelOrId(), this.criteria ), yc = this;
 			$(this.coresel).addClass('yrc-loading-overlay');
 			$.get(url, function(re){
@@ -128,6 +127,8 @@ jQuery(document).ready(function($){
 			this.label = YRC.extras[label].label;
 			this.secsel = this.ref.sel + YRC.extras[label].sel;
 			this.coresel = this.secsel;
+			this.request = {'id':'', 'page':'', 'times':0};
+			this.criteria = '';
 			this.fetchAtSetup();
 			this.moreEvent();
 			this.events();
@@ -146,7 +147,7 @@ jQuery(document).ready(function($){
 			return false;
 		}
 	};
-			
+	
 	Object.keys( YRC.extras ).forEach(function(section){
 		section = YRC.extras[section].label;
 		YRC[ section ] = function(){};
@@ -185,22 +186,32 @@ jQuery(document).ready(function($){
 		this.channel = channel.meta.channel;
 		this.section = 'uploads';
 		this.host = host;
-		//this.host.parent().css('width', '100%');
+				
+		this.active_sections = {'uploads': true};
+		if(this.data.style.playlists)this.active_sections.playlists = true;
+		if(this.data.style.search)this.active_sections.search = true;
+		
 		this.size.size(this);
 		this.init();
 		this.uploads = new YRC.Uploads().init(this, 'uploads');
-		this.playlist = new YRC.Playlist().init(this, 'playlist');
-		this.playlists = new YRC.Playlists().init(this, 'playlists');
+		
+		if(this.active_sections.playlists){
+			this.playlist = new YRC.Playlist().init(this, 'playlist');
+			this.playlists = new YRC.Playlists().init(this, 'playlists');
+		}
+		
 		YRC.EM.trigger('yrc.setup', this);
 		this.size.sections();
 	};
 	
 	YRC.Setup.prototype = {
-		'init': function( ){
-			this.host.append('<div class="yrc-shell" id="yrc-shell-'+ this.id +'">'+ YRC.template.content +'</div>')
+		'init': function(){
+			this.host.append('<div class="yrc-shell" id="yrc-shell-'+ this.id +'">'+ YRC.template.content( this.active_sections ) +'</div>')
 			this.sel = '#yrc-shell-'+ this.id;
 			yrcStyle( this.sel, this.data.style.colors );
 			this.load();
+			
+			if(!YRC.is_pro && Object.keys(this.active_sections).length < 2) $(this.sel+' .yrc-menu').addClass('pb-hidden');
 		},
 		
 		'load': function(){
@@ -215,7 +226,6 @@ jQuery(document).ready(function($){
 		},
 		
 		'deploy': function(channel){
-			//if(!channel) YRC.notFound();
 			localStorage.setItem(channel.id, JSON.stringify([channel, +new Date]));
 			var image = this.size.ww > 640 ? 'bannerTabletImageUrl' : 'bannerMobileImageUrl';
 				image = channel.brandingSettings.image[ image ];
@@ -288,7 +298,7 @@ jQuery(document).ready(function($){
 			'sections': function(){
 				var yc = this, section;
 				$(yc.ref.sel+'.yrc-shell, .yrc-section').css('width', this.ww);
-				$(yc.ref.sel+' .yrc-sections').css({'width': this.ww*3, 'margin-left': function(){
+				$(yc.ref.sel+' .yrc-sections').css({'width': this.ww*Object.keys(yc.ref.active_sections).length, 'margin-left': function(){
 					section = $(this).prev().find('.yrc-active').data('section');
 					return -($(this).prev().find('.yrc-active').index() * yc.ww);
 				}, 'height': function(){
@@ -356,25 +366,27 @@ jQuery(document).ready(function($){
 	};	
 	
 	YRC.template.search = YRC.template.search || function(){ return '';};
+	YRC.template.playlists = '<div class="yrc-section pb-inline">\
+								<div class="yrc-playlists yrc-sub-section"><ul class="yrc-core"></ul></div>\
+								<div class="yrc-playlist-videos yrc-sub-section"><ul class="yrc-core"></ul></div>\
+							</div>';
 				
-	YRC.template.content = 
-		'<div class="yrc-banner"></div>\
+	YRC.template.content = function( secs ){
+		return '<div class="yrc-banner"></div>\
 		<div class="yrc-content">\
 			<div class="yrc-menu pb-relative">\
 				<ul class="yrc-menu-items">\
-					<li class="pb-inline yrc-menu-item yrc-active" data-section="uploads">Videos</li>\
-					<li class="pb-inline yrc-menu-item" data-section="playlists">Playlists</li>\
-				</ul>\
+					<li class="pb-inline yrc-menu-item yrc-active" data-section="uploads">Videos</li>'+
+					(secs.playlists ? '<li class="pb-inline yrc-menu-item" data-section="playlists">Playlists</li>' : '') +
+				'</ul>\
 			</div>\
 			<div class="yrc-sections">\
-				<div class="yrc-section pb-inline"><div class="yrc-uploads yrc-sub-section"><ul class="yrc-core"></ul></div>\
-				</div><div class="yrc-section pb-inline">\
-						<div class="yrc-playlists yrc-sub-section"><ul class="yrc-core"></ul></div>\
-						<div class="yrc-playlist-videos yrc-sub-section"><ul class="yrc-core"></ul></div>\
-				</div>' + YRC.template.search() +
+				<div class="yrc-section pb-inline"><div class="yrc-uploads yrc-sub-section"><ul class="yrc-core"></ul></div></div>'
+				+ (secs.playlists ? YRC.template.playlists : '') + (secs.search ? YRC.template.search() : '') +
 			'</div>\
 		</div>\
-		<div class="yrc-banner"></div>';	
+		<div class="yrc-banner"></div>';
+	};	
 	
 	YRC.template.loadMoreButton = function (more){
 		return '<li class="yrc-load-more-button yrc-button"><span>'+ YRC.template.num(more) +' more</span></li>';
@@ -423,6 +435,10 @@ jQuery(document).ready(function($){
 	YRC.template.vicon = '<svg height="40" version="1.1" width="40" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden;"><path fill="#fff" stroke="#ffffff" d="M27.188,4.875V5.969H22.688V4.875H8.062V5.969H3.5619999999999994V4.875H2.5619999999999994V26.125H3.5619999999999994V25.031H8.062V26.125H22.686999999999998V25.031H27.186999999999998V26.125H28.436999999999998V4.875H27.188ZM8.062,23.719H3.5619999999999994V20.594H8.062V23.719ZM8.062,19.281H3.5619999999999994V16.156H8.062V19.281ZM8.062,14.844H3.5619999999999994V11.719H8.062V14.844ZM8.062,10.406H3.5619999999999994V7.281H8.062V10.406ZM11.247,20.59V9.754L20.628999999999998,15.172L11.247,20.59ZM27.188,23.719H22.688V20.594H27.188V23.719ZM27.188,19.281H22.688V16.156H27.188V19.281ZM27.188,14.844H22.688V11.719H27.188V14.844ZM27.188,10.406H22.688V7.281H27.188V10.406Z" stroke-width="3" stroke-linejoin="round" opacity="0" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linejoin: round; opacity: 0;"></path><path class="yrc-stat-icon" stroke="none" d="M27.188,4.875V5.969H22.688V4.875H8.062V5.969H3.5619999999999994V4.875H2.5619999999999994V26.125H3.5619999999999994V25.031H8.062V26.125H22.686999999999998V25.031H27.186999999999998V26.125H28.436999999999998V4.875H27.188ZM8.062,23.719H3.5619999999999994V20.594H8.062V23.719ZM8.062,19.281H3.5619999999999994V16.156H8.062V19.281ZM8.062,14.844H3.5619999999999994V11.719H8.062V14.844ZM8.062,10.406H3.5619999999999994V7.281H8.062V10.406ZM11.247,20.59V9.754L20.628999999999998,15.172L11.247,20.59ZM27.188,23.719H22.688V20.594H27.188V23.719ZM27.188,19.281H22.688V16.156H27.188V19.281ZM27.188,14.844H22.688V11.719H27.188V14.844ZM27.188,10.406H22.688V7.281H27.188V10.406Z" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="0" y="0" width="32" height="32" r="0" rx="0" ry="0" fill="#000000" stroke="#000" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></rect></svg>';
 		
 	$('body').on('click', '.yrc-shell a', function(e){ e.preventDefault(); });	
+	$('body').on('click', '.yrc-shell .yrc-banner, .yrc-shell .yrc-sections', function(e){
+		e.stopPropagation();
+		$('.yrc-sort-uploads').addClass('pb-hidden');
+	});	
 	
 	YRC.run = function(){
 		$('.yrc-shell-cover').each(function(){

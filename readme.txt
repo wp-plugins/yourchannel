@@ -4,7 +4,7 @@ Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos,
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.0
 Tested up to: 4.1.1
-Stable tag: 0.3
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,8 +21,10 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Banner image, profile picture and username.
 * Total videos and views.
 * Uploads (sorted by views.)
-* Playlists (lists videos on that playlist on click).
+* Playlists (lists videos on that playlist on click). (Optional)
 * Banner image in footer.
+* Default color accent is Black & White.
+
 
 You can put YourChannel shortcode in posts or any custome fields.
 Shortcode looks like `[yourchannel user="you"]`.
@@ -44,6 +46,14 @@ Save.
 Put the shortcode generated anywhere in your posts. (Also supports custom fields.)
 
 == Changelog ==
+
+= 0.3.1 =
+Playlists are optional.
+If playlists not shown, menu'll also be hidden.
+Default colors accents is now Black & White.
+
+= 0.3 =
+Now also accepts Channel ID.
 
 = 0.1 =
 Initial version.
