@@ -405,7 +405,7 @@ jQuery(document).ready(function($){
 	};
 	
 	YRC.template.player = function( v ){
-		return '<div class="yrc-player"><iframe style="width:100%;height:100%" src="http://www.youtube.com/embed/'+v+'?rel=0&amp;autoplay=1" frameborder="0" allowfullscreen=""></iframe></div>';
+		return '<div class="yrc-player"><iframe style="width:100%;height:100%" src="//www.youtube.com/embed/'+v+'?rel=0&amp;autoplay=1" frameborder="0" allowfullscreen=""></iframe></div>';
 	};
 	
 	YRC.template.video = function(vid, res){
