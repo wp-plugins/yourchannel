@@ -24,7 +24,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Playlists (lists videos on that playlist on click). (Optional)
 * Banner image in footer.
 * Default color accent is Black & White.
-
+* Smooooth animations.
 
 You can put YourChannel shortcode in posts or any custome fields.
 Shortcode looks like `[yourchannel user="you"]`.
