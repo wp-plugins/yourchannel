@@ -50,7 +50,6 @@ jQuery(document).ready(function($){
 	var watch_video = 'https://www.youtube.com/watch?v=';
 	
 	YRC.auth = {
-		//'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk',
 		'baseUrl': function ( rl ){ return 'https://www.googleapis.com/youtube/v3/' + rl +'&key=' + this.apikey; },
 		
 		'url': function uuu(type, page, res_id, search){
