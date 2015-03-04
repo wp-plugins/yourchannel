@@ -60,11 +60,19 @@
 
 .yrc-video img{
 	-webkit-transition: transform 300ms;
+	-moz-transition: transform 300ms;
+	-ms-transition: transform 300ms;
+	-o-transition: transform 300ms;
+	transition: transform 300ms;
 	width:100%;
 }
 
 .yrc-video:hover img{
 	-webkit-transform: scale(.95);
+	-moz-transform: scale(.95);
+	-ms-transform: scale(.95);
+	-o-transform: scale(.95);
+	transform: scale(.95);
 }
 
 .yrc-video a{
