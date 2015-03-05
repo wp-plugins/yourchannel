@@ -216,8 +216,6 @@
 	margin-bottom:.5em;
 }
 
-
-
 .yrc-search{
 	text-align:center;
 }
@@ -293,5 +291,5 @@
 
 .yrc-subscriber{
 	right:0;
-	z-index:100;
+	z-index:1000;
 }
