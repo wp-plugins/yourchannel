@@ -37,6 +37,10 @@ Don't let visitors leave your site for YouTube.
 
 **[Video tutorial in Spanish](http://www.webempresa.com/blog/item/1733-publica-tu-canal-de-videos-de-youtube-en-wordpress.html)**
 
+**Support :**
+
+We'll solve your issue within 6-18 hours. [Write too us](mailto:support@plugin.builders?subject=YourChannel Problem)
+
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
 Activate the plugin through the 'Plugins' menu in WordPress.
