@@ -40,6 +40,7 @@ Don't let visitors leave your site for YouTube.
 **Support :**
 
 We'll solve your issue within 6-18 hours.
+
 Write to us at **support[at]plugin.builders**
 
 == Installation ==
