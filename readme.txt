@@ -39,7 +39,8 @@ Don't let visitors leave your site for YouTube.
 
 **Support :**
 
-We'll solve your issue within 6-18 hours. [Write too us](mailto:support@plugin.builders?subject=YourChannel Problem)
+We'll solve your issue within 6-18 hours.
+Write to us at **support[at]plugin.builders**
 
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
