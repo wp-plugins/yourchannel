@@ -1,8 +1,11 @@
 <?php
-/**
+/*
+ *
  * @package YourChannel
  * @version 0.3.1
- */
+ *
+*/
+ 
 /*
 	Plugin Name: YourChannel
 	Plugin URI: http://wordpress.org/plugins/yourchannel/
