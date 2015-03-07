@@ -217,7 +217,6 @@ jQuery(document).ready(function($){
 			YRC.auth.apikey = this.data.meta.apikey;
 			var yc = this, url = YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics,brandingSettings&id='+this.channel);
 			//var channel = JSON.parse( localStorage.getItem( this.channel || '{}') );
-			
 			//if( !channel || ((+new Date - channel[1]) > 24*60*60*1000))
 				$.get(url, function(re){ yc.deploy( re.items[0] ); });
 			//else
