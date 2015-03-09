@@ -8,10 +8,10 @@ Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
- 
+Just like YouTube. Displays banner, name, profile pic, uploads, playlists and more. 
 
 == Description ==
+Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
 You don't need more storage or bandwidth, and your visitors hate leaving the webpage they've already loaded, so why don't you show your videos and playlists in your own website.
 	
 Tell this plugin your YouTube username or channel ID and it'll setup your channel in your own property.
