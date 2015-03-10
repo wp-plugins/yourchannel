@@ -26,7 +26,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Default color accent is Black & White.
 * Smooooth animations.
 
-You can put YourChannel shortcode in posts or any custome fields.
+You can put YourChannel shortcode in page/posts or any custome fields.
 Shortcode looks like `[yourchannel user="you"]`.
 
 YourChannel is completely responsive (shouldn't have mentioned, IT'S 2015).
