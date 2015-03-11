@@ -15,17 +15,19 @@
 	<div id="yrc-editor"></div>
 	<div id="yrc-live" class="wpb-hidden"></div>
 	<div id="yrc-do-upgrade">
-		<h3>You should upgrade if you:</h3>
+		<h3>You should upgrade if you want to:</h3>
 		<ul>
-			<li>need to show multiple channels.</li>		
-			<li>want to let users search YouTube - can be restricted to your channel.</li>
-			<li>want to change colors to match with your site.</li>
-			<li>want to show video stats/ratings.</li>
-			<li>want the ability to sort uploads (latest, most liked, most viewed).</li>
-			<li>need to show a subscribe button.</li>
+			<li>show multiple channels.</li>		
+			<li>let users search YouTube - can be restricted to your channel.</li>
+			<li>change colors to match with your site (even the icons).</li>
+			<li>show video stats/ratings.</li>
+			<li>sort uploads (latest, most liked, most viewed).</li>
+			<li>show a subscribe button.</li>
+			<li>help us make YourChannel a top-notch plugin.</li>
 		</ul>
 		<a class="button button-primary" href="http://plugin.builders/yourchannel/?from=wp">Upgrade for only 10$</a>
 		<a class="button" href="http://plugin.builders/yourchannel/?from=wp&demo=premium">Demo</a>
+		<a class="button" href="mailto:support@plugin.builders?subject=YourChannel Pre-Purchase Question">Pre-Purchase Question?</a>
 	</div>
 	<div id="pbc-feedback">
 		<a class="button" href="mailto:suggest@plugin.builders?subject=Extend YourChannel">Suggest Feature</a>
