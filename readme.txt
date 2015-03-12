@@ -41,7 +41,7 @@ Don't let visitors leave your site for YouTube.
 
 Write to us at **support[at]plugin.builders**
 
-**Note :** This plugin cannot list private videos/playlists.
+**Note :** This plugin cannot list unlisted videos/playlists.
 
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
