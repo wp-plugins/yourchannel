@@ -8,7 +8,7 @@ Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Just like YouTube. Displays banner, name, profile pic, uploads, playlists and more. 
+Just like YouTube. Displays banner, name, profile pic, uploads, playlists and more. You've to enter username.
 
 == Description ==
 Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
