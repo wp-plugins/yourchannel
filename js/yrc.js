@@ -427,7 +427,7 @@ jQuery(document).ready(function($){
 			<div class="yrc-player">'
 				+ YRC.template.subSectionBar(title, true) +
 				'<div class="yrc-player-frame">\
-					<iframe style="width:100%;height:100%" src="http://www.youtube.com/embed/'+v+'?rel=0&amp;autoplay=1" frameborder="0" allowfullscreen=""></iframe>\
+					<iframe style="width:100%;height:100%" src="//www.youtube.com/embed/'+v+'?rel=0&amp;autoplay=1" frameborder="0" allowfullscreen=""></iframe>\
 				</div>\
 			</div></div>';
 	};
