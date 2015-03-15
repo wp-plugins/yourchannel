@@ -359,7 +359,6 @@ jQuery(document).ready(function($){
 			
 			'sections': function(){
 				var yc = this, section;
-				console.log(yc.ref.sel);
 				$(yc.ref.sel+'.yrc-shell, '+yc.ref.sel+' .yrc-section').css('width', this.ww);
 				$(yc.ref.sel+' .yrc-sections').css({'width': this.ww*Object.keys(yc.ref.active_sections).length, 'margin-left': function(){
 					section = $(this).prev().find('.yrc-active').data('section');

@@ -254,6 +254,20 @@ jQuery(document).ready(function($){
 		YC.channels['nw'] = dum;
 		YC.channels.adminit( dum, 'nw', true );
 	};
+	
+	YC.versionCheck = function(){
+		if(!window.localStorage) return false;
+		if(localStorage.getItem('yrc_version') !== '0.4') YC.newVersionInfo();
+	};
+	
+	YC.newVersionInfo = function(){
+		$('#yrc-version-info').removeClass('wpb-hidden');
+		YC.setVersion();
+	};
+	
+	YC.setVersion = function(){
+		localStorage.setItem('yrc_version', '0.4');
+	};
 
 	YC.channels.deploy = function( channels ){
 		$('#yrc-init-loader').addClass('wpb-hidden');
@@ -265,8 +279,10 @@ jQuery(document).ready(function($){
 		if(channels.length){
 			YC.dummy.meta.apikey = channels[0].meta.apikey;
 			$('#yrc-channels, #yrc-editor').toggleClass('wpb-hidden');
+			YC.versionCheck();
 		} else {
 			YC.channels.createNew();
+			YC.setVersion();
 		}
 		
 		$('#yrc-channels').on('click', 'tr.pbc-down .pbc-edit', function(e){
