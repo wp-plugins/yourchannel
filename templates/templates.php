@@ -14,6 +14,10 @@
 	</div>
 	<div id="yrc-editor"></div>
 	<div id="yrc-live" class="wpb-hidden"></div>
+	<div id="yrc-version-info" class="wpb-hidden" style="padding:.5em;border:1px solid #000;margin:.35em 0;">
+		<h3><b>New version:</b> Please click Edit on channels and Save them for the new features to take effect.</h3>
+		<p>Not doing so might cause errors.</p>
+	</div>
 	<div id="yrc-do-upgrade">
 		<h3>Pro version features:</h3>
 		<ul>
