@@ -1,21 +1,20 @@
 <?php
-/*
- *
+/**
  * @package YourChannel
- * @version 0.3.1
- *
-*/
- 
+ * @version 0.4
+ */
 /*
 	Plugin Name: YourChannel
 	Plugin URI: http://wordpress.org/plugins/yourchannel/
 	Description: YouTube channel on your website.
 	Author: Plugin Builders
-	Version: 0.3.1
+	Version: 0.4
 	Author URI: http://plugin.builders/
 */
 
 class WPB_YourChannel{
+	private $version = 0.4;
+	
 	function __construct(){
 		add_action('admin_menu', array($this, 'createMenu'));
 		add_action('admin_init', array($this, 'deploy'));
@@ -25,8 +24,12 @@ class WPB_YourChannel{
 		
 		add_action('wp_ajax_yrc_save', array($this, 'save'));
 		add_action('wp_ajax_yrc_get', array($this, 'get'));
+		add_action('wp_ajax_yrc_delete', array($this, 'delete'));
+		add_action('wp_ajax_yrc_get_lang', array($this, 'getLang'));
+		add_action('wp_ajax_yrc_save_lang', array($this, 'saveLang'));
 		
 		add_shortcode( 'yourchannel', array($this, 'shortcoode') );
+		
 	}
 	
 	public function createMenu(){
@@ -44,7 +47,7 @@ class WPB_YourChannel{
 		<div class="wrap">
 			<div id="icon-themes" class="icon32"></div>
 			<h2 class="wpb-inline" id="yrc-icon">Your<span class="wpb-inline">Channel</span></h2>
-			<div id="yrc-wrapper">
+			<div id="yrc-wrapper" data-lang="<?php echo htmlentities( json_encode( get_option('yrc_lang_terms') ) ); ?>">
 				<img src="<?php echo site_url('wp-admin/images/spinner.gif'); ?>" id="yrc-init-loader"/>
 			</div>
 		</div>
@@ -74,18 +77,18 @@ class WPB_YourChannel{
 		}	
 	}
 	
-	public function loadForFront(){}
+	public function loadForFront(){
+	}
 	
-	public function shortcodeChannel( $user ){
+	public static function outputChannel( $user ){
 		$keys = get_option('yrc_keys');
 		$key = '';
-		if($keys){
+		if(sizeof($keys)){
 			foreach($keys as $k){
 				if( strtolower($k['user']) === strtolower($user)) {$key = $k['key']; break; }
 			}	
 		}
-		$key = $key ? $key : (sizeof($keys) < 2 ? $keys[0]['key'] : '');
-		return get_option( $key );
+		return $key ? get_option( $key ) : '';
 	}
 	
 	public function shortcoode($atts){
@@ -94,36 +97,35 @@ class WPB_YourChannel{
 				'user' => '',
 			), $atts );
 			
-		$channel = $this->shortcodeChannel( $atts['user'] );
-		if($channel){
-			return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'"></div>'.
-					$this->shortcodeScript();
-		}	
-		return '';
+		return self::output( $atts['user'] );
 	}
 	
-	function shortcodeScript(){ 
+	public static function output( $user ){ 
+		$channel = self::outputChannel( $user );
+		if(!$channel) return '';
+		
 		$url = plugins_url('/js/yrc.js', __FILE__);
 		$css_url = plugins_url('/css/style.css', __FILE__);
-		?>
+	
+		return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'" data-yrc-setup=""></div>
 		<script>
 			var YRC = YRC || {};
 			(function(){
 				if(!YRC.loaded){
 					YRC.loaded = true;
-					var script = document.createElement('script');
-						script.src = '<?php echo $url; ?>';
-						script.id = 'yrc-script';
-						document.querySelector('head').appendChild(script);
-					var style = document.createElement('link');
-						style.rel = 'stylesheet';
-						style.href = '<?php echo $css_url; ?>';
-						style.type = 'text/css';
-						document.querySelector('head').appendChild(style);
-				} else YRC.EM && YRC.EM.trigger('yrc.newchannel');
+					YRC.lang = '.json_encode( get_option('yrc_lang_terms') ).';	
+					var script = document.createElement("script");
+						script.src = "'.$url.'";
+						script.id = "yrc-script";
+						document.querySelector("head").appendChild(script);
+					var style = document.createElement("link");
+						style.rel = "stylesheet";
+						style.href = "'.$css_url.'";
+						style.type = "text/css";
+						document.querySelector("head").appendChild(style);
+				} else YRC.EM && YRC.EM.trigger("yrc.newchannel");
 			}());
-		</script>
-		<?php
+		</script>';
 	}
 	
 	
@@ -135,8 +137,7 @@ class WPB_YourChannel{
 	
 	
 	public function save(){
-		$down = $_POST['yrc_channel'];
-		$down = $this->validate( $down );
+		$down = $this->validate( $_POST['yrc_channel'] );
 		
 		if(!$down['meta']['channel'] || !$down['meta']['apikey']) {echo 0; die();}
 		
@@ -154,11 +155,14 @@ class WPB_YourChannel{
 			$re = $re ? $key : $re;
 		} else {
 			$re = get_option('yrc_keys');
-			forEach($re as $r)
-				if($r['key'] == $down['meta']['key']) {$r['user'] = $down['meta']['user']; break; }
-			update_option('yrc_keys', $re);
-			
-			$re = update_option($down['meta']['key'], $down);
+			forEach($re as $r){
+				if($r['key'] === $down['meta']['key']) {
+					$r['user'] = $down['meta']['user'];
+					update_option('yrc_keys', $re);
+					$re = update_option($down['meta']['key'], $down);
+					break;
+				}
+			}
 			$re = $key ? $key : $re;
 		}
 		wp_send_json($re);
@@ -175,7 +179,31 @@ class WPB_YourChannel{
 		wp_send_json($re);
 	}
 	
-		
+	public function delete(){
+		$key = sanitize_text_field( $_POST['yrc_key'] );
+		$keys = get_option('yrc_keys');
+		$re = false;
+		forEach($keys as $i=>$k){
+			if($k['key'] === $key) {
+				unset($keys[$i]);
+				update_option('yrc_keys', $keys);
+				$re = delete_option( $key );
+				break;
+			}
+		}	
+		echo $re;
+		die();
+	}
+	
+	public function getLang(){
+		wp_send_json( get_option('yrc_lang_terms') );
+	}
+	
+	public function saveLang(){
+		$lang = $_POST['yrc_lang'];
+		echo update_option('yrc_lang_terms', $lang);
+		die();
+	}
 	
 	/**
 	
@@ -223,13 +251,7 @@ class WPB_YourChannel{
 		} 
 	}
 	
-} 
-
-
+}
 
 new WPB_YourChannel();
-
-/*
-*/
-
 ?>

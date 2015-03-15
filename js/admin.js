@@ -16,30 +16,41 @@ jQuery(document).ready(function($){
 			error: error
 		});
 	};
-
+	
+	YC.merge = function(o, n, ox, ke){
+		for(var k in n){
+			if(typeof n[k] !== 'object'){
+				if(o === undefined) ox[ke] = n;
+				else {
+					if(o[k] === undefined) o[k] = n[k];
+				}
+			} else {
+				YC.merge(o[k], n[k], o, k);
+			}	
+		}
+	};
 
 	YC.channel = {};
 
 	YC.channels.adminit = function(channel, key, is_new){
-		if(!is_new && !YC.is_pro) channel.style.colors = YC.dummy.style.colors;
+		if(!is_new) YC.merge(channel, YC.dummy);
 		YC.channel.data = channel;
 		YC.channel.key = key;
-		YC.EM.trigger('yc.before_form');
 		
 		$('#yrc-channels').addClass('wpb-hidden');
 		$('#yrc-editor').html( YC.template('#yrc-form-tmpl')( YC.channel.data ))
 			.removeClass('wpb-hidden');
-			
+						
 		YC.EM.trigger('yc.form');
 						
 		$('#yrc-live').removeClass('wpb-hidden');
-		new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
+		YC.channel.setup = new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
 	};
 	
 	YC.redraw = function(){
 		$('style.yrc-stylesheet').remove();
 		$('#yrc-live').empty();
-		new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
+		YC.channel.setup = new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
 	};
 
 	$('body').on('change', 'input[name=apikey]', function(e){
@@ -76,8 +87,28 @@ jQuery(document).ready(function($){
 	$('body').on('change', '#yrc-channel', function(e){ $('#yrc-username').val(''); });
 	$('body').on('change', '#yrc-username', function(e){ $('#yrc-channel').val(''); });
 	$('body').on('change', '#pbc-show-sections input', function(e){
-		YC.channel.data.style[$(this).attr('name')] = $(this).attr('checked') ? true : '';
-		YC.redraw();
+		YC.channel.data.style[this.name] = this.checked ? true : '';
+		$('.yrc-menu-item[data-section=uploads]').trigger('click');
+		$('.yrc-menu-item[data-section='+this.name+']').toggleClass('wpb-force-hide');
+	});
+	
+	$('body').on('change', 'input[name=video_meta], input[name=video_size]', function(e){
+		if(this.name === 'video_size')
+			YC.channel.data.style.video_style[0] = this.value;
+		else 
+			YC.channel.data.style.video_style = [(this.value === 'adjacent' ? 'adjacent' : YC.channel.data.style.video_style[0]), this.value];
+		
+		if(YC.channel.data.style.video_style[1] === 'adjacent'){
+			YC.channel.data.style.video_style[0] = 'adjacent';
+			$('input[value=small]').attr('checked', 'checked');
+		} else {
+			if(YC.channel.data.style.video_style[0] === 'adjacent')
+				YC.channel.data.style.video_style[0] = 'small';
+		}
+		
+		$('.yrc-video').removeClass('yrc-item-open yrc-item-none yrc-item-closed yrc-item-adjacent yrc-item-small yrc-item-large')
+			.addClass('yrc-item-'+YC.channel.data.style.video_style[0]+' yrc-item-'+YC.channel.data.style.video_style[1]);	
+		YC.channel.setup.size.resize();
 	});
 
 	function ajax(url, success, error){
@@ -88,10 +119,14 @@ jQuery(document).ready(function($){
 		});
 	}
 	
-	function rawValues(){
+	function rawValues( inputs ){
 		var o = {};
-		$('input.wpb-raw').each(function(){
-			o[$(this).attr('name')] = $(this).val();
+		inputs.each(function(){
+			if(this.type === 'radio'){
+				if(this.checked) o[this.name] = this.value;
+			} else if (this.type === 'checkbox') {
+				o[this.name] = this.checked ? true : false;
+			} else o[this.name] = this.value;
 		});
 		return o;
 	}
@@ -101,6 +136,13 @@ jQuery(document).ready(function($){
 		$('.pbc-form-message').text('').removeClass('pbc-form-error');
 		if(!YC.channel.data.meta.user || !YC.channel.data.meta.channel|| !YC.channel.data.meta.apikey) 
 			return YC.formError('invalid');
+		
+		var o = rawValues($('input.wpb-raw'));
+			YC.channel.data.style.player_mode = o.player_mode;
+			YC.channel.data.style.truncate = o.truncate;
+			YC.channel.data.style.video_style.splice(0, 2);
+			
+		YC.EM.trigger('yc.save', o);	
 		
 		$('.pbc-form-save .button-primary').text('Saving...');
 		var is_new = (YC.channel.key === 'nw');
@@ -112,16 +154,20 @@ jQuery(document).ready(function($){
 			YC.channels.list(YC.channel.data, is_new);
 			
 			YC.channels[re] = YC.channel.data;
-			
-			delete YC.channels.nw;
-			delete YC.channel.data;
-			delete YC.channel.key;
-					
-			$('#yrc-editor').empty();
-			$('#yrc-channels, #yrc-editor').toggleClass('wpb-hidden');
-			$('#yrc-live').empty();
+			YC.cleanForm();
 		});
 	});
+	
+	YC.cleanForm = function(){
+		delete YC.channels.nw;
+		delete YC.channel.data;
+		delete YC.channel.key;
+		delete YC.channel.setup;
+				
+		$('#yrc-editor').empty();
+		$('#yrc-channels, #yrc-editor').toggleClass('wpb-hidden');
+		$('#yrc-live').empty();
+	};
 	
 	YC.formError = function(code){
 		var messages = {
@@ -155,8 +201,45 @@ jQuery(document).ready(function($){
 				}
 			},
 			'fit': false,
-			'playlists': true
+			'playlists': true,
+			'video_style':['large', 'open'],
+			'player_mode': 1,
+			'truncate': true
 		}
+	};
+	
+	YC.lang = {};
+	
+	YC.lang.terms = {
+		'Videos': 'Videos',
+		'Playlists': 'Playlists',
+		'Search': 'Search',
+		'Loading': 'Loading',
+		'more': 'more',
+		'Nothing_found': 'Nothing found'
+	};
+	
+	YRC.lang = _.clone( YC.lang.terms );
+	
+	YC.lang.show = function(){
+		$('#yrc-wrapper').append( YC.template('#yrc-lang-form-tmpl')({'terms': $('#yrc-wrapper').data('lang') || YRC.lang}) );
+	};
+	
+	$('body').on('submit', '#yrc-lang-form', function(e){
+		e.preventDefault(); var fo = $(this);
+		YC.lang.terms = rawValues(fo.find('input'));
+		fo.find('.button').text('Saving....');
+		YC.post({'action': 'yrc_save_lang', 'yrc_lang': YC.lang.terms}, function(re){
+			fo.find('.button').text('Save');
+		});
+	});
+	
+	$('body').on('click', '#yrc-lang-form h2', function(e){
+		$(this).next().toggleClass('wpb-zero');
+	});
+	
+	YC.channels.remove = function(d){
+		$('#yrc-channels tbody tr[data-down="'+d.meta.key+'"]').remove();
 	};
 		
 	YC.channels.list = function(d, is_new){
@@ -190,13 +273,19 @@ jQuery(document).ready(function($){
 			YC.channels.adminit( YC.channels[ $(this).data('down') ], $(this).data('down') );
 		});
 		
+		$('body').on('click', '#pbc-cancel-form', function(e){
+			YC.cleanForm();
+		});
+		
 		YC.EM.trigger('yc.deployed');
+		YC.lang.show();
 	};
 
 	YC.channels.init = function(){
 		YC.post({'action': 'yrc_get'}, function(re){		
 			YC.channels.deploy(re);
 		});
+		//YC.post({'action': 'yrc_get_lang'}, function(re){});
 		$('#yrc-wrapper').append( YC.template('#yrc-main-tmpl') )
 		YC.EM.trigger('yc.init');
 	};

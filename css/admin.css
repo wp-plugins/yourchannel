@@ -6,6 +6,8 @@
 .wpb-overflow{overflow:hidden;}
 .wpb-relative{position:relative;}
 .wpb-absolute{position:absolute;}
+.wpb-pointer{cursor:pointer;}
+.wpb-zero{height:0;}
 .wpb-clr{zoom:1;}
 .wpb-clr:after{clear:both;display:block;content:'';}
 
@@ -89,6 +91,7 @@ input[name=apikey]{width:200%;}
 	max-width:80%;
 }
 
+
 #yrc-do-upgrade{
 	padding:.5em;
 	background:#fff;
@@ -98,4 +101,23 @@ input[name=apikey]{width:200%;}
 #yrc-do-upgrade li{
 	list-style-type:square;
 	margin-left:2em;
+}
+
+#yrc-lang-form{
+	margin-top:2.5em;
+	background:#fff;
+	padding:.5em;
+}
+
+#yrc-lang-form .pbc-field{
+	width:33%;
+}
+
+#yrc-lang-form .pbc-field input{
+	margin-left:1em;
+}
+
+#pbc-lang-inputs{
+	transition:height 500ms;
+	overflow:hidden;
 }

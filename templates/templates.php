@@ -15,15 +15,17 @@
 	<div id="yrc-editor"></div>
 	<div id="yrc-live" class="wpb-hidden"></div>
 	<div id="yrc-do-upgrade">
-		<h3>You should upgrade if you want to:</h3>
+		<h3>Pro version features:</h3>
 		<ul>
-			<li>show multiple channels.</li>		
-			<li>let users search YouTube - can be restricted to your channel.</li>
-			<li>change colors to match with your site (even the icons).</li>
-			<li>show video stats/ratings.</li>
-			<li>sort uploads (latest, most liked, most viewed).</li>
-			<li>show a subscribe button.</li>
-			<li>help us make YourChannel a top-notch plugin.</li>
+			<li>Multiple channels.</li>		
+			<li>Let users search YouTube - can be restricted to your channel.</li>
+			<li>Change colors to match with your site.</li>
+			<li>Show video stats/ratings.</li>
+			<li>Limit number of videos on page.</li>
+			<li>Ability to sort uploads (latest, most liked, most viewed).</li>
+			<li>Show a subscribe button.</li>
+			<li>Show a other social media links in banner.</li>
+			<li>Widget.</li>
 		</ul>
 		<a class="button button-primary" href="http://plugin.builders/yourchannel/?from=wp">Upgrade for only 10$</a>
 		<a class="button" href="http://plugin.builders/yourchannel/?from=wp&demo=premium">Demo</a>
@@ -76,11 +78,79 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="pbc-row">
+			<div class="pbc-row-label wpb-inline">Style</div>
+			<div class="pbc-row-field wpb-inline" id="pbc-style-field">
+			
+				<div class="pbc-row">
+					<div class="pbc-row-label wpb-inline">Video size</div>
+					<div class="pbc-row-field wpb-inline">
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="video_size" value="small" class="wpb-raw" <%- style.video_style[0] === 'small' ? 'checked' : ''  %>/>Small</label>
+						</div>
+						
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="video_size" value="large" class="wpb-raw" <%- style.video_style[0] === 'large' ? 'checked' : ''  %>/>Large</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="pbc-row">
+					<div class="pbc-row-label wpb-inline">Video Meta</div>
+					<div class="pbc-row-field wpb-inline">
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="video_meta" value="none" class="wpb-raw" <%- style.video_style[1] === 'none' ? 'checked' : ''  %>/>None</label>
+						</div>
+						
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="video_meta" value="open" class="wpb-raw" <%- style.video_style[1] === 'open' ? 'checked' : ''  %>/>Bottom</label>
+						</div>
+						
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="video_meta" value="adjacent" class="wpb-raw" <%- style.video_style[1] === 'adjacent' ? 'checked' : ''  %>/>Right</label>
+						</div>
+						
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="video_meta" value="closed" class="wpb-raw" <%- style.video_style[1] === 'closed' ? 'checked' : ''  %>/>Show on hover</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="pbc-row">
+					<div class="pbc-row-label wpb-inline">Player</div>
+					<div class="pbc-row-field wpb-inline">
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="player_mode" value="1" class="wpb-raw" <%- style.player_mode ? 'checked' : ''  %>/>Inline</label>
+						</div>
+						
+						<div class="pbc-field wpb-inline">
+							<label><input type="radio" name="player_mode" value="0" class="wpb-raw" <%- style.player_mode ? '' : 'checked'  %>/>Lightbox</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="pbc-row">
+					<div class="pbc-row-label wpb-inline">Titles</div>
+					<div class="pbc-row-field wpb-inline">
+						<div class="pbc-field wpb-inline">
+							<label><input type="checkbox" name="truncate" class="wpb-raw" <%- style.truncate ? 'checked' : ''  %>/>Truncate</label>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
 														
 		<div class="pbc-form-save">
 			<div class="pbc-form-message"></div>
 			<button class="button button-primary">Save</button>
-			<button class="button">Cancel</button>
+			<% if(meta.key !== 'nw'){ %>
+				<a class="button" id="pbc-cancel-form">Cancel</a>
+				<% if(meta.search){ %>
+					<a class="button" id="pbc-delete-form">Delete</a>
+				<% } %>	
+			<% } %>	
 		</div>
 	</form>
 </script>
@@ -92,4 +162,18 @@
 		<td><span>[yourchannel user="<%= meta.user %>"]</span></td>
 		<td><a class="button pbc-edit" data-down="<%= meta.key %>">Edit</a></td>
 	</tr>
+</script>
+
+<script type="text/template" id="yrc-lang-form-tmpl">
+	<form id="yrc-lang-form">
+	<h2 class="wpb-pointer">Quick Translation</h2>
+	<div id="pbc-lang-inputs" class="wpb-zero">
+		<% for(var t in terms){ %>
+			<div class="pbc-field wpb-inline">
+				<label><%= YC.lang.terms[t] %><input type="text" name="<%= t %>" value="<%= terms[t] %>"/></label>
+			</div>
+		<% } %>
+		<div><button class="button button-primary">Save</button></div>
+	</div>
+	</form>
 </script>

@@ -12,17 +12,18 @@ jQuery(document).ready(function($){
 			'+ sel +' .yrc-menu li{\
 				color:'+ colors.color.link +'\
 			}\
-			'+ sel +' .yrc-video, '+ sel +' .yrc-banner, .yrc-placeholder-item, '+ sel +' .yrc-player, '+ sel +' .yrc-playlist-item{\
+			'+ sel +' .yrc-video, '+ sel +' .yrc-brand, .yrc-placeholder-item, '+ sel +' .yrc-player, '+ sel +' .yrc-playlist-item{\
 				background: '+ colors.item.background +';\
 			}\
-			'+ sel +' .yrc-section-action, '+ sel +' .yrc-load-more-button, .yrc-search button{\
+			.yrc-section-action, '+ sel +' .yrc-section-action, '+ sel +' .yrc-load-more-button, .yrc-search button, .yrc-player-bar, .yrc-player-bar span{\
 				background: '+ colors.button.background +';\
 				color: '+ colors.button.color +';\
 				border:none;\
 			}\
-			'+ sel +' .yrc-banner{\
+			'+ sel +' .yrc-brand{\
 				color: '+ colors.color.text +';\
 			}\
+			.yrc-loading-overlay:after{ content: "'+ YRC.lang.Loading +'..."; }\
 			'+ sel +' .yrc-stats svg .yrc-stat-icon{\
 				fill: '+ colors.color.text +'\
 			}\
@@ -50,6 +51,7 @@ jQuery(document).ready(function($){
 	var watch_video = 'https://www.youtube.com/watch?v=';
 	
 	YRC.auth = {
+		//'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk',
 		'baseUrl': function ( rl ){ return 'https://www.googleapis.com/youtube/v3/' + rl +'&key=' + this.apikey; },
 		
 		'url': function uuu(type, page, res_id, search){
@@ -94,7 +96,7 @@ jQuery(document).ready(function($){
 		'moreEvent': function(){
 			var yc = this;
 			$('body').on('click', this.coresel+' .yrc-load-more-button', function(e){
-				$(this).children('span').text('Loading...');
+				$(this).children('span').text(YRC.lang.more +'...');
 				yc.fetch();
 			});
 		},
@@ -104,7 +106,6 @@ jQuery(document).ready(function($){
 		},
 		
 		'fetch': function(){
-			console.log(this.request.page);
 			var url = YRC.auth.url( this.label, this.request.page, this.channelOrId(), this.criteria ), yc = this;
 			$(this.coresel).addClass('yrc-loading-overlay');
 			$.get(url, function(re){
@@ -117,7 +118,7 @@ jQuery(document).ready(function($){
 			$(this.coresel+' .yrc-load-more-button').remove();
 			if(!re.items.length) return this.nothingFound();
 			this.request.times ++;
-			if(re.nextPageToken) this.more( re.nextPageToken, re.pageInfo.totalResults - (this.request.times*25) );
+			if(re.nextPageToken && ((this.request.times*25) < this.max)) this.more( re.nextPageToken, Math.min(this.max, re.pageInfo.totalResults) - (this.request.times*25) );
 			this.list( re.items );
 		},
 		
@@ -125,9 +126,10 @@ jQuery(document).ready(function($){
 			this.ref = s;
 			this.label = YRC.extras[label].label;
 			this.secsel = this.ref.sel + YRC.extras[label].sel;
+			this.max = window.parseInt(this.ref.data.meta.maxv) || 10000;
 			this.coresel = this.secsel;
 			this.request = {'id':'', 'page':'', 'times':0};
-			this.criteria = '';
+			this.criteria = this.ref.data.meta.default_sorting || '';
 			this.fetchAtSetup();
 			this.moreEvent();
 			this.events();
@@ -142,7 +144,7 @@ jQuery(document).ready(function($){
 		},
 		
 		'nothingFound': function(){
-			$(this.coresel + ' ul').html('Nothing found.');
+			$(this.coresel + ' ul').html(YRC.lang.Nothing_found);
 			return false;
 		}
 	};
@@ -161,7 +163,7 @@ jQuery(document).ready(function($){
 		lists.forEach(function(list){
 			core.append( YRC.template.playlistItem( list ) );
 		});
-		this.ref.adjust(core, '.yrc-playlist-item', this.ref.section);		
+		this.ref.adjust(core, '.yrc-playlist-item', this.ref.section, true);		
 	};
 						
 	YRC.Playlists.prototype.events = function(){
@@ -171,8 +173,8 @@ jQuery(document).ready(function($){
 			pl.request.id = $(this).data('playlist');
 			pl.request.page = '';
 			pl.request.times = 0;
-			$(yc.secsel).css('margin-top', function(){return -$(this).height(); });
-			$(yc.secsel).append( YRC.template.subSectionBar( $(this).find('.yrc-playlist-meta div').text() ));
+			$(yc.secsel).css('margin-top', function(){return -$(this).height(); }).find('.yrc-section-action').remove();
+			$(yc.secsel).append( YRC.template.subSectionBar( $(this).find('.yrc-item-meta div').text() ));
 			pl.fetch();
 		});
 	};		
@@ -180,12 +182,14 @@ jQuery(document).ready(function($){
 	YRC.EM.trigger('yrc.classes_defined');
 		
 	YRC.Setup = function(id, channel, host){
+		channel.style.video_style = channel.style.video_style || ['large', 'open'];
 		this.id = id;
 		this.data = channel;
 		this.channel = channel.meta.channel;
 		this.section = 'uploads';
 		this.host = host;
 				
+		this.size = YRC.sizer();		
 		this.active_sections = {'uploads': true};
 		if(this.data.style.playlists)this.active_sections.playlists = true;
 		if(this.data.style.search)this.active_sections.search = true;
@@ -201,10 +205,14 @@ jQuery(document).ready(function($){
 		
 		YRC.EM.trigger('yrc.setup', this);
 		this.size.sections();
+		return this;
 	};
 	
 	YRC.Setup.prototype = {
 		'init': function(){
+			YRC.truncate = this.data.style.truncate ? 25 : 75;
+			this.player_mode = window.parseInt(this.data.style.player_mode);
+			this.data.style.rating_style = this.data.style.video_style[0] === 'large' ? window.parseInt(this.data.style.rating_style) : 0;
 			this.host.append('<div class="yrc-shell" id="yrc-shell-'+ this.id +'">'+ YRC.template.content( this.active_sections ) +'</div>')
 			this.sel = '#yrc-shell-'+ this.id;
 			yrcStyle( this.sel, this.data.style.colors );
@@ -217,6 +225,7 @@ jQuery(document).ready(function($){
 			YRC.auth.apikey = this.data.meta.apikey;
 			var yc = this, url = YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics,brandingSettings&id='+this.channel);
 			//var channel = JSON.parse( localStorage.getItem( this.channel || '{}') );
+			
 			//if( !channel || ((+new Date - channel[1]) > 24*60*60*1000))
 				$.get(url, function(re){ yc.deploy( re.items[0] ); });
 			//else
@@ -227,12 +236,12 @@ jQuery(document).ready(function($){
 			localStorage.setItem(channel.id, JSON.stringify([channel, +new Date]));
 			var image = this.size.ww > 640 ? 'bannerTabletImageUrl' : 'bannerMobileImageUrl';
 				image = channel.brandingSettings.image[ image ];
-			var banners = $(this.sel).find('.yrc-banner');
-				banners.css('background', 'url('+ (image || channel.brandingSettings.image.bannerImageUrl)+ ') no-repeat '+this.data.style.colors.item.background);
-				banners.eq(0).append( YRC.template.header(channel) );
+			var brands = $(this.sel).find('.yrc-brand');
+				brands.css('background', 'url('+ (image || channel.brandingSettings.image.bannerImageUrl)+ ') no-repeat '+this.data.style.colors.item.background);
+				brands.eq(0).append( YRC.template.header(channel) );
 			$(this.sel +' .yrc-stats').css('top', function(){ return 75 - ($(this).height()/2); })		
 			this.events();
-			YRC.EM.trigger('yrc.deployed', [[this.sel, channel.brandingSettings.channel.title]]);
+			YRC.EM.trigger('yrc.deployed', [[this.sel, this.data]]);
 		},
 		
 		'events': function(){
@@ -246,7 +255,7 @@ jQuery(document).ready(function($){
 				}});
 			});
 			
-			$('body').on('click', sel+' .yrc-sub-section-collapse span', function(e){ 
+			$('body').on('click', sel+' .yrc-playlist-bar .yrc-close span', function(e){ 
 				var t = $(this);
 				t.parents('.yrc-sub-section').css('margin-top', 0);
 				window.setTimeout(function(){
@@ -257,83 +266,61 @@ jQuery(document).ready(function($){
 			});
 						
 			$('body').on('click', sel+' .yrc-video a', function(e){
-				$(sel+' .yrc-player').remove();
+				$('.yrc-player-shell').remove();
+				var ttl = $(this).find('.yrc-video-title').text();
 				
-				var idx = $(this).parent().index()+1;
-					idx = idx - idx%yc.size.per_row;
-					idx = idx ? idx : yc.size.per_row;
-					
-				var v = $(this).parents('ul').children('li');
-					v = v.eq(idx-1) || v.last();
-					v.after( YRC.template.player( $(this).parent().data('video') ) );
-					
-				$('html,body').animate({'scrollTop': $(sel+' .yrc-player').offset().top-30}, 'slow');
-				$(sel+' .yrc-player').css('height', function(){
-					return (9/16) * $(this).width();
-				});
+				if(yc.player_mode){
+					var idx = $(this).parent().index()+1;
+						idx = idx - idx%yc.size.per_row;
+						idx = idx ? idx : yc.size.per_row;
+						
+					var v = $(this).parents('ul').children('li');
+						v = v.eq(idx-1) || v.last();
+						v.after( YRC.template.player( $(this).parent().data('video'), ttl ) );
+						
+					$('html,body').animate({'scrollTop': $(sel+' .yrc-player').offset().top-30}, 'slow');
+				} else {
+					$('body').append( YRC.template.player( $(this).parent().data('video') , ttl, true) );
+				}
+				$(sel+' .yrc-sections').css('height', 'auto');
+				$('.yrc-player-frame').css('height', ((9/16) * $('.yrc-player').width()) );
 			});	
+			
+			$('body').on('click', '.yrc-player-bar .yrc-close span', function(e){
+				$('.yrc-player-shell').remove();
+			});
 			
 			$(window).on('resize', function(e){
 				yc.size.resize();
 			});
 		},
 		
-		'size': {
-			'size': function(ref){
-				this.ref = ref || this.ref;
-				var th = this.ref.host.css('height', $(window).height()+5);
-				this.ww = this.ref.host.parent().width();
-				this.ref.host.css('height', 'auto');
-			},
-			
-			'resize': function(){
-				this.size();
-				this.sections();
-				this.ref.adjust($(this.ref.sel+' .yrc-core'), '.yrc-video');
-				this.ref.adjust($(this.ref.sel+' .yrc-core'), '.yrc-playlist-item');
-			},
-			
-			'sections': function(){
-				var yc = this, section;
-				$(yc.ref.sel+'.yrc-shell, .yrc-section').css('width', this.ww);
-				$(yc.ref.sel+' .yrc-sections').css({'width': this.ww*Object.keys(yc.ref.active_sections).length, 'margin-left': function(){
-					section = $(this).prev().find('.yrc-active').data('section');
-					return -($(this).prev().find('.yrc-active').index() * yc.ww);
-				}, 'height': function(){
-					return $(this).find('.yrc-'+section).parent().height();
-				}});
-				$(yc.ref.sel+' .yrc-player').css('height', function(){
-					return (9/16) * $(this).width();
-				});
-			}
-		},
-		
 		'listVideos': function(vids, cont, res){
+			var style = this.data.style.video_style;
+				style.push(this.data.style.rating_style ? 'pie' : 'bar');
 			var core = cont.children('.yrc-core');
 			vids.forEach(function( vid ){
-				core.append( YRC.template.video( vid, res ) );
+				core.append( YRC.template.video( vid, res, style ) );
 			});
 			this.adjust(core, '.yrc-video', this.section);	
-			core.find('.yrc-video.yrc-just-listed img').load(function(e){
-				$(this).addClass('yrc-full-scale');
+			core.find('.yrc-just-listed img').load(function(e){
+				$(this).parent().addClass('yrc-full-scale');
 			});	
 			
-			YRC.EM.trigger('yrc.videos_listed', [core]);
+			YRC.EM.trigger('yrc.videos_listed', [[core]]);
 		},
 		
-		'adjust': function(core, item, section){
-			var fw = 320, rem = 8, ww = this.size.ww;
-			var in_row = Math.round(ww/fw);
+		'adjust': function(core, item, section, pl){
+			var vid_f = (pl || this.data.style.video_style[0] !== 'small') ? 2 : 1,
+				fxw = 160*vid_f, fw = fxw, rem = 8, ww = this.size.ww,
+				in_row = Math.round(ww/fw);
+				
 			if(in_row > 1) ww -= (in_row - 1) * rem; 
 			
 			fw = ww/in_row;
-			fw = fw > 320 ? 320 : fw;
+			fw = fw > fxw ? fxw : fw;
 			//if(this.data.style.fit) rem += (this.size.ww - ((fw*in_row) + (in_row-1)*rem)) / (in_row-1);
-			
-			window.setTimeout(function(){
-				core.parents('.yrc-sections').css('height', function(){ return $(this).find('.yrc-'+section).parent().height(); });
-			}, 50);
-						
+									
 			var items = core.find(item); 
 			var lastrow = items.length - (items.length % in_row) - 1;
 			core.find(item+'.yrc-has-left').css('margin-left', 0).removeClass('yrc-has-left');
@@ -344,14 +331,49 @@ jQuery(document).ready(function($){
 				return 0;
 			}}).addClass('yrc-full-scale');
 			
-			this.size.per_row = in_row;
-			
+			if(!pl)this.size.per_row = in_row;
+			core.parents('.yrc-sections').css('height', 'auto');
 		}
 	};
+	
+	YRC.sizer = function(){
+		return {
+			'size': function(ref){
+				this.ref = ref || this.ref;
+				var th = this.ref.host.css('height', $(window).height()+5);
+				this.ww = this.ref.host.parent().width();
+				this.ref.host.css('height', 'auto').removeClass('yrc-mobile yrc-desktop').addClass((this.ww < 481 ? 'yrc-mobile' : 'yrc-desktop'));
+			},
+			
+			'resize': function(){
+				this.size();
+				this.sections();
+				this.ref.adjust($(this.ref.sel+' .yrc-core'), '.yrc-video');
+				this.ref.adjust($(this.ref.sel+' .yrc-core'), '.yrc-playlist-item', '', true);
+				$(this.ref.sel+' .yrc-sections').css('height', $(this.ref.sel+' .yrc-'+this.ref.section).height());
+				var ref = this.ref;
+				window.setTimeout(function(){
+					$(ref.sel+' .yrc-sections').css('height', $(ref.sel+' .yrc-'+ref.section).height());
+				}, 250);
+			},
+			
+			'sections': function(){
+				var yc = this, section;
+				console.log(yc.ref.sel);
+				$(yc.ref.sel+'.yrc-shell, '+yc.ref.sel+' .yrc-section').css('width', this.ww);
+				$(yc.ref.sel+' .yrc-sections').css({'width': this.ww*Object.keys(yc.ref.active_sections).length, 'margin-left': function(){
+					section = $(this).prev().find('.yrc-active').data('section');
+					return -($(this).prev().find('.yrc-active').index() * yc.ww);
+				}});
+				$(yc.ref.sel+' .yrc-sections').css('height', 'auto');
+				$('.yrc-player-frame').css('height', ((9/16) * $('.yrc-player').width()) );
+			}
+		};
+	};
+
 		
 	YRC.template.header = function(channel){
-		return '<div class="yrc-brand pb-relative">\
-				<div class="yrc-name pb-absolute">\
+		return '<div class="yrc-name pb-absolute">\
 					<img src="'+ channel.snippet.thumbnails.default.url +'"/>\
 					<span>'+ channel.brandingSettings.channel.title +'</span>\
 				</div>\
@@ -359,8 +381,7 @@ jQuery(document).ready(function($){
 					<span class="yrc-subs"></span>\
 					<span class="yrc-videos pb-block">'+ YRC.template.vicon +'<span class="pb-inline">'+ YRC.template.num( channel.statistics.videoCount ) +'</span></span>\
 					<span class="yrc-views pb-block">'+ YRC.template.eyecon +'<span class="pb-inline">'+ YRC.template.num( channel.statistics.viewCount ) +'</span></span>\
-				</div>\
-			</div>';
+				</div>';
 	};	
 	
 	YRC.template.search = YRC.template.search || function(){ return '';};
@@ -370,12 +391,12 @@ jQuery(document).ready(function($){
 							</div>';
 				
 	YRC.template.content = function( secs ){
-		return '<div class="yrc-banner"></div>\
+		return '<div class="yrc-banner pb-relative"><div class="yrc-brand pb-relative"></div></div>\
 		<div class="yrc-content">\
 			<div class="yrc-menu pb-relative">\
 				<ul class="yrc-menu-items">\
-					<li class="pb-inline yrc-menu-item yrc-active" data-section="uploads">Videos</li>'+
-					(secs.playlists ? '<li class="pb-inline yrc-menu-item" data-section="playlists">Playlists</li>' : '') +
+					<li class="pb-inline yrc-menu-item yrc-active" data-section="uploads">'+ YRC.lang.Videos +'</li>'+
+					(secs.playlists ? '<li class="pb-inline yrc-menu-item" data-section="playlists">'+ YRC.lang.Playlists +'</li>' : '') +
 				'</ul>\
 			</div>\
 			<div class="yrc-sections">\
@@ -383,51 +404,61 @@ jQuery(document).ready(function($){
 				+ (secs.playlists ? YRC.template.playlists : '') + (secs.search ? YRC.template.search() : '') +
 			'</div>\
 		</div>\
-		<div class="yrc-banner"></div>';
+		<div class="yrc-banner"><div class="yrc-brand pb-relative"></div></div>';
 	};	
 	
 	YRC.template.loadMoreButton = function (more){
-		return '<li class="yrc-load-more-button yrc-button"><span>'+ YRC.template.num(more) +' more</span></li>';
+		return '<li class="yrc-load-more-button yrc-button"><span>'+ YRC.template.num(more) +' '+ YRC.lang.more +'</span></li>';
 	};
 	
 	YRC.template.num = function( num ){
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	};
 	
-	YRC.template.subSectionBar = function( title ){
-		$('.yrc-section-action').remove();
-		return '<li class="yrc-section-action">\
+	YRC.template.subSectionBar = function( title , player){
+		return '<li class="yrc-section-action '+(player ? 'yrc-player-bar':'yrc-playlist-bar')+'">\
 			<span class="yrc-sub-section-name">'+ title
-			+'</span><span class="yrc-sub-section-collapse"><span>x</span></span>\
+			+'</span><span class="yrc-close"><span>x</span></span>\
 		</li>';
 	};
 	
-	YRC.template.player = function( v ){
-		return '<div class="yrc-player"><iframe style="width:100%;height:100%" src="//www.youtube.com/embed/'+v+'?rel=0&amp;autoplay=1" frameborder="0" allowfullscreen=""></iframe></div>';
+	YRC.template.player = function( v , title, lightbox){
+		return '<div class="yrc-player-shell '+(lightbox ? 'yrc-lightbox' : 'yrc-inline-player')+'">\
+			<div class="yrc-player">'
+				+ YRC.template.subSectionBar(title, true) +
+				'<div class="yrc-player-frame">\
+					<iframe style="width:100%;height:100%" src="http://www.youtube.com/embed/'+v+'?rel=0&amp;autoplay=1" frameborder="0" allowfullscreen=""></iframe>\
+				</div>\
+			</div></div>';
 	};
-	
-	YRC.template.video = function(vid, res){
-		var vid_id = res ? vid.snippet.resourceId.videoId : vid.id.videoId;
-		var title = vid.snippet.title.length < 25 ? vid.snippet.title : (vid.snippet.title.substr(0, 25) + '...');
-		return '<li data-video="'+ vid_id +'" class="yrc-video pb-inline yrc-just-listed"><a href="'+ watch_video + vid_id +'">\
-			<img src="'+ (vid.snippet.thumbnails ? vid.snippet.thumbnails.medium.url : '') +'" class="yrc-thumb"/>\
-			<div class="yrc-video-meta">\
-				<div class="pb-inline yrc-name-date"><span class="yrc-video-title pb-block">'+ title +'</span>\
-					<span class="yrc-video-date pb-block">'+ miti( new Date(vid.snippet.publishedAt) ) +'</span>\
-				</div><div class="pb-inline yrc-ratings"></div>\
-			</div>\
-		</a></li>';
+		
+	YRC.template.video = function( vid, res, style ){
+		var vid_id = res ? vid.snippet.resourceId.videoId : vid.id.videoId,
+			title = vid.snippet.title.length < YRC.truncate ? vid.snippet.title : (vid.snippet.title.substr(0, YRC.truncate) + '...'),
+			cl = style[0] +(style[0] === 'adjacent' ? '' : ' yrc-item-'+style[1]);
+		
+		return '<li class="yrc-video yrc-item-'+ cl +' yrc-item pb-inline yrc-just-listed" data-video="'+ vid_id +'">\
+			<a href="'+ watch_video + vid_id +'">\
+				<figure class="yrc-thumb pb-inline pb-relative"><img src="'+ (vid.snippet.thumbnails ? vid.snippet.thumbnails.medium.url : '') +'"/>\
+				</figure><div class="yrc-item-meta pb-inline">\
+					<div class="yrc-name-date yrc-nd-'+style[2]+'">\
+						<span class="pb-block yrc-video-title">'+ title +'</span>\
+						<span class="yrc-video-date">'+ miti( new Date(vid.snippet.publishedAt) ) +'</span>\
+						<span class="yrc-video-views"></span>\
+					</div></div>\
+			</a></li>';
 	};
 	
 	YRC.template.playlistItem = function( item ){
-		var title = item.snippet.title.length < 20 ? item.snippet.title : (item.snippet.title.substr(0, 19) + '..');
-		return '<li class="yrc-playlist-item pb-inline" data-playlist="'+ item.id +'">\
-				<img src="'+ item.snippet.thumbnails['default'].url +'" class="pb-inline"\
-				/><div class="pb-inline yrc-playlist-meta"><div class="pb-block">'+ title +'</div>\
+		var title = item.snippet.title.length < YRC.truncate ? item.snippet.title : (item.snippet.title.substr(0, YRC.truncate-1) + '..');
+		return '<li class="yrc-playlist-item yrc-item-adjacent pb-inline yrc-item" data-playlist="'+ item.id +'">\
+				<figure class="yrc-thumb pb-inline yrc-full-scale"><img src="'+ item.snippet.thumbnails['default'].url +'"\>\
+					</figure><div class="pb-inline yrc-item-meta"><div class="pb-block">'+ title +'</div>\
 					<span class="pb-block">'+ item.contentDetails.itemCount +' videos</span>\
 					<span class="pb-block">'+ miti( new Date(item.snippet.publishedAt) ) +'</span></div>\
 			</li>';
 	};
+	
 	
 	YRC.template.eyecon = '<svg height="40" version="1.1" width="40" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden;"><path fill="#fff" stroke="#ffffff" d="M16,8.286C8.454,8.286,2.5,16,2.5,16S8.454,23.715,16,23.715C21.771,23.715,29.5,16,29.5,16S21.771,8.286,16,8.286ZM16,20.807C13.350999999999999,20.807,11.193,18.65,11.193,15.999999999999998S13.350999999999999,11.192999999999998,16,11.192999999999998S20.807000000000002,13.350999999999997,20.807000000000002,15.999999999999998S18.649,20.807,16,20.807ZM16,13.194C14.451,13.194,13.193999999999999,14.450000000000001,13.193999999999999,16C13.193999999999999,17.55,14.45,18.806,16,18.806C17.55,18.806,18.806,17.55,18.806,16C18.806,14.451,17.55,13.194,16,13.194Z" stroke-width="3" stroke-linejoin="round" opacity="0" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linejoin: round; opacity: 0;"></path><path class="yrc-stat-icon" stroke="none" d="M16,8.286C8.454,8.286,2.5,16,2.5,16S8.454,23.715,16,23.715C21.771,23.715,29.5,16,29.5,16S21.771,8.286,16,8.286ZM16,20.807C13.350999999999999,20.807,11.193,18.65,11.193,15.999999999999998S13.350999999999999,11.192999999999998,16,11.192999999999998S20.807000000000002,13.350999999999997,20.807000000000002,15.999999999999998S18.649,20.807,16,20.807ZM16,13.194C14.451,13.194,13.193999999999999,14.450000000000001,13.193999999999999,16C13.193999999999999,17.55,14.45,18.806,16,18.806C17.55,18.806,18.806,17.55,18.806,16C18.806,14.451,17.55,13.194,16,13.194Z" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="0" y="0" width="32" height="32" r="0" rx="0" ry="0" fill="#000000" stroke="#000" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></rect></svg>';			
 	YRC.template.vicon = '<svg height="40" version="1.1" width="40" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden;"><path fill="#fff" stroke="#ffffff" d="M27.188,4.875V5.969H22.688V4.875H8.062V5.969H3.5619999999999994V4.875H2.5619999999999994V26.125H3.5619999999999994V25.031H8.062V26.125H22.686999999999998V25.031H27.186999999999998V26.125H28.436999999999998V4.875H27.188ZM8.062,23.719H3.5619999999999994V20.594H8.062V23.719ZM8.062,19.281H3.5619999999999994V16.156H8.062V19.281ZM8.062,14.844H3.5619999999999994V11.719H8.062V14.844ZM8.062,10.406H3.5619999999999994V7.281H8.062V10.406ZM11.247,20.59V9.754L20.628999999999998,15.172L11.247,20.59ZM27.188,23.719H22.688V20.594H27.188V23.719ZM27.188,19.281H22.688V16.156H27.188V19.281ZM27.188,14.844H22.688V11.719H27.188V14.844ZM27.188,10.406H22.688V7.281H27.188V10.406Z" stroke-width="3" stroke-linejoin="round" opacity="0" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linejoin: round; opacity: 0;"></path><path class="yrc-stat-icon" stroke="none" d="M27.188,4.875V5.969H22.688V4.875H8.062V5.969H3.5619999999999994V4.875H2.5619999999999994V26.125H3.5619999999999994V25.031H8.062V26.125H22.686999999999998V25.031H27.186999999999998V26.125H28.436999999999998V4.875H27.188ZM8.062,23.719H3.5619999999999994V20.594H8.062V23.719ZM8.062,19.281H3.5619999999999994V16.156H8.062V19.281ZM8.062,14.844H3.5619999999999994V11.719H8.062V14.844ZM8.062,10.406H3.5619999999999994V7.281H8.062V10.406ZM11.247,20.59V9.754L20.628999999999998,15.172L11.247,20.59ZM27.188,23.719H22.688V20.594H27.188V23.719ZM27.188,19.281H22.688V16.156H27.188V19.281ZM27.188,14.844H22.688V11.719H27.188V14.844ZM27.188,10.406H22.688V7.281H27.188V10.406Z" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="0" y="0" width="32" height="32" r="0" rx="0" ry="0" fill="#000000" stroke="#000" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></rect></svg>';
@@ -438,13 +469,22 @@ jQuery(document).ready(function($){
 		$('.yrc-sort-uploads').addClass('pb-hidden');
 	});	
 	
-	YRC.run = function(){
-		$('.yrc-shell-cover').each(function(){
-			if(!$(this).data('yrc-setup')){
-				$(this).attr('data-yrc-setup', 1);
-				new YRC.Setup(YRC.counter++, $(this).data('yrc-channel'), $(this));
-			}
-		});
+	YRC.run = function(shell){
+		if(!shell.attr('data-yrc-setup') && shell.length){
+			shell.attr('data-yrc-setup', 1);
+			new YRC.Setup(YRC.counter++, shell.data('yrc-channel'), shell);
+		}
 	};
-	YRC.run();
+	
+	YRC.lang = YRC.lang || {
+		'Videos': 'Videos',
+		'Playlists': 'Playlists',
+		'Search': 'Search',
+		'Loading': 'Loading',
+		'more': 'more',
+		'Nothing_found': 'Nothing found'
+	};
+	
+	YRC.run( $('.yrc-shell-cover').eq(0) );
+	YRC.EM.trigger('yrc.run');
 });
