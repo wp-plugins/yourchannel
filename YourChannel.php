@@ -1,14 +1,14 @@
 <?php
 /**
  * @package YourChannel
- * @version 0.4
+ * @version 0.4.1
  */
 /*
 	Plugin Name: YourChannel
 	Plugin URI: http://wordpress.org/plugins/yourchannel/
 	Description: YouTube channel on your website.
 	Author: Plugin Builders
-	Version: 0.4
+	Version: 0.4.1
 	Author URI: http://plugin.builders/
 */
 
@@ -16,7 +16,6 @@ class WPB_YourChannel{
 	private $version = 0.4;
 	
 	function __construct(){
-		register_activation_hook(__FILE__, array($this, 'onInstall'));
 		add_action('admin_menu', array($this, 'createMenu'));
 		add_action('admin_init', array($this, 'deploy'));
 		
@@ -81,10 +80,6 @@ class WPB_YourChannel{
 	public function loadForFront(){
 	}
 	
-	public function onInstall(){
-		delete_option('yrc_keys');
-	}
-	
 	public static function outputChannel( $user ){
 		$keys = get_option('yrc_keys');
 		$key = '';
@@ -107,7 +102,7 @@ class WPB_YourChannel{
 	
 	public static function output( $user ){ 
 		$channel = self::outputChannel( $user );
-		if(!$channel) return '';
+		if(!$channel) return '<span id="yrc-wrong-shortcode"></span>';
 		
 		$url = plugins_url('/js/yrc.js', __FILE__);
 		$css_url = plugins_url('/css/style.css', __FILE__);
@@ -160,7 +155,7 @@ class WPB_YourChannel{
 			$re = $re ? $key : $re;
 		} else {
 			$re = get_option('yrc_keys');
-			forEach($re as $r){
+			forEach($re as &$r){
 				if($r['key'] === $down['meta']['key']) {
 					$r['user'] = $down['meta']['user'];
 					update_option('yrc_keys', $re);

@@ -4,7 +4,7 @@ Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos,
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.0
 Tested up to: 4.1.1
-Stable tag: 0.4
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 
 * Easy visual builder with live preview which generates shortcode that looks like `[yourchannel user="user"]`.
 * Play video in Lightbox or Inline. **New**
-* 7 video thumb style combinations. **New**
+* 7 video style combinations. **New**
 * Beautifully responsive.
 * SVG icons, which means you can change colors.
 * Feature suggestions are implemented quickly.

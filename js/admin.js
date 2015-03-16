@@ -140,7 +140,7 @@ jQuery(document).ready(function($){
 		var o = rawValues($('input.wpb-raw'));
 			YC.channel.data.style.player_mode = o.player_mode;
 			YC.channel.data.style.truncate = o.truncate;
-			YC.channel.data.style.video_style.splice(0, 2);
+			YC.channel.data.style.video_style = YC.channel.data.style.video_style.splice(0, 2);
 			
 		YC.EM.trigger('yc.save', o);	
 		
@@ -257,7 +257,7 @@ jQuery(document).ready(function($){
 	
 	YC.versionCheck = function(){
 		if(!window.localStorage) return false;
-		if(localStorage.getItem('yrc_version') !== '0.4') YC.newVersionInfo();
+		if(localStorage.getItem('yrc_version') !== '0.4.1') YC.newVersionInfo();
 	};
 	
 	YC.newVersionInfo = function(){
@@ -266,7 +266,7 @@ jQuery(document).ready(function($){
 	};
 	
 	YC.setVersion = function(){
-		localStorage.setItem('yrc_version', '0.4');
+		localStorage.setItem('yrc_version', '0.4.1');
 	};
 
 	YC.channels.deploy = function( channels ){
