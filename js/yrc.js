@@ -210,7 +210,7 @@ jQuery(document).ready(function($){
 	
 	YRC.Setup.prototype = {
 		'init': function(){
-			YRC.truncate = this.data.style.truncate ? 25 : 75;
+			YRC.truncate = parseInt(this.data.style.truncate) ? 25 : 75;
 			this.player_mode = window.parseInt(this.data.style.player_mode);
 			this.data.style.rating_style = this.data.style.video_style[0] === 'large' ? window.parseInt(this.data.style.rating_style) : 0;
 			this.host.append('<div class="yrc-shell" id="yrc-shell-'+ this.id +'">'+ YRC.template.content( this.active_sections ) +'</div>')

@@ -125,11 +125,11 @@
 					<div class="pbc-row-label wpb-inline">Player</div>
 					<div class="pbc-row-field wpb-inline">
 						<div class="pbc-field wpb-inline">
-							<label><input type="radio" name="player_mode" value="1" class="wpb-raw" <%- style.player_mode ? 'checked' : ''  %>/>Inline</label>
+							<label><input type="radio" name="player_mode" value="1" class="wpb-raw" <%- parseInt(style.player_mode) ? 'checked' : ''  %>/>Inline</label>
 						</div>
 						
 						<div class="pbc-field wpb-inline">
-							<label><input type="radio" name="player_mode" value="0" class="wpb-raw" <%- style.player_mode ? '' : 'checked'  %>/>Lightbox</label>
+							<label><input type="radio" name="player_mode" value="0" class="wpb-raw" <%- parseInt(style.player_mode) ? '' : 'checked'  %>/>Lightbox</label>
 						</div>
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 					<div class="pbc-row-label wpb-inline">Titles</div>
 					<div class="pbc-row-field wpb-inline">
 						<div class="pbc-field wpb-inline">
-							<label><input type="checkbox" name="truncate" class="wpb-raw" <%- style.truncate ? 'checked' : ''  %>/>Truncate</label>
+							<label><input type="checkbox" name="truncate" class="wpb-raw" <%- parseInt(style.truncate) ? 'checked' : ''  %>/>Truncate</label>
 						</div>
 					</div>
 				</div>
