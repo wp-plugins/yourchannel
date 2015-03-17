@@ -123,7 +123,7 @@ class WPB_YourChannel{
 						style.href = "'.$css_url.'";
 						style.type = "text/css";
 						document.querySelector("head").appendChild(style);
-				} else YRC.EM && YRC.EM.trigger("yrc.newchannel");
+				} else { if(YRC.EM)YRC.EM.trigger("yrc.newchannel");}
 			}());
 		</script>';
 	}
