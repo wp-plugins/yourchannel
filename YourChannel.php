@@ -16,6 +16,7 @@ class WPB_YourChannel{
 	private $version = 0.4;
 	
 	function __construct(){
+		register_activation_hook(__FILE__, array($this, 'onInstall'));
 		add_action('admin_menu', array($this, 'createMenu'));
 		add_action('admin_init', array($this, 'deploy'));
 		
@@ -61,6 +62,10 @@ class WPB_YourChannel{
 	}
 	
 	public function deploy(){}
+	
+	public function onInstall(){
+		delete_option('yrc_keys');
+	}
 	
 	public function loadDashJs($hook){
 		if($hook == 'settings_page_yourchannel'){
