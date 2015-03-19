@@ -55,9 +55,7 @@ Write to us at **support[at]plugin.builders**
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
 Activate the plugin through the 'Plugins' menu in WordPress.
-
 Go to Settings > YourChannel.
-
 Fill in the inputs with your API key, (we've left our API key for you to get started, but you should get your own) YouTube username and some other preferences.
 Save.
 Put the shortcode generated anywhere in your posts. (Also supports custom fields.)

@@ -54,23 +54,23 @@ jQuery(document).ready(function($){
 		//'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk',
 		'baseUrl': function ( rl ){ return 'https://www.googleapis.com/youtube/v3/' + rl +'&key=' + this.apikey; },
 		
-		'url': function uuu(type, page, res_id, search){
-			var url = ''; 
+		'url': function uuu(type, page, res_id, search, limit){
+			var url = '';
 			switch(type){
 				case 'Playlist':
-					url = this.baseUrl('playlistItems?part=snippet%2C+contentDetails&maxResults=25&pageToken='+page+'&playlistId='+res_id);
+					url = this.baseUrl('playlistItems?part=snippet%2C+contentDetails&maxResults='+limit+'&pageToken='+page+'&playlistId='+res_id);
 				break;
 				case 'Uploads':
-					url = this.baseUrl('search?order='+ (search || 'viewCount') +'&part=snippet&channelId='+ res_id +'&type=video&pageToken='+page+'&maxResults=25');
+					url = this.baseUrl('search?order='+ (search || 'viewCount') +'&part=snippet&channelId='+ res_id +'&type=video&pageToken='+page+'&maxResults='+limit);
 				break;
 				case 'channel':
 					url = this.baseUrl('channels?part=contentDetails,snippet,statistics,brandingSettings&id='+ res_id);
 				break;
 				case 'Playlists':
-					url = this.baseUrl('playlists?part=snippet,status,contentDetails&channelId='+ res_id +'&pageToken='+page+'&maxResults=25');
+					url = this.baseUrl('playlists?part=snippet,status,contentDetails&channelId='+ res_id +'&pageToken='+page+'&maxResults='+limit);
 				break;
 				case 'Search':
-					url = this.baseUrl( YRC.searchUrl( page, res_id, search ) );
+					url = this.baseUrl( YRC.searchUrl( page, res_id, search, limit ) );
 				break;
 			}
 			return url;
@@ -106,7 +106,7 @@ jQuery(document).ready(function($){
 		},
 		
 		'fetch': function(){
-			var url = YRC.auth.url( this.label, this.request.page, this.channelOrId(), this.criteria ), yc = this;
+			var url = YRC.auth.url( this.label, this.request.page, this.channelOrId(), this.criteria, this.per_page ), yc = this;
 			$(this.coresel).addClass('yrc-loading-overlay');
 			$.get(url, function(re){
 				$(yc.coresel).removeClass('yrc-loading-overlay');
@@ -118,7 +118,7 @@ jQuery(document).ready(function($){
 			$(this.coresel+' .yrc-load-more-button').remove();
 			if(!re.items.length) return this.nothingFound();
 			this.request.times ++;
-			if(re.nextPageToken && ((this.request.times*25) < this.max)) this.more( re.nextPageToken, Math.min(this.max, re.pageInfo.totalResults) - (this.request.times*25) );
+			if(re.nextPageToken && ((this.request.times*this.per_page) < this.max)) this.more( re.nextPageToken, Math.min(this.max, re.pageInfo.totalResults) - (this.request.times*this.per_page) );
 			this.list( re.items );
 		},
 		
@@ -130,6 +130,7 @@ jQuery(document).ready(function($){
 			this.coresel = this.secsel;
 			this.request = {'id':'', 'page':'', 'times':0};
 			this.criteria = this.ref.data.meta.default_sorting || '';
+			this.per_page = this.ref.data.meta.per_page || 25;
 			this.fetchAtSetup();
 			this.moreEvent();
 			this.events();
@@ -163,7 +164,8 @@ jQuery(document).ready(function($){
 		lists.forEach(function(list){
 			core.append( YRC.template.playlistItem( list ) );
 		});
-		this.ref.adjust(core, '.yrc-playlist-item', this.ref.section, true);		
+		this.ref.adjust(core, '.yrc-playlist-item', this.ref.section, true);
+		//$('.yrc-menu-item[data-section=playlists]').trigger('click');
 	};
 						
 	YRC.Playlists.prototype.events = function(){
@@ -462,7 +464,7 @@ jQuery(document).ready(function($){
 	YRC.template.eyecon = '<svg height="40" version="1.1" width="40" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden;"><path fill="#fff" stroke="#ffffff" d="M16,8.286C8.454,8.286,2.5,16,2.5,16S8.454,23.715,16,23.715C21.771,23.715,29.5,16,29.5,16S21.771,8.286,16,8.286ZM16,20.807C13.350999999999999,20.807,11.193,18.65,11.193,15.999999999999998S13.350999999999999,11.192999999999998,16,11.192999999999998S20.807000000000002,13.350999999999997,20.807000000000002,15.999999999999998S18.649,20.807,16,20.807ZM16,13.194C14.451,13.194,13.193999999999999,14.450000000000001,13.193999999999999,16C13.193999999999999,17.55,14.45,18.806,16,18.806C17.55,18.806,18.806,17.55,18.806,16C18.806,14.451,17.55,13.194,16,13.194Z" stroke-width="3" stroke-linejoin="round" opacity="0" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linejoin: round; opacity: 0;"></path><path class="yrc-stat-icon" stroke="none" d="M16,8.286C8.454,8.286,2.5,16,2.5,16S8.454,23.715,16,23.715C21.771,23.715,29.5,16,29.5,16S21.771,8.286,16,8.286ZM16,20.807C13.350999999999999,20.807,11.193,18.65,11.193,15.999999999999998S13.350999999999999,11.192999999999998,16,11.192999999999998S20.807000000000002,13.350999999999997,20.807000000000002,15.999999999999998S18.649,20.807,16,20.807ZM16,13.194C14.451,13.194,13.193999999999999,14.450000000000001,13.193999999999999,16C13.193999999999999,17.55,14.45,18.806,16,18.806C17.55,18.806,18.806,17.55,18.806,16C18.806,14.451,17.55,13.194,16,13.194Z" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="0" y="0" width="32" height="32" r="0" rx="0" ry="0" fill="#000000" stroke="#000" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></rect></svg>';			
 	YRC.template.vicon = '<svg height="40" version="1.1" width="40" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden;"><path fill="#fff" stroke="#ffffff" d="M27.188,4.875V5.969H22.688V4.875H8.062V5.969H3.5619999999999994V4.875H2.5619999999999994V26.125H3.5619999999999994V25.031H8.062V26.125H22.686999999999998V25.031H27.186999999999998V26.125H28.436999999999998V4.875H27.188ZM8.062,23.719H3.5619999999999994V20.594H8.062V23.719ZM8.062,19.281H3.5619999999999994V16.156H8.062V19.281ZM8.062,14.844H3.5619999999999994V11.719H8.062V14.844ZM8.062,10.406H3.5619999999999994V7.281H8.062V10.406ZM11.247,20.59V9.754L20.628999999999998,15.172L11.247,20.59ZM27.188,23.719H22.688V20.594H27.188V23.719ZM27.188,19.281H22.688V16.156H27.188V19.281ZM27.188,14.844H22.688V11.719H27.188V14.844ZM27.188,10.406H22.688V7.281H27.188V10.406Z" stroke-width="3" stroke-linejoin="round" opacity="0" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-linejoin: round; opacity: 0;"></path><path class="yrc-stat-icon" stroke="none" d="M27.188,4.875V5.969H22.688V4.875H8.062V5.969H3.5619999999999994V4.875H2.5619999999999994V26.125H3.5619999999999994V25.031H8.062V26.125H22.686999999999998V25.031H27.186999999999998V26.125H28.436999999999998V4.875H27.188ZM8.062,23.719H3.5619999999999994V20.594H8.062V23.719ZM8.062,19.281H3.5619999999999994V16.156H8.062V19.281ZM8.062,14.844H3.5619999999999994V11.719H8.062V14.844ZM8.062,10.406H3.5619999999999994V7.281H8.062V10.406ZM11.247,20.59V9.754L20.628999999999998,15.172L11.247,20.59ZM27.188,23.719H22.688V20.594H27.188V23.719ZM27.188,19.281H22.688V16.156H27.188V19.281ZM27.188,14.844H22.688V11.719H27.188V14.844ZM27.188,10.406H22.688V7.281H27.188V10.406Z" transform="matrix(1,0,0,1,4,4)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="0" y="0" width="32" height="32" r="0" rx="0" ry="0" fill="#000000" stroke="#000" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></rect></svg>';
 		
-	$('body').on('click', '.yrc-shell a', function(e){ e.preventDefault(); });	
+	$('body').on('click', '.yrc-content a', function(e){ e.preventDefault(); });	
 	$('body').on('click', '.yrc-shell .yrc-banner, .yrc-shell .yrc-sections', function(e){
 		e.stopPropagation();
 		$('.yrc-sort-uploads').addClass('pb-hidden');
