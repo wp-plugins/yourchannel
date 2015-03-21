@@ -52,23 +52,6 @@ Write to us at **support[at]plugin.builders**
 
 **Note :** This plugin cannot list unlisted videos/playlists.
 
-
-**Upgrade (10$) to enhance content & experience.**
-
-**Pro features:**
-
-* multiple channels.	
-* let users search YouTube - can be restricted to your channel.
-* change colors to match with your site.
-* show video stats/ratings (2 styles).
-* sort uploads (latest, most liked, most viewed).
-* limit number of videos to be loaded.
-* show a subscribe button.
-* add social media links to banner.
-* widget.
-
-**[Pro Demo (old version)](http://plugin.builders/yourchannel/?demo=premium)**
-
 == Installation ==
 Upload YourChannel folder to your wp-content/plugins/ directory.
 Activate the plugin through the 'Plugins' menu in WordPress.
