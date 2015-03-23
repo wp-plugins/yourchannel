@@ -13,7 +13,7 @@
 */
 
 class WPB_YourChannel{
-	private $version = 0.4;
+	private $version = '0.4.1';
 	
 	function __construct(){
 		register_activation_hook(__FILE__, array($this, 'onInstall'));
