@@ -52,8 +52,7 @@ class WPB_YourChannel{
 				<img src="<?php echo site_url('wp-admin/images/spinner.gif'); ?>" id="yrc-init-loader"/>
 			</div>
 		</div>
-		<?php
-		$this->templates();
+		<?php $this->templates();
 	}
 	
 	public function templates(){
