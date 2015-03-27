@@ -52,7 +52,8 @@ class WPB_YourChannel{
 				<img src="<?php echo site_url('wp-admin/images/spinner.gif'); ?>" id="yrc-init-loader"/>
 			</div>
 		</div>
-		<?php $this->templates();
+		<?php
+		$this->templates();
 	}
 	
 	public function templates(){
@@ -81,14 +82,15 @@ class WPB_YourChannel{
 		}	
 	}
 	
-	public function loadForFront(){}
+	public function loadForFront(){
+	}
 	
 	public static function outputChannel( $user ){
 		$keys = get_option('yrc_keys');
 		$key = '';
 		if(sizeof($keys)){
 			foreach($keys as $k){
-				if( strtolower($k['user']) === strtolower($user)) {$key = $k['key']; break; }
+				if( stripslashes(strtolower($k['user'])) === strtolower($user)) {$key = $k['key']; break; }
 			}	
 		}
 		return $key ? get_option( $key ) : '';
