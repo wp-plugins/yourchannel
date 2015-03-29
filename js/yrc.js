@@ -277,7 +277,7 @@ jQuery(document).ready(function($){
 						idx = idx ? idx : yc.size.per_row;
 						
 					var v = $(this).parents('ul').children('li');
-						v = v.eq(idx-1) || v.last();
+						v = v.eq(idx-1).length ? v.eq(idx-1) : v.last();
 						v.after( YRC.template.player( $(this).parent().data('video'), ttl ) );
 						
 					$('html,body').animate({'scrollTop': $(sel+' .yrc-player').offset().top-30}, 'slow');

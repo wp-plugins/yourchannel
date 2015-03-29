@@ -148,6 +148,7 @@ class WPB_YourChannel{
 		
 		$re = null;
 		$key = $down['meta']['key'];
+		$down['meta']['user'] = stripslashes($down['meta']['user']);
 		
 		if($key === 'nw'){
 			$re = get_option('yrc_keys');
