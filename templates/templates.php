@@ -24,16 +24,16 @@
 			<li>Multiple channels.</li>		
 			<li>Let users search YouTube - can be restricted to your channel.</li>
 			<li>Change colors to match with your site.</li>
-			<li>Show video stats/ratings.</li>
+			<li>Show video stats/ratings (2 styles).</li>
 			<li>Limit number of videos on page.</li>
 			<li>Ability to sort uploads (latest, most liked, most viewed).</li>
 			<li>Show a subscribe button.</li>
-			<li>Show a other social media links in banner.</li>
+			<li>Show other social media links in banner.</li>
 			<li>Widget.</li>
 		</ul>
-		<a class="button button-primary" href="http://plugin.builders/yourchannel/?from=wp">Upgrade for only 10$</a>
-		<a class="button" href="http://plugin.builders/yourchannel/?from=wp&demo=premium">Demo</a>
-		<a class="button" href="mailto:support@plugin.builders?subject=YourChannel Pre-Purchase Question">Pre-Purchase Question?</a>
+		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.4.1">Upgrade for only 10$</a>
+		<a class="button" href="http://plugin.builders/yourchannel-demo/?from=wp&demo=premium&v=0.4.1">Demo</a>
+		<a class="button" href="mailto:enquiry@plugin.builders?subject=YourChannel Enquiry">Pre-Purchase Question?</a>
 	</div>
 	<div id="pbc-feedback">
 		<a class="button" href="mailto:suggest@plugin.builders?subject=Extend YourChannel">Suggest Feature</a>
