@@ -17,6 +17,7 @@ class WPB_YourChannel{
 	
 	function __construct(){
 		register_activation_hook(__FILE__, array($this, 'onInstall'));
+		
 		add_action('admin_menu', array($this, 'createMenu'));
 		add_action('admin_init', array($this, 'deploy'));
 		
