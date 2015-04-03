@@ -1,6 +1,6 @@
 === YourChannel: YouTube channel on your website ===
 Contributors: plugin.builders
-Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, play, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
+Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, play, live, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.0
 Tested up to: 4.1.1
