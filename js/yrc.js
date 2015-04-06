@@ -102,11 +102,11 @@ jQuery(document).ready(function($){
 		},
 		
 		'channelOrId': function(){
-			return (this.label === 'Playlist' ? this.request.id : (this.label === 'Search' ? (this.restrict_to_channel ? this.ref.channel : '') : this.ref.channel));
+			return ((this.label === 'Playlist' || this.temp_label === 'Playlist') ? this.request.id : (this.label === 'Search' ? (this.restrict_to_channel ? this.ref.channel : '') : this.ref.channel));
 		},
 		
 		'fetch': function(){
-			var url = YRC.auth.url( this.label, this.request.page, this.channelOrId(), this.criteria, this.per_page ), yc = this;
+			var url = YRC.auth.url( this.temp_label || this.label, this.request.page, this.channelOrId(), this.criteria, this.per_page ), yc = this;
 			$(this.coresel).addClass('yrc-loading-overlay');
 			$.get(url, function(re){
 				$(yc.coresel).removeClass('yrc-loading-overlay');
@@ -141,7 +141,7 @@ jQuery(document).ready(function($){
 		'fetchAtSetup': function(){ this.fetch(); },
 		
 		'list': function( items ){
-			this.ref.listVideos( items, $(this.coresel), (this.label === 'Playlist'));
+			this.ref.listVideos( items, $(this.coresel), (this.label === 'Playlist' || this.temp_label === 'Playlist'));
 		},
 		
 		'nothingFound': function(){
@@ -165,7 +165,6 @@ jQuery(document).ready(function($){
 			core.append( YRC.template.playlistItem( list ) );
 		});
 		this.ref.adjust(core, '.yrc-playlist-item', this.ref.section, true);
-		//$('.yrc-menu-item[data-section=playlists]').trigger('click');
 	};
 						
 	YRC.Playlists.prototype.events = function(){
@@ -188,17 +187,19 @@ jQuery(document).ready(function($){
 		this.id = id;
 		this.data = channel;
 		this.channel = channel.meta.channel;
-		this.section = 'uploads';
 		this.host = host;
 				
 		this.size = YRC.sizer();		
-		this.active_sections = {'uploads': true};
+		this.active_sections = {};
+		
 		if(this.data.style.playlists)this.active_sections.playlists = true;
 		if(this.data.style.search)this.active_sections.search = true;
+		if(this.data.style.uploads)this.active_sections.uploads = true;
 		
 		this.size.size(this);
 		this.init();
-		this.uploads = new YRC.Uploads().init(this, 'uploads');
+		if(this.active_sections.uploads)
+			this.uploads = new YRC.Uploads().init(this, 'uploads');
 		
 		if(this.active_sections.playlists){
 			this.playlist = new YRC.Playlist().init(this, 'playlist');
@@ -206,6 +207,8 @@ jQuery(document).ready(function($){
 		}
 		
 		YRC.EM.trigger('yrc.setup', this);
+		$(this.sel+' .yrc-menu li:first-child').addClass('yrc-active');
+		this.section = $(this.sel+' .yrc-menu li:first-child').data('section');
 		this.size.sections();
 		return this;
 	};
@@ -220,7 +223,10 @@ jQuery(document).ready(function($){
 			yrcStyle( this.sel, this.data.style.colors );
 			this.load();
 			
-			if(!YRC.is_pro && Object.keys(this.active_sections).length < 2) $(this.sel+' .yrc-menu').addClass('pb-hidden');
+			if(Object.keys(this.active_sections).length < 2){
+				if(!YRC.is_pro || (YRC.is_pro && !this.data.style.uploads))
+					$(this.sel+' .yrc-menu').addClass('pb-hidden');
+			}
 		},
 		
 		'load': function(){
@@ -395,14 +401,14 @@ jQuery(document).ready(function($){
 		return '<div class="yrc-banner pb-relative"><div class="yrc-brand pb-relative"></div></div>\
 		<div class="yrc-content">\
 			<div class="yrc-menu pb-relative">\
-				<ul class="yrc-menu-items">\
-					<li class="pb-inline yrc-menu-item yrc-active" data-section="uploads">'+ YRC.lang.Videos +'</li>'+
+				<ul class="yrc-menu-items">'+
+					(secs.uploads ? '<li class="pb-inline yrc-menu-item" data-section="uploads">'+ YRC.lang.Videos +'</li>' : '') +
 					(secs.playlists ? '<li class="pb-inline yrc-menu-item" data-section="playlists">'+ YRC.lang.Playlists +'</li>' : '') +
 				'</ul>\
 			</div>\
-			<div class="yrc-sections">\
-				<div class="yrc-section pb-inline"><div class="yrc-uploads yrc-sub-section"><ul class="yrc-core"></ul></div></div>'
-				+ (secs.playlists ? YRC.template.playlists : '') + (secs.search ? YRC.template.search() : '') +
+			<div class="yrc-sections">' +
+				(secs.uploads ? '<div class="yrc-section pb-inline"><div class="yrc-uploads yrc-sub-section"><ul class="yrc-core"></ul></div></div>': '') +
+				(secs.playlists ? YRC.template.playlists : '') + (secs.search ? YRC.template.search() : '') +
 			'</div>\
 		</div>\
 		<div class="yrc-banner"><div class="yrc-brand pb-relative"></div></div>';

@@ -55,10 +55,10 @@
 			<div class="pbc-row-label wpb-inline">YouTube</div>
 			<div class="pbc-row-field wpb-inline">
 				<div class="pbc-field wpb-inline">
-					<label class="pbc-field-label">Username:<input name="user" value="<%= meta.user %>" class="wpb-raw" id="yrc-username" placeholder="username"/></label><span> OR </span>
+					<label class="pbc-field-label">Username: <input name="user" value="<%= meta.user %>" class="wpb-raw" id="yrc-username" placeholder="username"/></label><span> OR </span>
 				</div></br></br>
 				<div class="pbc-field wpb-inline">
-					<label class="pbc-field-label">Channel ID:<input name="channel" value="<%= meta.channel %>" class="wpb-raw" id="yrc-channel" placeholder="channel"/></label>
+					<label class="pbc-field-label">Channel ID: <input name="channel" value="<%= meta.channel %>" class="wpb-raw" id="yrc-channel" placeholder="channel"/></label>
 				</div>
 				<div class="pbc-field wpb-inline">
 					<a class="button" id="yrc-get-channel-id">Check</a>
@@ -78,8 +78,17 @@
 			<div class="pbc-row-label wpb-inline">Show</div>
 			<div class="pbc-row-field wpb-inline" id="pbc-show-sections">
 				<div class="pbc-field wpb-inline">
+					<label class="pbc-field-label">Videos: <input type="checkbox" name="uploads" <%- style.uploads ? 'checked' : '' %>/></label>
+				</div>
+
+				<div class="pbc-field wpb-inline">
 					<label class="pbc-field-label">Playlists:<input type="checkbox" name="playlists" <%- style.playlists ? 'checked' : '' %> class="wpb-raw"/></label>
 				</div>
+				<% if(meta.search){ %>
+				<div class="pbc-field wpb-inline">
+					<label class="pbc-field-label">Search: <input type="checkbox" name="search" <%- style.search ? 'checked' : '' %>/></label>
+				</div>
+				<% } %>
 			</div>
 		</div>
 		
