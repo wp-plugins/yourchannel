@@ -1,4 +1,5 @@
 var YC = YC || {'channels':{}};
+
 jQuery(document).ready(function($){
 	YC.EM = YC.EM || $({});
 
@@ -88,8 +89,7 @@ jQuery(document).ready(function($){
 	$('body').on('change', '#yrc-username', function(e){ $('#yrc-channel').val(''); });
 	$('body').on('change', '#pbc-show-sections input', function(e){
 		YC.channel.data.style[this.name] = this.checked ? true : '';
-		$('.yrc-menu-item[data-section=uploads]').trigger('click');
-		$('.yrc-menu-item[data-section='+this.name+']').toggleClass('wpb-force-hide');
+		YC.redraw();
 	});
 	
 	$('body').on('change', 'input[name=video_meta], input[name=video_size]', function(e){
@@ -202,6 +202,7 @@ jQuery(document).ready(function($){
 			},
 			'fit': false,
 			'playlists': true,
+			'uploads': true,
 			'video_style':['large', 'open'],
 			'player_mode': 1,
 			'truncate': true
@@ -254,7 +255,7 @@ jQuery(document).ready(function($){
 		YC.channels['nw'] = dum;
 		YC.channels.adminit( dum, 'nw', true );
 	};
-	
+
 	YC.versionCheck = function(){
 		if(!window.localStorage) return false;
 		if(localStorage.getItem('yrc_version') !== '0.4.1') YC.newVersionInfo();
@@ -268,7 +269,7 @@ jQuery(document).ready(function($){
 	YC.setVersion = function(){
 		localStorage.setItem('yrc_version', '0.4.1');
 	};
-
+	
 	YC.channels.deploy = function( channels ){
 		$('#yrc-init-loader').addClass('wpb-hidden');
 		channels.forEach(function(channel){
