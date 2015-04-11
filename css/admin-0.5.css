@@ -62,7 +62,7 @@
 	width:15%;
 	font-weight:bold;
 }
-
+.pbc-field{margin-right:1em;}
 .pbc-field label{
 	display:inline-block;
 	line-height:1em;
@@ -98,7 +98,7 @@ input[name=apikey]{width:200%;}
 	margin-top:1em;
 }
 
-#yrc-do-upgrade li{
+#yrc-do-upgrade li, #yrc-version-info li{
 	list-style-type:square;
 	margin-left:2em;
 }

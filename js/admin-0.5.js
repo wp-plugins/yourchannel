@@ -78,6 +78,7 @@ jQuery(document).ready(function($){
 				channel_box.val(re.items[0].id);
 				YC.channel.data.meta.channel = re.items[0].id;
 				YC.channel.data.meta.user = user_box.val();
+				YC.channel.data.meta.channel_uploads = re.items[0].contentDetails.relatedPlaylists.uploads;
 				YC.redraw();
 			}
 		}, function(er){
@@ -125,7 +126,7 @@ jQuery(document).ready(function($){
 			if(this.type === 'radio'){
 				if(this.checked) o[this.name] = this.value;
 			} else if (this.type === 'checkbox') {
-				o[this.name] = this.checked ? true : false;
+				o[this.name] = this.checked ? 1 : '';
 			} else o[this.name] = this.value;
 		});
 		return o;
@@ -138,14 +139,16 @@ jQuery(document).ready(function($){
 			return YC.formError('invalid');
 		
 		var o = rawValues($('input.wpb-raw'));
-			YC.channel.data.style.player_mode = o.player_mode;
-			YC.channel.data.style.truncate = o.truncate ? 1 : 0;
-			YC.channel.data.style.video_style = YC.channel.data.style.video_style.splice(0, 2);
+		YC.channel.data.style.player_mode = o.player_mode;
+		YC.channel.data.style.truncate = o.truncate ? 1 : 0;
+		YC.channel.data.style.video_style = YC.channel.data.style.video_style.splice(0, 2);
+		YC.channel.data.meta.onlyonce = o.onlyonce;
 			
 		YC.EM.trigger('yc.save', o);	
 		
 		$('.pbc-form-save .button-primary').text('Saving...');
 		var is_new = (YC.channel.key === 'nw');
+		delete YC.channel.data.meta.playlist;
 		
 		YC.post({'action': 'yrc_save', 'yrc_channel': YC.channel.data}, function(re){
 			if(!re) YC.formError('invalid');
@@ -183,7 +186,8 @@ jQuery(document).ready(function($){
 			'user': 'mrsuicidesheep',
 			'channel': 'UC5nc_ZtjKW1htCVZVRxlQAQ',
 			'key': 'nw',
-			'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk'
+			'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk',
+			'onlyonce': ''
 		},
 		
 		'style': {
@@ -205,7 +209,8 @@ jQuery(document).ready(function($){
 			'uploads': true,
 			'video_style':['large', 'open'],
 			'player_mode': 1,
-			'truncate': true
+			'truncate': 1,
+			'banner':true
 		}
 	};
 	
@@ -258,7 +263,7 @@ jQuery(document).ready(function($){
 
 	YC.versionCheck = function(){
 		if(!window.localStorage) return false;
-		if(localStorage.getItem('yrc_version') !== '0.4.1') YC.newVersionInfo();
+		if(localStorage.getItem('yrc_version') != $('#yrc-wrapper').data('version')) YC.newVersionInfo();
 	};
 	
 	YC.newVersionInfo = function(){
@@ -267,7 +272,7 @@ jQuery(document).ready(function($){
 	};
 	
 	YC.setVersion = function(){
-		localStorage.setItem('yrc_version', '0.4.1');
+		localStorage.setItem('yrc_version', $('#yrc-wrapper').data('version'));
 	};
 	
 	YC.channels.deploy = function( channels ){
