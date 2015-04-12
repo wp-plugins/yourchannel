@@ -141,6 +141,7 @@ jQuery(document).ready(function($){
 		var o = rawValues($('input.wpb-raw'));
 		YC.channel.data.style.player_mode = o.player_mode;
 		YC.channel.data.style.truncate = o.truncate ? 1 : 0;
+		YC.channel.data.style.rtl = o.rtl;
 		YC.channel.data.style.video_style = YC.channel.data.style.video_style.splice(0, 2);
 		YC.channel.data.meta.onlyonce = o.onlyonce;
 			
@@ -210,6 +211,7 @@ jQuery(document).ready(function($){
 			'video_style':['large', 'open'],
 			'player_mode': 1,
 			'truncate': 1,
+			'rtl':0,
 			'banner':true
 		}
 	};

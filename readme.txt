@@ -32,6 +32,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Easy visual builder with live preview which generates shortcode that looks like `[yourchannel user="user"]`.
 * Play video in Lightbox or Inline. **New**
 * 7 video thumb styles. **New**
+* RTL support. **New**
 * Beautifully responsive.
 * SVG icons, which means you can change colors.
 * Feature suggestions are implemented quickly.
