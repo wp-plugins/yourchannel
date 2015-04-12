@@ -212,6 +212,7 @@ jQuery(document).ready(function($){
 		this.data = channel;
 		this.channel = channel.meta.channel;
 		this.host = host;
+		this.rtl = channel.style.rtl;
 				
 		this.size = YRC.sizer();		
 		this.active_sections = {};
@@ -288,9 +289,9 @@ jQuery(document).ready(function($){
 				var idx = $(this).index();
 				yc.section = $(this).data('section');
 				$(this).addClass('yrc-active').siblings().removeClass('yrc-active');
-				$(sel+' .yrc-sections').css({'margin-left': (idx * -yc.size.ww), 'height': function(){
+				$(sel+' .yrc-sections').css({'height': function(){
 					return $(this).find('.yrc-section:eq('+ idx +')').height();
-				}});
+				}}).css('margin-'+(yc.rtl ? 'right': 'left'), (idx * -yc.size.ww));
 				if(yc.section === 'search') $(sel+' .yrc-search-form-top').css('display', 'none');
 				else $(sel+' .yrc-search-form-top').css('display', '');
 			});
@@ -378,14 +379,15 @@ jQuery(document).ready(function($){
 			//if(this.data.style.fit) rem += (this.size.ww - ((fw*in_row) + (in_row-1)*rem)) / (in_row-1);
 									
 			var items = core.find(item); 
+			var margin_dir = this.rtl ? 'right' : 'left';
 			var lastrow = items.length - (items.length % in_row) - 1;
-			core.find(item+'.yrc-has-left').css('margin-left', 0).removeClass('yrc-has-left');
+			core.find(item+'.yrc-has-left').css(('margin-'+margin_dir), 0).removeClass('yrc-has-left');
 			
-			core.find(item).css({'width': fw, 'margin-right': function(i){
-				if(i > lastrow) $(this).css('margin-left', rem).addClass('yrc-has-left');
+			core.find(item).css('width', fw).css(('margin-'+(margin_dir ==='left'?'right':'left')), function(i){
+				if(i > lastrow) $(this).css(('margin-'+margin_dir), rem).addClass('yrc-has-left');
 				if((i+1)%in_row) return rem;
 				return 0;
-			}}).addClass('yrc-full-scale');
+			}).addClass('yrc-full-scale');
 			
 			if(!pl)this.size.per_row = in_row;
 			core.parents('.yrc-sections').css('height', 'auto');
@@ -416,10 +418,10 @@ jQuery(document).ready(function($){
 			'sections': function(){
 				var yc = this, section;
 				$(yc.ref.sel+'.yrc-shell, '+yc.ref.sel+' .yrc-section').css('width', this.ww);
-				$(yc.ref.sel+' .yrc-sections').css({'width': this.ww*Object.keys(yc.ref.active_sections).length, 'margin-left': function(){
+				$(yc.ref.sel+' .yrc-sections').css('width', this.ww*Object.keys(yc.ref.active_sections).length).css('margin-'+(yc.ref.rtl ? 'right': 'left'), function(){
 					section = $(this).parent().find('.yrc-menu-items .yrc-active').data('section');
 					return -($(this).parent().find('.yrc-menu-items .yrc-active').index() * yc.ww);
-				}});
+				});
 				$(yc.ref.sel+' .yrc-sections').css('height', 'auto');
 				$('.yrc-player-frame').css('height', ((9/16) * $('.yrc-player').width()) );
 			}

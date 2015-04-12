@@ -167,6 +167,15 @@
 					</div>
 				</div>
 				
+				<div class="pbc-row">
+					<div class="pbc-row-label wpb-inline">Direction</div>
+					<div class="pbc-row-field wpb-inline">
+						<div class="pbc-field wpb-inline">
+							<label><input type="checkbox" name="rtl" class="wpb-raw" <%- parseInt(style.rtl) ? 'checked' : ''  %>/>RTL</label>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 		
