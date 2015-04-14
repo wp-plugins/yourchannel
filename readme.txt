@@ -55,6 +55,7 @@ Write to us at **support[at]plugin.builders**
 **Note :** This plugin cannot list unlisted videos/playlists.
 
 == Installation ==
+
 Upload YourChannel folder to your wp-content/plugins/ directory.
 Activate the plugin through the 'Plugins' menu in WordPress.
 Go to Settings > YourChannel.
