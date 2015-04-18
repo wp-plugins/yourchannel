@@ -79,8 +79,7 @@ class WPB_YourChannel{
 		}	
 	}
 	
-	public function loadForFront(){
-	}
+	public function loadForFront(){}
 	
 	public static function outputChannel( $user ){
 		$keys = get_option('yrc_keys');
