@@ -162,6 +162,16 @@ jQuery(document).ready(function($){
 		});
 	});
 	
+	$('body').on('click', '#pbc-delete-form', function(e){
+		$(this).text('Deleting...');
+		YC.post({'action': 'yrc_delete', 'yrc_key': YC.channel.data.meta.key}, function(re){
+			$('.pbc-down[data-down='+YC.channel.data.meta.key+']').remove();
+			delete YC.channels[YC.channel.data.meta.key];
+			YC.cleanForm();
+			window.location.reload();
+		});
+	});
+	
 	YC.cleanForm = function(){
 		delete YC.channels.nw;
 		delete YC.channel.data;
