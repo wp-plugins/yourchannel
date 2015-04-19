@@ -38,8 +38,8 @@
 			<li>Show other social media links in banner.</li>
 			<li>Widget.</li>
 		</ul>
-		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.5">Upgrade</a>
-		<a class="button" href="http://plugin.builders/yourchannel-demo/?from=wp&demo=premium&v=0.5">Demo</a>
+		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.4.1">Upgrade</a>
+		<a class="button" href="http://plugin.builders/yourchannel-demo/?from=wp&demo=premium&v=0.4.1">Demo</a>
 		<a class="button" href="mailto:enquiry@plugin.builders?subject=YourChannel Enquiry">Pre-Purchase Question?</a>
 	</div>
 	<div id="pbc-feedback">
@@ -191,9 +191,7 @@
 			<button class="button button-primary">Save</button>
 			<% if(meta.key !== 'nw'){ %>
 				<a class="button" id="pbc-cancel-form">Cancel</a>
-				<% if(meta.search){ %>
-					<a class="button" id="pbc-delete-form">Delete</a>
-				<% } %>	
+				<a class="button" id="pbc-delete-form">Delete</a>
 			<% } %>	
 		</div>
 	</form>

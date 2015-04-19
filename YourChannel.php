@@ -79,9 +79,12 @@ class WPB_YourChannel{
 		}	
 	}
 	
-	public function loadForFront(){}
+	public function loadForFront(){
+	}
 	
 	public static function outputChannel( $user ){
+		$user =  html_entity_decode($user);
+		
 		$keys = get_option('yrc_keys');
 		$key = '';
 		if(sizeof($keys)){
@@ -146,7 +149,7 @@ class WPB_YourChannel{
 		
 		$re = null;
 		$key = $down['meta']['key'];
-		$down['meta']['user'] = stripslashes( $down['meta']['user'] );
+		$down['meta']['user'] = stripslashes($down['meta']['user']);
 		
 		if($key === 'nw'){
 			$re = get_option('yrc_keys');

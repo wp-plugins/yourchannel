@@ -1,6 +1,6 @@
-=== YourChannel: YouTube channel on your site ===
+=== YourChannel: YouTube channel on your website ===
 Contributors: plugin.builders
-Tags: youtube, youtube playlists, subscription, subscribe, embed, video, videos, play, live, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
+Tags: youtube, youtube playlists, subscription, subscribe, stream, social, embed, video, videos, play, live, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.0
 Tested up to: 4.1.1
@@ -8,7 +8,7 @@ Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Almost like YouTube. Displays banner, uploads, playlists and more (All optional). Just enter your YT username.
+Almost like YouTube. Displays banner, uploads, playlists and more. You need a username.
 
 == Description ==
 Do you create or curate YouTube videos? Now turn your website with YouTube links into an engagement platform.
@@ -55,7 +55,6 @@ Write to us at **support[at]plugin.builders**
 **Note :** This plugin cannot list unlisted videos/playlists.
 
 == Installation ==
-
 Upload YourChannel folder to your wp-content/plugins/ directory.
 Activate the plugin through the 'Plugins' menu in WordPress.
 Go to Settings > YourChannel.
