@@ -208,14 +208,14 @@
 
 <script type="text/template" id="yrc-lang-form-tmpl">
 	<form id="yrc-lang-form">
-	<h2 class="wpb-pointer">Quick Translation</h2>
-	<div id="pbc-lang-inputs" class="wpb-zero">
-		<% for(var t in terms){ %>
-			<div class="pbc-field wpb-inline">
-				<label><%= YC.lang.terms[t] %><input type="text" name="<%= t %>" value="<%= terms[t] %>"/></label>
-			</div>
-		<% } %>
-		<div><button class="button button-primary">Save</button></div>
-	</div>
+		<h2 class="wpb-pointer">Quick Translation</h2>
+		<div id="pbc-lang-inputs" class="wpb-zero">
+			<% for(var t in terms){ %>
+				<div class="pbc-field wpb-inline">
+					<label><%= YC.lang.terms[t] %><input type="text" name="<%= t %>" value="<%= terms[t] %>"/></label>
+				</div>
+			<% } %>
+			<div><button class="button button-primary">Save</button></div>
+		</div>
 	</form>
 </script>
