@@ -77,8 +77,7 @@ class WPB_YourChannel{
 		}	
 	}
 	
-	public function loadForFront(){
-	}
+	public function loadForFront(){}
 	
 	public static function outputChannel( $user ){
 		$user =  html_entity_decode($user);
