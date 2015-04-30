@@ -149,7 +149,7 @@
 	transition: transform 300ms;
 }
 
-.yrc-item-open:hover .yrc-thumb, .yrc-item-adjacent:hover .yrc-thumb{
+.yrc-item-open:hover .yrc-thumb, .yrc-item-adjacent:hover .yrc-thumb, .yrc-item-none:hover .yrc-thumb{
 	-webkit-transform: scale(.95);
 	-moz-transform: scale(.95);
 	-ms-transform: scale(.95);
