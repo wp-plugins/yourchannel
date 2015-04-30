@@ -114,6 +114,7 @@ jQuery(document).ready(function($){
 
 	function ajax(url, success, error){
 		$.ajax({
+			type: 'GET',
 			url: url,
 			success: success,
 			error: error
