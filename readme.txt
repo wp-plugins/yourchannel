@@ -30,16 +30,16 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 **Features :**
 
 * Easy visual builder with live preview which generates shortcode that looks like `[yourchannel user="user"]`.
-* Play video in Lightbox or Inline. **New**
-* 7 video thumb styles. **New**
-* RTL support. **New**
+* Play video in Lightbox or Inline.
+* 7 video thumb styles.
+* RTL support.
 * Beautifully responsive.
 * SVG icons, which means you can change colors.
 * Feature suggestions are implemented quickly.
 * Smooooth animations.
 * Shortcode works in page, posts or custom fields.
 * Loads files only if shortcode is present. 
-* Quick translation form for UI terms (Videos, Playlists, Loading... etc.). **New**
+* Quick translation form for UI terms (Videos, Playlists, Loading... etc.).
 
 
 Don't let visitors leave your site for YouTube.
@@ -48,7 +48,7 @@ Don't let visitors leave your site for YouTube.
 
 **[Video tutorial in Spanish](http://www.webempresa.com/blog/item/1733-publica-tu-canal-de-videos-de-youtube-en-wordpress.html)**
 
-**Support :** We'll respond to your issue within 6-18 hours.
+**Support :** We'll respond to your issue within 3-18 hours.
 
 Write to us at **support[at]plugin.builders**
 
