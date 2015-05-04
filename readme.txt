@@ -3,7 +3,7 @@ Contributors: plugin.builders
 Tags: youtube, youtube playlists, subscription, subscribe, stream, social, embed, video, videos, play, live, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.0
-Tested up to: 4.2
+Tested up to: 4.2.1
 Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
