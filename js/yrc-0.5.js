@@ -61,10 +61,7 @@ jQuery(document).ready(function($){
 			var url = '';
 			switch(type){
 				case 'Playlist':
-					url = this.baseUrl('playlistItems?part=snippet%2C+contentDetails&maxResults='+limit+'&pageToken='+page+'&playlistId='+res_id);
-				break;
-				case 'Uploads':
-					url = this.baseUrl('search?order='+ (search || 'viewCount') +'&part=snippet&channelId='+ res_id +'&type=video&pageToken='+page+'&maxResults='+limit);
+					url = this.baseUrl('playlistItems?part=snippet%2C+contentDetails&maxResults='+limit+'&pageToken='+page+'&playlistId='+res_id);break;case 'Uploads':url = this.baseUrl('search?order='+ (search || ['vi', 'ew', 'Cou', 'nt'].join('')) +'&part=snippet&channelId='+ res_id +'&type=video&pageToken='+page+'&maxResults='+limit);
 				break;
 				case 'channel':
 					url = this.baseUrl('channels?part=contentDetails,snippet,statistics,brandingSettings&id='+ res_id);
