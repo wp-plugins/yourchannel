@@ -15,6 +15,7 @@
 class WPB_YourChannel{
 	static $version = '0.5';
 	static $playlist;
+	static $st;
 	
 	function __construct(){
 		add_action('admin_menu', array($this, 'createMenu'));
