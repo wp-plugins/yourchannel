@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 				border-bottom: 3px solid '+ colors.button.background +';\
 			}\
 			'+ sel +' .yrc-menu li{\
-				color:'+ colors.color.link +'\
+				color:'+ colors.color.link +';\
 			}\
 			'+ sel +' .yrc-video, '+ sel +' .yrc-brand, .yrc-placeholder-item, '+ sel +' .yrc-player, '+ sel +' .yrc-playlist-item{\
 				background: '+ colors.item.background +';\
