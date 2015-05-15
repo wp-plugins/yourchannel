@@ -195,7 +195,6 @@
 	display:block;
 }
 
-.yrc-item-large .yrc-video-views:before{ content:' | '; }
 .yrc-item-large.yrc-item-closed .yrc-item-meta{ padding:1em; }
 
 .yrc-item-large .yrc-item-meta{width:100%;}
