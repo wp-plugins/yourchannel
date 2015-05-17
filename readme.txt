@@ -44,7 +44,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 
 Don't let visitors leave your site for YouTube.
 
-**[Demo](http://plugin.builders/yourchannel-demo/?demo=free)**
+**[Demo](http://plugin.builders/yourchannel-demo/?demo=wp.org)**
 
 **[Video tutorial in Spanish](http://www.webempresa.com/blog/item/1733-publica-tu-canal-de-videos-de-youtube-en-wordpress.html)**
 
