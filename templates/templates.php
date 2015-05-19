@@ -45,7 +45,7 @@
 	<div id="pbc-feedback">
 		<a class="button" href="mailto:suggest@plugin.builders?subject=Extend YourChannel">Suggest Feature</a>
 		<a class="button" href="mailto:support@plugin.builders?subject=YourChannel Problem">Report Issue</a>
-		<a class="button" href="https://wordpress.org/support/view/plugin-reviews/yourchannel?#postform" target="_blank">Rate It</a>
+		<a class="button" href="https://wordpress.org/support/view/plugin-reviews/yourchannel?#postform" target="_blank">Write a review</a>
 	</div>
 </script>				
 
