@@ -1,5 +1,6 @@
 var YC = YC || {'channels':{}};
-
+	YC.lang = {'aui': yrc_lang_terms.aui};
+	
 jQuery(document).ready(function($){
 	YC.EM = YC.EM || $({});
 
@@ -18,29 +19,16 @@ jQuery(document).ready(function($){
 		});
 	};
 	
-	YC.merge = function(o, n, ox, ke){
-		for(var k in n){
-			if(typeof n[k] !== 'object'){
-				if(o === undefined) ox[ke] = n;
-				else {
-					if(o[k] === undefined) o[k] = n[k];
-				}
-			} else {
-				YC.merge(o[k], n[k], o, k);
-			}	
-		}
-	};
-
 	YC.channel = {};
 
 	YC.channels.adminit = function(channel, key, is_new){
-		if(!is_new) YC.merge(channel, YC.dummy);
+		if(!is_new) YRC.merge(channel, YC.dummy);
+		channel.social = channel.social || {};
 		YC.channel.data = channel;
 		YC.channel.key = key;
 		
-		$('#yrc-channels').addClass('wpb-hidden');
-		$('#yrc-editor').html( YC.template('#yrc-form-tmpl')( YC.channel.data ))
-			.removeClass('wpb-hidden');
+		$('#yrc-channels, #yrc-lang-form').addClass('wpb-hidden');
+		$('#yrc-editor').html( YC.template('#yrc-form-tmpl')( YC.channel.data )).removeClass('wpb-hidden');
 						
 		YC.EM.trigger('yc.form');
 						
@@ -70,7 +58,7 @@ jQuery(document).ready(function($){
 				: YRC.auth.baseUrl('channels?part=snippet,contentDetails,statistics&id='+channel_input.val().trim());
 		ajax(uu, function(re){
 			if(!re.items.length)
-				$('#yrc-ac-error').text( (user_box.val() ? user_box.val() : channel_input.val()) + ' doesn\'t exist.' ).addClass('pbc-form-error');
+				$('#yrc-ac-error').text( (user_box.val() ? user_box.val() : channel_input.val()) + YC.lang.aui.does_not_exist ).addClass('pbc-form-error');
 			else {
 				if(user_box.val()) channel_input.val(re.items[0].id);
 				else user_box.val(re.items[0].snippet.title);
@@ -90,6 +78,7 @@ jQuery(document).ready(function($){
 	$('body').on('change', '#yrc-username', function(e){ $('#yrc-channel').val(''); });
 	$('body').on('change', '#pbc-show-sections input', function(e){
 		YC.channel.data.style[this.name] = this.checked ? true : '';
+		if(YC.channel.data.style.search_on_top) YC.channel.data.style.search = true;
 		YC.redraw();
 	});
 	
@@ -141,14 +130,15 @@ jQuery(document).ready(function($){
 		
 		var o = rawValues($('input.wpb-raw'));
 		YC.channel.data.style.player_mode = o.player_mode;
-		YC.channel.data.style.truncate = o.truncate ? 1 : 0;
+		YC.channel.data.style.truncate = o.truncate;
 		YC.channel.data.style.rtl = o.rtl;
+		YC.channel.data.style.thumb_margin = o.thumb_margin || 8;
 		YC.channel.data.style.video_style = YC.channel.data.style.video_style.splice(0, 2);
 		YC.channel.data.meta.onlyonce = o.onlyonce;
 			
 		YC.EM.trigger('yc.save', o);	
 		
-		$('.pbc-form-save .button-primary').text('Saving...');
+		$('.pbc-form-save .button-primary').text(YC.lang.aui.saving+'...');
 		var is_new = (YC.channel.key === 'nw');
 		delete YC.channel.data.meta.playlist;
 		
@@ -164,7 +154,7 @@ jQuery(document).ready(function($){
 	});
 	
 	$('body').on('click', '#pbc-delete-form', function(e){
-		$(this).text('Deleting...');
+		$(this).text(YC.lang.aui.deleting+'...');
 		YC.post({'action': 'yrc_delete', 'yrc_key': YC.channel.data.meta.key}, function(re){
 			$('.pbc-down[data-down='+YC.channel.data.meta.key+']').remove();
 			delete YC.channels[YC.channel.data.meta.key];
@@ -179,15 +169,16 @@ jQuery(document).ready(function($){
 		delete YC.channel.key;
 		delete YC.channel.setup;
 				
-		$('#yrc-editor').empty();
-		$('#yrc-channels, #yrc-editor').toggleClass('wpb-hidden');
-		$('#yrc-live').empty();
+		$('style.yrc-stylesheet').remove();
+		$('#yrc-editor, #yrc-live').empty();
+		$('#yrc-channels, #yrc-editor, #yrc-lang-form').toggleClass('wpb-hidden');
+		$('#yrc-defined-css').addClass('wpb-hidden');
 	};
 	
 	YC.formError = function(code){
 		var messages = {
-			'apikey': 'Please enter your API key.',
-			'invalid': 'Your inputs are invalid, please have a look at them.'
+			'apikey': YC.lang.aui.enter_api_key,
+			'invalid': YC.lang.aui.invalid_inputs
 		};
 		$('.pbc-form-message').text( messages[code] ).addClass('pbc-form-error');
 		return false;
@@ -199,7 +190,9 @@ jQuery(document).ready(function($){
 			'channel': 'UC5nc_ZtjKW1htCVZVRxlQAQ',
 			'key': 'nw',
 			'apikey': 'AIzaSyBHM34vx2jpa91sv4fk8VzaEHJbeL5UuZk',
-			'onlyonce': ''
+			'channel_uploads': '',
+			'onlyonce': '',
+			'tag':''
 		},
 		
 		'style': {
@@ -222,14 +215,14 @@ jQuery(document).ready(function($){
 			'video_style':['large', 'open'],
 			'player_mode': 1,
 			'truncate': 1,
-			'rtl':0,
-			'banner':true
+			'rtl':'',
+			'banner':true,
+			'thumb_margin':8,
+			'play_icon':''
 		}
 	};
-	
-	YC.lang = {};
-	
-	YC.lang.terms = {
+		
+	YC.lang.form_labels = {
 		'Videos': 'Videos',
 		'Playlists': 'Playlists',
 		'Search': 'Search',
@@ -237,24 +230,26 @@ jQuery(document).ready(function($){
 		'more': 'more',
 		'Nothing_found': 'Nothing found'
 	};
-	
-	YRC.lang = _.clone( YC.lang.terms );
-	
+		
 	YC.lang.show = function(){
-		$('#yrc-wrapper').append( YC.template('#yrc-lang-form-tmpl')({'terms': $('#yrc-wrapper').data('lang') || YRC.lang}) );
+		$('#yrc-wrapper').append( YC.template('#yrc-lang-form-tmpl')({'terms': YRC.lang.form}) );
 	};
 	
 	$('body').on('submit', '#yrc-lang-form', function(e){
 		e.preventDefault(); var fo = $(this);
-		YC.lang.terms = rawValues(fo.find('input'));
+		YRC.lang.form = rawValues(fo.find('input'));
 		fo.find('.button').text('Saving....');
-		YC.post({'action': 'yrc_save_lang', 'yrc_lang': YC.lang.terms}, function(re){
+		YC.post({'action': 'yrc_save_lang', 'yrc_lang': YRC.lang.form}, function(re){
 			fo.find('.button').text('Save');
 		});
 	});
 	
 	$('body').on('click', '#yrc-lang-form h2', function(e){
 		$(this).next().toggleClass('wpb-zero');
+	});
+	
+	$('body').on('click', '.pbc-field-toggler', function(e){
+		$(this).next().toggleClass('wpb-force-hide');
 	});
 	
 	YC.channels.remove = function(d){
@@ -320,7 +315,6 @@ jQuery(document).ready(function($){
 		YC.post({'action': 'yrc_get'}, function(re){		
 			YC.channels.deploy(re);
 		});
-		//YC.post({'action': 'yrc_get_lang'}, function(re){});
 		$('#yrc-wrapper').append( YC.template('#yrc-main-tmpl') )
 		YC.EM.trigger('yc.init');
 	};

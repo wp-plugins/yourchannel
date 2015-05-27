@@ -1,0 +1,164 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: YourChannel 0.6\n"
+"POT-Creation-Date: 2015-05-27 13:04+0545\n"
+"PO-Revision-Date: 2015-05-27 13:04+0545\n"
+"Last-Translator: Nub Bt. <support@plugin.builders>\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: YourChannel.php:303
+msgid "Sort by"
+msgstr ""
+
+#: YourChannel.php:304
+msgid "Relevant"
+msgstr ""
+
+#: YourChannel.php:305
+msgid "Latest"
+msgstr ""
+
+#: YourChannel.php:306
+msgid "Liked"
+msgstr ""
+
+#: YourChannel.php:307
+msgid "Title"
+msgstr ""
+
+#: YourChannel.php:308
+msgid "Views"
+msgstr ""
+
+#: YourChannel.php:309
+msgid "Duration"
+msgstr ""
+
+#: YourChannel.php:310
+msgid "Any"
+msgstr ""
+
+#: YourChannel.php:311
+msgid "Short"
+msgstr ""
+
+#: YourChannel.php:312
+msgid "Medium"
+msgstr ""
+
+#: YourChannel.php:313
+msgid "Long"
+msgstr ""
+
+#: YourChannel.php:314
+msgid "Uploaded"
+msgstr ""
+
+#: YourChannel.php:315
+msgid "All time"
+msgstr ""
+
+#: YourChannel.php:316
+msgid "Today"
+msgstr ""
+
+#: YourChannel.php:317
+msgid "ago"
+msgstr ""
+
+#: YourChannel.php:318
+msgid "Last"
+msgstr ""
+
+#: YourChannel.php:319
+msgid "day"
+msgstr ""
+
+#: YourChannel.php:320
+msgid "days"
+msgstr ""
+
+#: YourChannel.php:321
+msgid "week"
+msgstr ""
+
+#: YourChannel.php:322
+msgid "weeks"
+msgstr ""
+
+#: YourChannel.php:323
+msgid "month"
+msgstr ""
+
+#: YourChannel.php:324
+msgid "months"
+msgstr ""
+
+#: YourChannel.php:325
+msgid "year"
+msgstr ""
+
+#: YourChannel.php:326
+msgid "years"
+msgstr ""
+
+#: YourChannel.php:327
+msgid "Older"
+msgstr ""
+
+#: YourChannel.php:331
+msgid "Videos"
+msgstr ""
+
+#: YourChannel.php:332
+msgid "Playlists"
+msgstr ""
+
+#: YourChannel.php:333
+msgid "Search"
+msgstr ""
+
+#: YourChannel.php:334
+msgid "Loading"
+msgstr ""
+
+#: YourChannel.php:335
+msgid "more"
+msgstr ""
+
+#: YourChannel.php:336
+msgid "Nothing found"
+msgstr ""
+
+#: templates/templates.php:225
+msgid "doesn't exist"
+msgstr ""
+
+#: templates/templates.php:226
+msgid "Saving"
+msgstr ""
+
+#: templates/templates.php:227
+msgid "Please enter your API key"
+msgstr ""
+
+#: templates/templates.php:228
+msgid "Your inputs are invalid, please have a look at them"
+msgstr ""
+
+#: templates/templates.php:229
+msgid "Save"
+msgstr ""
+
+#: templates/templates.php:230
+msgid "Deleting"
+msgstr ""

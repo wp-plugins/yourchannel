@@ -2,9 +2,9 @@
 Contributors: plugin.builders
 Tags: youtube, youtube playlists, subscription, subscribe, stream, social, embed, video, videos, play, live, player, playlist, youtube plugin, youtube player, youtube gallery, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials
 Donate link: http://plugin.builders/yourchannel/?d=donate
-Requires at least: 3.0
+Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 0.5
+Stable tag: 0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,13 +33,14 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Play video in Lightbox or Inline.
 * 7 video thumb styles.
 * RTL support.
-* Beautifully responsive.
-* SVG icons, which means you can change colors.
+* Beautifully responsive (IT'S 2015).
+* SVG icons.
 * Feature suggestions are implemented quickly.
 * Smooooth animations.
 * Shortcode works in page, posts or custom fields.
 * Loads files only if shortcode is present. 
 * Quick translation form for UI terms (Videos, Playlists, Loading... etc.).
+* Translation ready **New**
 
 
 Don't let visitors leave your site for YouTube.

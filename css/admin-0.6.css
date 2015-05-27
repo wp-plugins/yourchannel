@@ -21,6 +21,7 @@
 	color:#1e8cbe;
 	line-height:2em;
 	font-weight:bold;
+	margin-bottom:.5em;
 }
 
 #yrc-icon span{
@@ -32,6 +33,9 @@
 	font-weight:normal;
 }
 
+#yrc-new, #yrc-clear-keys{
+	margin:1em 1em 0 0;
+}
 
 #yrc-editor{
 	padding:1em;
@@ -62,13 +66,19 @@
 	width:15%;
 	font-weight:bold;
 }
+
+.pbc-row-field .pbc-row-label{
+	width:25%;
+}
+
 .pbc-field{margin-right:1em;}
+
 .pbc-field label{
 	display:inline-block;
 	line-height:1em;
 }
 
-input[name=apikey]{width:200%;}
+input[name=apikey]{width:50%;}
 
 .pbc-field small {color:#aaa;}
 
@@ -77,7 +87,11 @@ input[name=apikey]{width:200%;}
 	margin:0 2% 2% 0;
 }
 
-#pbc-feedback{margin-top:1em;}
+#pbc-feedback{
+	margin-top:2em;
+	padding-top:1em;
+	border-top:1px solid #ddd;
+}
 
 .wp-color-result{
 	overflow:hidden;
@@ -88,25 +102,37 @@ input[name=apikey]{width:200%;}
 }
 
 #pbc-styles-field, .pbc-row-field{
-	max-width:80%;
+	min-width:70%;
+	max-width:74%;
 }
 
-
-#yrc-do-upgrade{
-	padding:.5em;
-	background:#fff;
-	margin-top:1em;
+#yrc-user-fields .pbc-field{
+	width:70%;
 }
+
+#yrc-user-fields .pbc-field-label{
+	width:100%;
+}
+
+#yrc-user-fields .pbc-field input{
+	width:50%;
+}
+
 
 #yrc-do-upgrade li, #yrc-version-info li{
 	list-style-type:square;
 	margin-left:2em;
 }
 
-#yrc-lang-form{
-	margin-top:2.5em;
+#yrc-lang-form, #yrc-do-upgrade, #yrc-defined-css{
+	margin-top:2em;
 	background:#fff;
 	padding:.5em;
+}
+
+#yrc-defined-css ul li{
+	list-style-type:square;
+	list-style-position:inside;
 }
 
 #yrc-lang-form .pbc-field{
