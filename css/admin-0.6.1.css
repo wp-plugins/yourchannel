@@ -1,0 +1,149 @@
+.wpb-float-left{float:left;}
+.wpb-float-right{float:right;}
+.wpb-inline{display:inline-block; vertical-align:top;}
+.wpb-hidden{display:none;}
+.wpb-force-hide{display:none !important;}
+.wpb-overflow{overflow:hidden;}
+.wpb-relative{position:relative;}
+.wpb-absolute{position:absolute;}
+.wpb-pointer{cursor:pointer;}
+.wpb-zero{height:0;}
+.wpb-clr{zoom:1;}
+.wpb-clr:after{clear:both;display:block;content:'';}
+
+#yrc-wrapper, .wpb-widget-wrapper, #yrc-wrapper *, .wpb-widget-wrapper *{
+	box-sizing:border-box !important;
+}
+
+#yrc-wrapper{width:85%;}
+
+#yrc-icon{
+	color:#1e8cbe;
+	line-height:2em;
+	font-weight:bold;
+	margin-bottom:.5em;
+}
+
+#yrc-icon span{
+	background:#1e8cbe;
+	color:#fff;
+	padding:0 .25em;
+	border-radius:.5em;
+	margin-left:.1em;
+	font-weight:normal;
+}
+
+#yrc-new, #yrc-clear-keys{
+	margin:1em 1em 0 0;
+}
+
+#yrc-editor{
+	padding:1em;
+	background:#fff;
+	-webkit-user-select:none;
+}
+
+#yrc-live{
+	margin:2em 0;
+}
+
+.pbc-row{
+	padding:1em;
+}
+
+.pbc-form-error{
+	margin-bottom:.5em;
+	font-size:1.5em;
+	color:red;
+}
+
+.pbc-row:not(:last-child){
+	border-bottom:1px solid #ddd;
+	margin-bottom:1em;
+}
+
+.pbc-row-label{
+	width:15%;
+	font-weight:bold;
+}
+
+.pbc-row-field .pbc-row-label{
+	width:25%;
+}
+
+.pbc-field{margin-right:1em;}
+
+.pbc-field label{
+	display:inline-block;
+	line-height:1em;
+}
+
+input[name=apikey]{width:50%;}
+
+.pbc-field small {color:#aaa;}
+
+#pbc-styles .pbc-row .pbc-field{
+	width:45%;
+	margin:0 2% 2% 0;
+}
+
+#pbc-feedback{
+	margin-top:2em;
+	padding-top:1em;
+	border-top:1px solid #ddd;
+}
+
+.wp-color-result{
+	overflow:hidden;
+}
+
+#pbc-styles{
+	margin-top:1em;
+}
+
+#pbc-styles-field, .pbc-row-field{
+	min-width:70%;
+	max-width:74%;
+}
+
+#yrc-user-fields .pbc-field{
+	width:70%;
+}
+
+#yrc-user-fields .pbc-field-label{
+	width:100%;
+}
+
+#yrc-user-fields .pbc-field input{
+	width:50%;
+}
+
+
+#yrc-do-upgrade li, #yrc-version-info li{
+	list-style-type:square;
+	margin-left:2em;
+}
+
+#yrc-lang-form, #yrc-do-upgrade, #yrc-defined-css{
+	margin-top:2em;
+	background:#fff;
+	padding:.5em;
+}
+
+#yrc-defined-css ul li{
+	list-style-type:square;
+	list-style-position:inside;
+}
+
+#yrc-lang-form .pbc-field{
+	width:33%;
+}
+
+#yrc-lang-form .pbc-field input{
+	margin-left:1em;
+}
+
+#pbc-lang-inputs{
+	transition:height 500ms;
+	overflow:hidden;
+}
