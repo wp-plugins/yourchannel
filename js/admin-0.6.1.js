@@ -37,7 +37,9 @@ jQuery(document).ready(function($){
 	};
 	
 	YC.redraw = function(){
+		console.log('redraw');
 		$('style.yrc-stylesheet').remove();
+		$('body').off('click').on('click', '.yrc-load-more-button', function(){});
 		$('#yrc-live').empty();
 		YC.channel.setup = new YRC.Setup(0, YC.channel.data, $('#yrc-live'));
 	};
@@ -47,7 +49,7 @@ jQuery(document).ready(function($){
 		YRC.auth.apikey = $(this).val().trim();
 	});
 
-	$('body').on('click', '#yrc-get-channel-id', function(e){
+	$('body').off('click', '#yrc-get-channel-id').on('click', '#yrc-get-channel-id', function(e){
 		$('.pbc-form-message').text('').removeClass('pbc-form-error');
 		if(!YC.channel.data.meta.apikey || YC.channel.data.meta.apikey.length != 39) return YC.formError('apikey');
 		var user_box = $('#yrc-username'), channel_box = $('input.wpb-raw[name=channel]'), channel_input = $('#yrc-channel');
@@ -67,6 +69,7 @@ jQuery(document).ready(function($){
 				YC.channel.data.meta.channel = re.items[0].id;
 				YC.channel.data.meta.user = user_box.val();
 				YC.channel.data.meta.channel_uploads = re.items[0].contentDetails.relatedPlaylists.uploads;
+				YC.channel.data.meta.onlyonce = '';
 				YC.redraw();
 			}
 		}, function(er){
