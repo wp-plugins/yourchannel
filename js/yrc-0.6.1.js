@@ -248,6 +248,8 @@ jQuery(document).ready(function($){
 		if(channel.meta.onlyonce){
 			channel.meta.playlist = channel.meta.channel_uploads;
 			this.onlyonce = true;
+			channel.meta.maxv = parseInt(channel.meta.maxv) || 0;
+			channel.meta.per_page = parseInt(channel.meta.per_page) || 50;
 		}
 		if(!channel.meta.playlist)
 			channel.meta.default_sorting = (channel.meta.default_sorting === 'none') ? '' : channel.meta.default_sorting; 
@@ -355,7 +357,7 @@ jQuery(document).ready(function($){
 				YRC.play(yc, sel, $(this));
 			});	
 			
-			$('body').on('click', '.yrc-player-bar .yrc-close span', yc.closePlayer);
+			$('body').on('click', '.yrc-player-bar .yrc-close span', function(){ yc.closePlayer(); });
 			
 			$(window).on('resize', function(e){
 				yc.size.resize();
@@ -381,12 +383,13 @@ jQuery(document).ready(function($){
 		
 		'listVideos': function(vids, cont, res){
 			var core = cont.children('.yrc-core'), append = 1, i;
-			var srt = this.uploads ? (this.uploads.criteria || 'title') : 'title';
+			var srt = this.uploads ? (this.uploads.criteria || 'etad') : 'etad';
 			if((srt !== 'none') && ( this.onlyonce || this.data.meta.playlist) ){
-				if((srt === 'date' || srt === 'title')){
+				if((srt === 'date' || srt === 'title' || srt === 'etad')){
 					vids.sort(function(a, b){
-						i = (srt === 'date') ? (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt))
-							: (a.snippet.title > b.snippet.title);
+							if(srt === 'date') {i = (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt));}
+							else if (srt === 'title') {i = (a.snippet.title > b.snippet.title);}
+							else {i = (new Date(a.snippet.publishedAt) > new Date(b.snippet.publishedAt));}
 						return i ? 1 : -1;	
 					});
 					append = 0;

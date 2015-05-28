@@ -16,7 +16,7 @@
 	<div id="yrc-live" class="wpb-hidden"></div>
 	<div id="yrc-version-info" class="wpb-hidden" style="padding:.5em;border:1px solid #000;margin:.35em 0;">
 		<h3><b><?php _e('New version', 'YourChannel'); ?>: <span class="yrc-version"></span></b></h3>
-		<p><?php _e('New version', 'If something seems off please edit and save your channel', 'YourChannel'); ?>.</p>
+		<p><?php _e('If something seems off please edit and save your channel', 'YourChannel'); ?>.</p>
 	</div>
 	<div id="yrc-do-upgrade">
 		<h3>Pro version features:</h3>
@@ -189,9 +189,9 @@
 		</div>
 				
 		<div class="pbc-row">
-			<div class="pbc-row-label wpb-inline"><?php _e('Only once', 'YourChannel'); ?></div>
+			<div class="pbc-row-label wpb-inline"><?php _e('Missing', 'YourChannel'); ?></div>
 			<div class="pbc-row-field wpb-inline">
-				<label><input type="checkbox" <%- meta.onlyonce ? 'checked' : '' %> name="onlyonce" class="wpb-raw"/><?php _e('Check this ONLY IF you\'ve 50 or less videos and some are missing', 'YourChannel'); ?>.</label>
+				<label><input type="checkbox" <%- meta.onlyonce ? 'checked' : '' %> name="onlyonce" class="wpb-raw"/><?php _e('Check this ONLY IF some videos are missing, HAS DRAWBACKS', 'YourChannel'); ?>.</label>
 			</div>
 		</div>
 														

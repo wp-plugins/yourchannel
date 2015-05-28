@@ -1,22 +1,22 @@
 <?php
 /**
  * @package YourChannel
- * @version 0.6
+ * @version 0.6.1
  */
 /*
 	Plugin Name: YourChannel
 	Plugin URI: http://wordpress.org/plugins/yourchannel/
 	Description: YouTube channel on your website.
 	Author: Plugin Builders
-	Version: 0.6
+	Version: 0.6.1
 	Author URI: http://plugin.builders/
 	Text Domain: YourChannel
 	Domain Path: languages
 */
 
 class WPB_YourChannel{
-	static $version = '0.6';
-	static $version_file = '0.6';
+	static $version = '0.6.1';
+	static $version_file = '0.6.1';
 	static $terms = array();
 	static $playlist;
 	static $st;
