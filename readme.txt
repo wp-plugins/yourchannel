@@ -4,7 +4,7 @@ Tags: youtube, youtube playlists, subscription, subscribe, stream, social, embed
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 0.6.1
+Stable tag: 0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
