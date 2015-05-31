@@ -23,7 +23,7 @@ class WPB_YourChannel{
 	static $so;
 	
 	function __construct(){
-		$this->translateTerms();
+		self::translateTerms();
 		add_action('admin_menu', array($this, 'createMenu'));
 		add_action('admin_init', array($this, 'deploy'));
 		add_action('plugins_loaded', array($this, 'loadTextDomain') );
@@ -37,6 +37,7 @@ class WPB_YourChannel{
 		add_action('wp_ajax_yrc_get_lang', array($this, 'getLang'));
 		add_action('wp_ajax_yrc_save_lang', array($this, 'saveLang'));
 		add_action('wp_ajax_yrc_clear_keys', array($this, 'clearKeys'));
+		
 		add_shortcode( 'yourchannel', array($this, 'shortcoode') );
 	}
 	
@@ -134,7 +135,8 @@ class WPB_YourChannel{
 		
 		$url = plugins_url('/js/yrc-'.self::$version_file.'.js', __FILE__);
 		$css_url = plugins_url('/css/style-'.self::$version_file.'.css', __FILE__);
-		
+				
+		self::translateTerms();
 		$terms = array(
 			'form' => get_option('yrc_lang_terms'),
 			'fui' => self::$terms['front_ui']
@@ -297,7 +299,7 @@ class WPB_YourChannel{
 		load_plugin_textdomain( 'YourChannel', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 	
-	function translateTerms(){ 
+	public static function translateTerms(){ 
 		self::$terms['front_ui'] = array(
 			'sort_by'  => __('Sort by', 'YourChannel'),
 			'relevant'  => __('Relevant', 'YourChannel'),
