@@ -23,7 +23,7 @@
 		<ul>
 			<?php $this->proFeatures(); ?>
 		</ul>
-		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.6">Upgrade</a>
+		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.6.2">Upgrade</a>
 		<a class="button" href="mailto:enquiry@plugin.builders?subject=YourChannel Enquiry">Pre-Purchase Question?</a>
 	</div>
 	<div id="pbc-feedback">
