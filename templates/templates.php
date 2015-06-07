@@ -21,24 +21,9 @@
 	<div id="yrc-do-upgrade">
 		<h3>Pro version features:</h3>
 		<ul>
-			<li>Multiple channels.</li>		
-			<li>List videos from a certain playlist in the <i>Videos</i> section.</li>
-			<li>Let users search YouTube - can be restricted to your channel.</li>
-			<li>Search bar below banner.</li>
-			<li>Show videos by a search term. <b>New</b></li>
-			<li>Change colors to match with your site.</li>
-			<li>Show video stats/ratings (2 styles).</li>
-			<li>Limit number of videos on page.</li>
-			<li>Ability to sort uploads (latest, most liked, most viewed).</li>
-			<li>Autoplay next video. <b>New</b></li>
-			<li>Load first video. <b>New</b></li>
-			<li>Custom CSS input. <b>New</b></li>
-			<li>Show a subscribe button (multiple styles).</li>
-			<li>Show other social media links in banner.</li>
-			<li>Widget.</li>
+			<?php $this->proFeatures(); ?>
 		</ul>
 		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.6">Upgrade</a>
-		<a class="button" href="http://plugin.builders/yourchannel-demo/?from=wp&demo=premium&v=0.6">Demo</a>
 		<a class="button" href="mailto:enquiry@plugin.builders?subject=YourChannel Enquiry">Pre-Purchase Question?</a>
 	</div>
 	<div id="pbc-feedback">
@@ -161,6 +146,19 @@
 					</div>
 					
 					<div class="pbc-row">
+						<div class="pbc-row-label wpb-inline"><?php _e('Player', 'YourChannel'); ?> <?php _e('top', 'YourChannel'); ?></div>
+						<div class="pbc-row-field wpb-inline">
+							<div class="pbc-field wpb-inline">
+								<label><input type="radio" name="player_top" value="title" class="wpb-raw" <%- (style.player_top === 'title') ? 'checked' : ''  %>/><?php _e('Title', 'YourChannel'); ?></label>
+							</div>
+							
+							<div class="pbc-field wpb-inline">
+								<label><input type="radio" name="player_top" value="desc" class="wpb-raw" <%- (style.player_top === 'desc') ? 'checked' : ''  %>/><?php _e('Description', 'YourChannel'); ?></label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="pbc-row">
 						<div class="pbc-row-label wpb-inline"><?php _e('Titles', 'YourChannel'); ?></div>
 						<div class="pbc-row-field wpb-inline">
 							<div class="pbc-field wpb-inline">
@@ -189,7 +187,7 @@
 		</div>
 				
 		<div class="pbc-row">
-			<div class="pbc-row-label wpb-inline"><?php _e('Missing', 'YourChannel'); ?></div>
+			<div class="pbc-row-label wpb-inline"><?php _e('Only once', 'YourChannel'); ?></div>
 			<div class="pbc-row-field wpb-inline">
 				<label><input type="checkbox" <%- meta.onlyonce ? 'checked' : '' %> name="onlyonce" class="wpb-raw"/><?php _e('Check this ONLY IF some videos are missing, HAS DRAWBACKS', 'YourChannel'); ?>.</label>
 			</div>
@@ -226,7 +224,10 @@
 				<label><%= YC.lang.form_labels[t] %><input type="text" name="<%= t %>" value="<%= terms[t] %>"/></label>
 			</div>
 		<% } %>
-		<div><button class="button button-primary"><?php _e('Save', 'YourChannel'); ?></button></div>
+		<div>
+			<button class="button button-primary"><?php _e('Save', 'YourChannel'); ?></button>
+			<a class="button" id="yrc-delete-terms"><?php _e('Clear', 'YourChannel'); ?></a>
+		</div>
 	</div>
 	</form>
 	<div id="yrc-defined-css" class="wpb-hidden">
@@ -248,13 +249,16 @@
 		'enter_api_key' => __('Please enter your API key', 'YourChannel'),
 		'invalid_inputs' => __('Your inputs are invalid, please have a look at them', 'YourChannel'),
 		'save' => __('Save', 'YourChannel'),
-		'deleting' => __('Deleting', 'YourChannel')
+		'deleting' => __('Deleting', 'YourChannel'),
+		'clear' => __('Clear', 'YourChannel'),
+		'clearing' => __('Clearing', 'YourChannel')
 	);
 	
 	$admin_terms = apply_filters('yrc_admin_ui_terms', $admin_terms);
 ?>
 
 <script>
+	<?php WPB_YourChannel::translateTerms(); ?>
 	var yrc_lang_terms = {
 		'aui': <?php echo json_encode($admin_terms); ?>,
 		'form': <?php $ft = get_option('yrc_lang_terms'); echo json_encode($ft ? $ft : WPB_YourChannel::$terms['form']); ?>,

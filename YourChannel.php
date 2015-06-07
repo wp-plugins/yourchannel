@@ -1,22 +1,22 @@
 <?php
 /**
  * @package YourChannel
- * @version 0.6.1
+ * @version 0.6.2
  */
 /*
 	Plugin Name: YourChannel
-	Plugin URI: http://wordpress.org/plugins/yourchannel/
+	Plugin URI: http://plugin.builders/yourchannel/
 	Description: YouTube channel on your website.
 	Author: Plugin Builders
-	Version: 0.6.1
+	Version: 0.6.2
 	Author URI: http://plugin.builders/
 	Text Domain: YourChannel
 	Domain Path: languages
 */
 
 class WPB_YourChannel{
-	static $version = '0.6.1';
-	static $version_file = '0.6.1';
+	static $version = '0.6.2';
+	static $version_file = '0.6.2';
 	static $terms = array();
 	static $playlist;
 	static $st;
@@ -36,9 +36,12 @@ class WPB_YourChannel{
 		add_action('wp_ajax_yrc_delete', array($this, 'delete'));
 		add_action('wp_ajax_yrc_get_lang', array($this, 'getLang'));
 		add_action('wp_ajax_yrc_save_lang', array($this, 'saveLang'));
+		add_action('wp_ajax_yrc_delete_lang', array($this, 'deleteLang'));
 		add_action('wp_ajax_yrc_clear_keys', array($this, 'clearKeys'));
 		
 		add_shortcode( 'yourchannel', array($this, 'shortcoode') );
+		
+		$this->free();
 	}
 	
 	public function clearKeys(){
@@ -135,12 +138,14 @@ class WPB_YourChannel{
 		
 		$url = plugins_url('/js/yrc-'.self::$version_file.'.js', __FILE__);
 		$css_url = plugins_url('/css/style-'.self::$version_file.'.css', __FILE__);
-				
+		
+		
 		self::translateTerms();
 		$terms = array(
 			'form' => get_option('yrc_lang_terms'),
 			'fui' => self::$terms['front_ui']
 		);
+		
 		
 		$terms['form'] = $terms['form'] ? $terms['form'] : self::$terms['form'];
 	
@@ -249,6 +254,12 @@ class WPB_YourChannel{
 		die();
 	}
 	
+	public function deleteLang(){
+		delete_option('yrc_lang_terms');
+		echo 1;
+		die();
+	}
+		
 	/**
 	
 		Sanitizing
@@ -325,7 +336,8 @@ class WPB_YourChannel{
 			'months'  => __('months', 'YourChannel'),
 			'year'  => __('year', 'YourChannel'),
 			'years'  => __('years', 'YourChannel'),
-			'older'  => __('Older', 'YourChannel')
+			'older'  => __('Older', 'YourChannel'),
+			'wplocale' => get_locale()
 		);
 		
 		self::$terms['form'] = array(
@@ -337,6 +349,97 @@ class WPB_YourChannel{
 			'Nothing_found'  => __('Nothing found', 'YourChannel')
 		);
 	}
+	
+	
+	/**		Free Version Specific	**/
+	
+	public function free(){
+		add_action('admin_notices', array($this, 'showProFeature'));
+		add_action('wp_ajax_yrc_upgrade_nag_dismiss', array($this, 'upgradeNagDismiss'));
+	}
+	
+	public $nags = 13;
+	public $max_nags = 4;
+	public $nag_key = 'yrc_upgrade_nag_dismisses';
+	
+	public function upgradeNagDismisses( $add = false ){
+		$nags = get_option($this->nag_key);
+		$nags = $nags ? array((int)$nags[0], (int)$nags[1]) : array(0, 0);
+		$nags[1] += ($nags[0] >= $this->nags) ? 1 : 0;
+		$nags[0] = $nags[0] >= $this->nags ? 0 : (($add || $nags[0]) ? ($nags[0]+1) : $nags[0]);
+		update_option($this->nag_key, $nags);
+		return $nags;
+	}
+	
+	public function upgradeNagDismiss(){
+		$this->upgradeNagDismisses( true );
+		echo 1;
+		die();
+	}
+	
+	public function showProFeature(){
+		if( get_admin_page_title() === 'YourChannel' ) return false;
+		
+		$nags = $this->upgradeNagDismisses();
+		if(($nags[0] && ($nags[0] <= $this->nags)) || ($nags[1] > $this->max_nags)) return false;
+				
+		$notice = $this->proFeatures( true ); ?>
+			<div class="updated yrc-nag">
+				<p>
+					<span style="display:inline-block;width:90%;">
+						<b>YourChannel Pro Feature: </b>
+						<a href="http://plugin.builders/yourchannel?notice" target="_blank">
+							<?php echo $notice; ?>
+						</a>
+					</span><span style="text-align:right;display:inline-block;width:10%;">
+						<a href="#dismiss" id="yrc-later" style="color:#E68B8B;">X</a>
+					</span>
+				</p>
+			</div>
+			<script type="text/javascript">
+				jQuery('body').on('click', '#yrc-later', function(e){
+					e.preventDefault();
+					jQuery('.yrc-nag p').html('Ok, we\'ll ask you again.');
+					window.setTimeout(function(){
+						jQuery('.yrc-nag').slideUp();
+					}, 1000);
+					jQuery.post('admin-ajax.php', {'action':'yrc_upgrade_nag_dismiss'}, function(re){
+						console.log(re);
+					});
+				});
+			</script>
+		<?php	
+		
+		if($nags[1] === $this->max_nags){
+			update_option( $this->nag_key, array((int)$nags[0], (int)$nags[1]+1) );
+			echo '<div class="updated yrc-nag"><p>We won\'t ask you to upgrade anymore. Thanks for using <a href="http://plugin.builders/yourchannel?notice">YourChannel</a></p></div>';
+		}	
+	}
+	
+	public function proFeatures( $random = false ){
+		$features = array(
+			'Multiple channels.',		
+			'List videos from a certain playlist in the <i>Videos</i> section.',
+			'Let users search YouTube - can be restricted to your channel.',
+			'Search bar below banner.',
+			'Show videos by a search term. <b>New</b>',
+			'Change colors to match with your site.',
+			'Show video stats/ratings (2 styles).',
+			'Limit number of videos on page.',
+			'Ability to sort uploads (latest, most liked, most viewed).',
+			'Autoplay next video. <b>New</b>',
+			'Preload any or first video. <b>New</b>',
+			'Custom CSS input. <b>New</b>',
+			'Show a subscribe button (multiple styles).',
+			'Show other social media links in banner.',
+			'Widget.'
+		);
+		if($random) return $features[ rand(0, sizeof($features)-1) ];
+		
+		foreach($features as $f){
+			echo '<li>'. $f .'</li>';
+		}
+	}	
 } 
 
 new WPB_YourChannel();

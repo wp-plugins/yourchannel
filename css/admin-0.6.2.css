@@ -110,6 +110,15 @@ input[name=apikey]{width:50%;}
 	width:70%;
 }
 
+form > .pbc-row > .pbc-row-field{
+	min-width:80%;
+	max-width:84%;
+}
+
+.pbc-row-field .pbc-field{
+	margin-bottom:.5em;
+}
+
 #yrc-user-fields .pbc-field-label{
 	width:100%;
 }

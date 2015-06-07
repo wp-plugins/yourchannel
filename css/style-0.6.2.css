@@ -114,7 +114,9 @@
 
 .yrc-sub-section-name{
 	text-align:left;
-	width:70%;
+	width:90%;
+	max-height:150px;
+	overflow:auto;
 }
 
 .yrc-rtl .yrc-sub-section-name{
@@ -122,7 +124,7 @@
 }
 
 .yrc-close{
-	width:30%;
+	width:10%;
 	text-align:right;
 }
 
@@ -176,10 +178,11 @@
 }
 
 .yrc-item a{
-	display:block;
 	height:100%;
 	text-decoration:none;
 }
+
+.yrc-onlyone-video {display:none;}
 
 .yrc-item-meta{
 	text-align:left;
