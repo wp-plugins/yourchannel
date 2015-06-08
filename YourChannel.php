@@ -420,6 +420,7 @@ class WPB_YourChannel{
 		$features = array(
 			'Multiple channels.',		
 			'List videos from a certain playlist in the <i>Videos</i> section.',
+			'Create custom playlists! <b>New</b>',
 			'Let users search YouTube - can be restricted to your channel.',
 			'Search bar below banner.',
 			'Show videos by a search term. <b>New</b>',
