@@ -150,7 +150,7 @@ class WPB_YourChannel{
 		$terms['form'] = $terms['form'] ? $terms['form'] : self::$terms['form'];
 	
 		return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'" data-yrc-setup=""></div>
-		<script>
+		<script data-cfasync="false" type="text/javascript">
 			var YRC = YRC || {};
 			(function(){
 				if(!YRC.loaded){
@@ -159,6 +159,8 @@ class WPB_YourChannel{
 					var script = document.createElement("script");
 						script.src = "'.$url.'";
 						script.id = "yrc-script";
+						script.setAttribute("type", "text/javascript");
+						script.setAttribute("data-cfasync", "false");
 						document.querySelector("head").appendChild(script);
 					var style = document.createElement("link");
 						style.rel = "stylesheet";
@@ -420,7 +422,6 @@ class WPB_YourChannel{
 		$features = array(
 			'Multiple channels.',		
 			'List videos from a certain playlist in the <i>Videos</i> section.',
-			'Create custom playlists! <b>New</b>',
 			'Let users search YouTube - can be restricted to your channel.',
 			'Search bar below banner.',
 			'Show videos by a search term. <b>New</b>',
