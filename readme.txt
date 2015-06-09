@@ -50,7 +50,7 @@ Don't let visitors leave your site for YouTube.
 
 **[Video tutorial in Spanish](http://www.webempresa.com/blog/item/1733-publica-tu-canal-de-videos-de-youtube-en-wordpress.html)**
 
-**Support :** We'll respond to your issue within 3-18 hours.
+**Support :** We'll respond to your issue within 1-18 hours.
 
 Write to us at **support[at]plugin.builders**
 
