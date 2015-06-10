@@ -276,6 +276,7 @@
 .yrc-player-shell{
 	width:100%;
 	margin-bottom:.5em;
+	z-index:1000000000;
 }
 
 .yrc-inline-player .yrc-player, .yrc-mobile .yrc-player{width:100%;}
