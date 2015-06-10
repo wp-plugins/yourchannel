@@ -157,10 +157,10 @@ class WPB_YourChannel{
 					YRC.loaded = true;
 					YRC.lang = '.json_encode( $terms ).';	
 					var script = document.createElement("script");
+						script.setAttribute("data-cfasync", "false");
+						script.setAttribute("type", "text/javascript");
 						script.src = "'.$url.'";
 						script.id = "yrc-script";
-						script.setAttribute("type", "text/javascript");
-						script.setAttribute("data-cfasync", "false");
 						document.querySelector("head").appendChild(script);
 					var style = document.createElement("link");
 						style.rel = "stylesheet";
