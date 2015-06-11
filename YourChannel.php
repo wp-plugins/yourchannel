@@ -5,11 +5,11 @@
  */
 /*
 	Plugin Name: YourChannel
-	Plugin URI: http://plugin.builders/yourchannel/
+	Plugin URI: http://plugin.builders/yourchannel/?from=plugins
 	Description: YouTube channel on your website.
 	Author: Plugin Builders
 	Version: 0.6.2
-	Author URI: http://plugin.builders/
+	Author URI: http://plugin.builders/?from=plugins
 	Text Domain: YourChannel
 	Domain Path: languages
 */
