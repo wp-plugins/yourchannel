@@ -40,7 +40,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Shortcode works in page, posts or custom fields.
 * Loads files only if shortcode is present. 
 * Quick translation form for UI terms (Videos, Playlists, Loading... etc.).
-* Translation ready **New**
+* Translation-ready **New**
 
 
 Don't let visitors leave your site for YouTube.
