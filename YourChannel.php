@@ -430,7 +430,7 @@ class WPB_YourChannel{
 			'Limit number of videos on page.',
 			'Ability to sort uploads (latest, most liked, most viewed).',
 			'Autoplay next video. <b>New</b>',
-			'Preload any or first video. <b>New</b>',
+			'Preload ( and autoplay ) any or first video. <b>New</b>',
 			'Custom CSS input. <b>New</b>',
 			'Show a subscribe button (multiple styles).',
 			'Show other social media links in banner.',
