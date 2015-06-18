@@ -65,6 +65,8 @@ Save.
 Put the shortcode generated anywhere in your posts. (Also supports custom fields.)
 
 == Changelog ==
+= 0.6 =
+Implemented YouTube Player API.
 
 = 0.3.1 =
 Playlists are optional.
