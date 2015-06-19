@@ -153,19 +153,22 @@ class WPB_YourChannel{
 			var YRC = YRC || {};
 			(function(){
 				if(!YRC.loaded){
-					YRC.loaded = true;
-					YRC.lang = '.json_encode( $terms ).';	
-					var script = document.createElement("script");
-						script.setAttribute("data-cfasync", "false");
-						script.setAttribute("type", "text/javascript");
-						script.src = "'.$url.'";
-						script.id = "yrc-script";
-						document.querySelector("head").appendChild(script);
-					var style = document.createElement("link");
-						style.rel = "stylesheet";
-						style.href = "'.$css_url.'";
-						style.type = "text/css";
-						document.querySelector("head").appendChild(style);
+					function YRC_Loader(){
+						YRC.loaded = true;
+						YRC.lang = '.json_encode( $terms ).';	
+						var script = document.createElement("script");
+							script.src = "'.$url.'";
+							script.id = "yrc-script";
+							document.querySelector("head").appendChild(script);
+						var style = document.createElement("link");
+							style.rel = "stylesheet";
+							style.href = "'.$css_url.'";
+							style.type = "text/css";
+							document.querySelector("head").appendChild(style);
+					}
+					if(window.jQuery){YRC_Loader()}else { var yrctimer2324 = window.setInterval(function(){
+						if(window.jQuery){YRC_Loader(); window.clearInterval(yrctimer2324); }
+					}, 100);}
 				} else { if(YRC.EM)YRC.EM.trigger("yrc.newchannel");}
 			}());
 		</script>';
