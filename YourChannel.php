@@ -77,6 +77,7 @@ class WPB_YourChannel{
 	}
 	
 	public function deploy(){}
+	public function loadForFront(){}
 	
 	public function loadDashJs($hook){
 		if($hook === 'settings_page_yourchannel'){
@@ -92,9 +93,7 @@ class WPB_YourChannel{
 			wp_enqueue_style('wp-color-picker');
 		}	
 	}
-	
-	public function loadForFront(){}
-	
+		
 	public static function nins( $array, $key ){	//nothing if not set
 		return isset( $array[$key] ) && $array[$key] ? strtolower( $array[$key] ) : '';
 	}
