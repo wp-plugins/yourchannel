@@ -1,22 +1,22 @@
 <?php
 /**
  * @package YourChannel
- * @version 0.6.2
+ * @version 0.6.3
  */
 /*
 	Plugin Name: YourChannel
 	Plugin URI: http://plugin.builders/yourchannel/?from=plugins
 	Description: YouTube channel on your website.
 	Author: Plugin Builders
-	Version: 0.6.2
+	Version: 0.6.3
 	Author URI: http://plugin.builders/?from=plugins
 	Text Domain: YourChannel
 	Domain Path: languages
 */
 
 class WPB_YourChannel{
-	static $version = '0.6.2';
-	static $version_file = '0.6.2';
+	static $version = '0.6.3';
+	static $version_file = '0.6.3';
 	static $terms = array();
 	static $playlist;
 	static $st;
@@ -40,6 +40,7 @@ class WPB_YourChannel{
 		add_action('wp_ajax_yrc_clear_keys', array($this, 'clearKeys'));
 		
 		add_shortcode( 'yourchannel', array($this, 'shortcoode') );
+		
 		$this->free();
 	}
 	
@@ -77,7 +78,6 @@ class WPB_YourChannel{
 	}
 	
 	public function deploy(){}
-	public function loadForFront(){}
 	
 	public function loadDashJs($hook){
 		if($hook === 'settings_page_yourchannel'){
@@ -93,7 +93,9 @@ class WPB_YourChannel{
 			wp_enqueue_style('wp-color-picker');
 		}	
 	}
-		
+	
+	public function loadForFront(){}
+	
 	public static function nins( $array, $key ){	//nothing if not set
 		return isset( $array[$key] ) && $array[$key] ? strtolower( $array[$key] ) : '';
 	}
@@ -152,22 +154,19 @@ class WPB_YourChannel{
 			var YRC = YRC || {};
 			(function(){
 				if(!YRC.loaded){
-					function YRC_Loader(){
-						YRC.loaded = true;
-						YRC.lang = '.json_encode( $terms ).';	
-						var script = document.createElement("script");
-							script.src = "'.$url.'";
-							script.id = "yrc-script";
-							document.querySelector("head").appendChild(script);
-						var style = document.createElement("link");
-							style.rel = "stylesheet";
-							style.href = "'.$css_url.'";
-							style.type = "text/css";
-							document.querySelector("head").appendChild(style);
-					}
-					if(window.jQuery){YRC_Loader()}else { var yrctimer2324 = window.setInterval(function(){
-						if(window.jQuery){YRC_Loader(); window.clearInterval(yrctimer2324); }
-					}, 100);}
+					YRC.loaded = true;
+					YRC.lang = '.json_encode( $terms ).';	
+					var script = document.createElement("script");
+						script.setAttribute("data-cfasync", "false");
+						script.setAttribute("type", "text/javascript");
+						script.src = "'.$url.'";
+						script.id = "yrc-script";
+						document.querySelector("head").appendChild(script);
+					var style = document.createElement("link");
+						style.rel = "stylesheet";
+						style.href = "'.$css_url.'";
+						style.type = "text/css";
+						document.querySelector("head").appendChild(style);
 				} else { if(YRC.EM)YRC.EM.trigger("yrc.newchannel");}
 			}());
 		</script>';
@@ -391,7 +390,7 @@ class WPB_YourChannel{
 				<p>
 					<span style="display:inline-block;width:90%;">
 						<b>YourChannel Pro Feature: </b>
-						<a href="http://plugin.builders/yourchannel?notice" target="_blank">
+						<a href="http://plugin.builders/yourchannel?notice=0.6.3" target="_blank">
 							<?php echo $notice; ?>
 						</a>
 					</span><span style="text-align:right;display:inline-block;width:10%;">
@@ -431,7 +430,7 @@ class WPB_YourChannel{
 			'Limit number of videos on page.',
 			'Ability to sort uploads (latest, most liked, most viewed).',
 			'Autoplay next video. <b>New</b>',
-			'Preload ( and autoplay ) any or first video. <b>New</b>',
+			'Preload any or first video. <b>New</b>',
 			'Custom CSS input. <b>New</b>',
 			'Show a subscribe button (multiple styles).',
 			'Show other social media links in banner.',

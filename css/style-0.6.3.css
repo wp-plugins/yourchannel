@@ -110,6 +110,7 @@
 
 .yrc-section-action span{
 	display:inline-block;
+	vertical-align:top;
 }
 
 .yrc-sub-section-name{
@@ -126,7 +127,10 @@
 .yrc-close{
 	width:10%;
 	text-align:right;
+	opacity:.85;
 }
+
+.yrc-close:hover{opacity:1;}
 
 .yrc-rtl .yrc-close{
 	text-align:left;
@@ -276,11 +280,14 @@
 .yrc-player-shell{
 	width:100%;
 	margin-bottom:.5em;
-	z-index:1000000000;
+	z-index:100000000;
 }
 
 .yrc-inline-player .yrc-player, .yrc-mobile .yrc-player{width:100%;}
 .yrc-player{background:#000;}
+.yrc-prev, .yrc-next{
+	display:none;
+}	
 
 .yrc-lightbox .yrc-player{
 	width:80%;
@@ -292,9 +299,10 @@
 	position:fixed;
 	top:0;
 	left:0;
-	z-index:10000;
 	height:100%;
 }
+
+.yrc-lightbox .yrc-player-top-hide{ display:none !important; }
 
 .yrc-loading-overlay{
 	width:100%;
@@ -312,3 +320,4 @@
 .yrc-mobile .yrc-shell{ font-size:14px; }
 .yrc-mobile .yrc-stats{ display:none; }
 .yrc-mobile .yrc-banner{ height:auto; }
+

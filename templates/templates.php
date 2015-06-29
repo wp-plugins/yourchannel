@@ -1,5 +1,9 @@
 <script type="text/template" id="yrc-main-tmpl">
-	<div id="yrc-channels" class="wpb-hidden">
+	<div id="yrc-channels" class="wpb-hidden yrc-content">
+		<div class="yrc-content-header wpb-clr">
+			<h2 class="wpb-float-left"><?php _e('Channels', 'YourChannel'); ?></h2>
+			<div class="yrc-content-buttons wpb-float-right"></div>
+		</div>
 		<table class="widefat">
 			<thead>
 				<tr>
@@ -23,7 +27,7 @@
 		<ul>
 			<?php $this->proFeatures(); ?>
 		</ul>
-		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.6.2">Upgrade</a>
+		<a class="button button-primary" href="http://plugin.builders/products/yourchannel/?from=wp&v=0.6.3">Upgrade</a>
 		<a class="button" href="mailto:enquiry@plugin.builders?subject=YourChannel Enquiry">Pre-Purchase Question?</a>
 	</div>
 	<div id="pbc-feedback">
@@ -95,6 +99,19 @@
 					</div>
 					
 					<div class="pbc-row">
+						<div class="pbc-row-label wpb-inline"><?php _e('Thumb image size', 'YourChannel'); ?></div>
+						<div class="pbc-row-field wpb-inline">
+							<div class="pbc-field wpb-inline">
+								<label><input type="radio" name="thumb_image_size" value="medium" class="wpb-raw" <%- style.thumb_image_size === 'medium' ? 'checked' : ''  %>/><?php _e('Medium', 'YourChannel'); ?></label>
+							</div>
+							
+							<div class="pbc-field wpb-inline">
+								<label><input type="radio" name="thumb_image_size" value="high" class="wpb-raw" <%- style.thumb_image_size === 'high' ? 'checked' : ''  %>/><?php _e('Large', 'YourChannel'); ?></label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="pbc-row">
 						<div class="pbc-row-label wpb-inline"><?php _e('Play icon', 'YourChannel'); ?></div>
 						<div class="pbc-row-field wpb-inline">
 							<div class="pbc-field wpb-inline">
@@ -154,6 +171,10 @@
 							
 							<div class="pbc-field wpb-inline">
 								<label><input type="radio" name="player_top" value="desc" class="wpb-raw" <%- (style.player_top === 'desc') ? 'checked' : ''  %>/><?php _e('Description', 'YourChannel'); ?></label>
+							</div>
+							
+							<div class="pbc-field wpb-inline">
+								<label><input type="radio" name="player_top" value="hide" class="wpb-raw" <%- (style.player_top === 'hide') ? 'checked' : ''  %>/><?php _e('Hide', 'YourChannel'); ?></label>
 							</div>
 						</div>
 					</div>
@@ -249,6 +270,7 @@
 		'enter_api_key' => __('Please enter your API key', 'YourChannel'),
 		'invalid_inputs' => __('Your inputs are invalid, please have a look at them', 'YourChannel'),
 		'save' => __('Save', 'YourChannel'),
+		'edit' => __('Edit', 'YourChannel'),
 		'deleting' => __('Deleting', 'YourChannel'),
 		'clear' => __('Clear', 'YourChannel'),
 		'clearing' => __('Clearing', 'YourChannel')
