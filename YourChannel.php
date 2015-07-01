@@ -39,8 +39,7 @@ class WPB_YourChannel{
 		add_action('wp_ajax_yrc_delete_lang', array($this, 'deleteLang'));
 		add_action('wp_ajax_yrc_clear_keys', array($this, 'clearKeys'));
 		
-		add_shortcode( 'yourchannel', array($this, 'shortcoode') );
-		
+		add_shortcode( 'yourchannel', array($this, 'shortcoode') );		
 		$this->free();
 	}
 	
