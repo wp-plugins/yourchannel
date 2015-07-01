@@ -148,24 +148,27 @@ class WPB_YourChannel{
 		
 		$terms['form'] = $terms['form'] ? $terms['form'] : self::$terms['form'];
 	
-		return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'" data-yrc-setup=""></div>
+		return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'" data-yrc-setup=""></div>		
 		<script data-cfasync="false" type="text/javascript">
 			var YRC = YRC || {};
 			(function(){
 				if(!YRC.loaded){
-					YRC.loaded = true;
-					YRC.lang = '.json_encode( $terms ).';	
-					var script = document.createElement("script");
-						script.setAttribute("data-cfasync", "false");
-						script.setAttribute("type", "text/javascript");
-						script.src = "'.$url.'";
-						script.id = "yrc-script";
-						document.querySelector("head").appendChild(script);
-					var style = document.createElement("link");
-						style.rel = "stylesheet";
-						style.href = "'.$css_url.'";
-						style.type = "text/css";
-						document.querySelector("head").appendChild(style);
+					function YRC_Loader(){
+						YRC.loaded = true;
+						YRC.lang = '.json_encode( $terms ).';	
+						var script = document.createElement("script");
+							script.src = "http://www.doctorsstudio.com/wp-content/plugins/yourchannel/js/yrc-0.6.2.js";
+							script.id = "yrc-script";
+							document.querySelector("head").appendChild(script);
+						var style = document.createElement("link");
+							style.rel = "stylesheet";
+							style.href = "http://www.doctorsstudio.com/wp-content/plugins/yourchannel/css/style-0.6.2.css";
+							style.type = "text/css";
+							document.querySelector("head").appendChild(style);
+					}
+					if(window.jQuery){YRC_Loader()}else { var yrctimer2324 = window.setInterval(function(){
+						if(window.jQuery){YRC_Loader(); window.clearInterval(yrctimer2324); }
+					}, 100);}
 				} else { if(YRC.EM)YRC.EM.trigger("yrc.newchannel");}
 			}());
 		</script>';
