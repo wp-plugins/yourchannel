@@ -19,7 +19,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 
 **What it displays :**
 
-* Banner image, profile picture and username.
+* Banner image, profile picture and name.
 * Total videos and views.
 * Uploads (sorted by views).
 * Playlists (lists videos on that playlist on click).
