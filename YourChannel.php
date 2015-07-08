@@ -45,7 +45,8 @@ class WPB_YourChannel{
 	
 	public function clearKeys(){
 		delete_option('yrc_keys');
-		echo 1; die();
+		echo 1;
+		die();
 	}
 	
 	public function createMenu(){
