@@ -22,7 +22,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Banner image, profile picture and name.
 * Total videos and views.
 * Uploads (sorted by views).
-* Playlists (lists videos on that playlist on click).
+* Playlists (lists videos from that playlist on click).
 * Banner image in footer.
 * All of above are optional. You can choose what to display.
 * Default color accent Black & White.
@@ -33,7 +33,7 @@ Tell this plugin your YouTube username or channel ID and it'll setup your channe
 * Play video in Lightbox or Inline.
 * 7 video thumb styles.
 * RTL support.
-* Beautifully responsive (IT'S 2015).
+* Smartly responsive.
 * SVG icons.
 * Feature suggestions are implemented quickly.
 * Smooooth animations.
