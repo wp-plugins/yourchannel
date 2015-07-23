@@ -137,13 +137,11 @@ class WPB_YourChannel{
 		$url = plugins_url('/js/yrc-'.self::$version_file.'.js', __FILE__);
 		$css_url = plugins_url('/css/style-'.self::$version_file.'.css', __FILE__);
 		
-		
 		self::translateTerms();
 		$terms = array(
 			'form' => get_option('yrc_lang_terms'),
 			'fui' => self::$terms['front_ui']
 		);
-		
 		
 		$terms['form'] = $terms['form'] ? $terms['form'] : self::$terms['form'];
 	
