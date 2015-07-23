@@ -39,13 +39,14 @@ class WPB_YourChannel{
 		add_action('wp_ajax_yrc_delete_lang', array($this, 'deleteLang'));
 		add_action('wp_ajax_yrc_clear_keys', array($this, 'clearKeys'));
 		
-		add_shortcode( 'yourchannel', array($this, 'shortcoode') );		
+		add_shortcode( 'yourchannel', array($this, 'shortcoode') );
+		
 		$this->free();
 	}
 	
 	public function clearKeys(){
 		delete_option('yrc_keys');
-		die(1);
+		echo 1; die();
 	}
 	
 	public function createMenu(){
@@ -77,7 +78,6 @@ class WPB_YourChannel{
 	}
 	
 	public function deploy(){}
-	public function loadForFront(){}
 	
 	public function loadDashJs($hook){
 		if($hook === 'settings_page_yourchannel'){
@@ -93,7 +93,9 @@ class WPB_YourChannel{
 			wp_enqueue_style('wp-color-picker');
 		}	
 	}
-		
+	
+	public function loadForFront(){}
+	
 	public static function nins( $array, $key ){	//nothing if not set
 		return isset( $array[$key] ) && $array[$key] ? strtolower( $array[$key] ) : '';
 	}
@@ -137,35 +139,34 @@ class WPB_YourChannel{
 		$url = plugins_url('/js/yrc-'.self::$version_file.'.js', __FILE__);
 		$css_url = plugins_url('/css/style-'.self::$version_file.'.css', __FILE__);
 		
+		
 		self::translateTerms();
 		$terms = array(
 			'form' => get_option('yrc_lang_terms'),
 			'fui' => self::$terms['front_ui']
 		);
 		
+		
 		$terms['form'] = $terms['form'] ? $terms['form'] : self::$terms['form'];
 	
-		return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'" data-yrc-setup=""></div>		
+		return '<div class="yrc-shell-cover" data-yrc-channel="'. htmlentities( json_encode($channel) ) .'" data-yrc-setup=""></div>
 		<script data-cfasync="false" type="text/javascript">
 			var YRC = YRC || {};
 			(function(){
 				if(!YRC.loaded){
-					function YRC_Loader(){
-						YRC.loaded = true;
-						YRC.lang = '.json_encode( $terms ).';	
-						var script = document.createElement("script");
-							script.src = "http://www.doctorsstudio.com/wp-content/plugins/yourchannel/js/yrc-0.6.2.js";
-							script.id = "yrc-script";
-							document.querySelector("head").appendChild(script);
-						var style = document.createElement("link");
-							style.rel = "stylesheet";
-							style.href = "http://www.doctorsstudio.com/wp-content/plugins/yourchannel/css/style-0.6.2.css";
-							style.type = "text/css";
-							document.querySelector("head").appendChild(style);
-					}
-					if(window.jQuery){YRC_Loader()}else { var yrctimer2324 = window.setInterval(function(){
-						if(window.jQuery){YRC_Loader(); window.clearInterval(yrctimer2324); }
-					}, 100);}
+					YRC.loaded = true;
+					YRC.lang = '.json_encode( $terms ).';	
+					var script = document.createElement("script");
+						script.setAttribute("data-cfasync", "false");
+						script.setAttribute("type", "text/javascript");
+						script.src = "'.$url.'";
+						script.id = "yrc-script";
+						document.querySelector("head").appendChild(script);
+					var style = document.createElement("link");
+						style.rel = "stylesheet";
+						style.href = "'.$css_url.'";
+						style.type = "text/css";
+						document.querySelector("head").appendChild(style);
 				} else { if(YRC.EM)YRC.EM.trigger("yrc.newchannel");}
 			}());
 		</script>';
