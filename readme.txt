@@ -66,6 +66,9 @@ Put the shortcode generated anywhere in your posts. (Also supports custom fields
 
 == Changelog ==
 
+= 0.4 =
+Videos can be played in lightbox.
+
 = 0.3.1 =
 Playlists are optional.
 If playlists not shown, menu'll also be hidden.
