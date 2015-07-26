@@ -208,7 +208,7 @@
 		</div>
 				
 		<div class="pbc-row">
-			<div class="pbc-row-label wpb-inline"><?php _e('Only once', 'YourChannel'); ?></div>
+			<div class="pbc-row-label wpb-inline"><?php _e('Missing', 'YourChannel'); ?></div>
 			<div class="pbc-row-field wpb-inline">
 				<label><input type="checkbox" <%- meta.onlyonce ? 'checked' : '' %> name="onlyonce" class="wpb-raw"/><?php _e('Check this ONLY IF some videos are missing, HAS DRAWBACKS', 'YourChannel'); ?>.</label>
 			</div>
