@@ -265,7 +265,7 @@
 
 <?php
 	$admin_terms = array(
-		'does_not_exist' => __("doesn't exist", 'YourChannel'),
+		'does_not_exist' => __('doesn\'t exist', 'YourChannel'),
 		'saving' => __('Saving', 'YourChannel'),
 		'enter_api_key' => __('Please enter your API key', 'YourChannel'),
 		'invalid_inputs' => __('Your inputs are invalid, please have a look at them', 'YourChannel'),
