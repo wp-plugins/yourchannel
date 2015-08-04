@@ -3,7 +3,7 @@ Contributors: plugin.builders
 Tags: youtube, youtube playlists, subscription, subscribe, stream, social, embed, video, videos, play, live, player, playlist, youtube plugin, youtube player, gallery, video gallery, gallery widget, video widget, youtube video gallery, shortcode, youtube shortcode, auto play, autoplay, widget, youtube widget, youtube gallery widget, youtube channel widget, social media, preview, youtube gallery, youtube channel gallery, youtube playlist gallery, youtube custom playlist, custom, custom playlist, free, browse, channel, youtube channel, search, ratings, views, likes, dislikes, google, api, free, youtube playlist, curate, create, list, audio, podcast, podcasts, svg, responsive, mobile, music, movies, movie, songs, tutorials, lightbox, light box, video lightbox, lightbox player, lightbox gallery, youtube lightbox, banner
 Donate link: http://plugin.builders/yourchannel/?d=donate
 Requires at least: 3.5
-Tested up to: 4.2.3
+Tested up to: 4.2.4
 Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
