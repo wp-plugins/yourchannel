@@ -272,6 +272,7 @@ class WPB_YourChannel{
 	
 	public function validate($ins){
 		$rins = $this->validation( $ins );
+		//return $rins;
 		return $rins;
 	}
 	
